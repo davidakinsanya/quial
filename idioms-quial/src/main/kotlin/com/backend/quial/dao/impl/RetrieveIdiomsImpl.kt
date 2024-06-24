@@ -23,11 +23,13 @@ class RetrieveIdiomsImpl: RetrieveIdioms {
     
     csvReader().open(fileInputStream) {
       readAllWithHeaderAsSequence().map {
-       Idiom(
-         regex.findAll(it["basic-info"]!!).map{it.groupValues[1]}.toList(),
-         regex.findAll(it["meaning"]!!).map{it.groupValues[1]}.toList(),
-         regex.findAll(it["example-sentences"]!!).map{it.groupValues[1]}.toList()
+        listOfIdioms.add(
+         Idiom(
+           regex.findAll(it["basic-info"]!!).map{it.groupValues[1]}.toList(),
+           regex.findAll(it["meaning"]!!).map{it.groupValues[1]}.toList(),
+           regex.findAll(it["example-sentences"]!!).map{it.groupValues[1]}.toList()
         )
+       )
       }
     }
     
