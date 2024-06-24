@@ -16,7 +16,7 @@ class RetrieveIdiomsImpl: RetrieveIdioms {
   override fun readIdioms(): List<Idiom> {
     val listOfIdioms = mutableListOf<Idiom>()
     
-    val file = File("../../python.quial.csv")
+    val file = File("../../python/quial.csv")
     val fileInputStream = FileInputStream(file)
     val regex = Regex("\\[(.*?)]")
     
