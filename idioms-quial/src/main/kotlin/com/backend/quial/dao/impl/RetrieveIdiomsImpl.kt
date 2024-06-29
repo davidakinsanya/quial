@@ -5,6 +5,7 @@ import com.backend.quial.dto.Idiom
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import java.io.File
 import java.io.FileInputStream
+import java.nio.file.Paths
 
 class RetrieveIdiomsImpl: RetrieveIdioms {
   
@@ -15,25 +16,26 @@ class RetrieveIdiomsImpl: RetrieveIdioms {
    */
   override fun readIdioms(): List<Idiom> {
     val listOfIdioms = mutableListOf<Idiom>()
-    
-    val file = File("../../python/quial.csv")
+
+    val file = File(Paths.get("").toAbsolutePath().toString() + "\\src\\main\\kotlin\\com\\backend\\quial\\python\\quial.csv")
     val fileInputStream = FileInputStream(file)
-    val regex = Regex("\\[(.*?)]")
-    
-    
-    csvReader().open(fileInputStream) {
-      readAllWithHeaderAsSequence().map {
-        listOfIdioms.add(
-         Idiom(
-           regex.findAll(it["basic-info"]!!).map{it.groupValues[1]}.toList(),
-           regex.findAll(it["meaning"]!!).map{it.groupValues[1]}.toList(),
-           regex.findAll(it["example-sentences"]!!).map{it.groupValues[1]}.toList()
-        )
-       )
-      }
+    val regex = """\[(.*?)]""".toRegex()
+
+    val csvReader = csvReader {
+      skipEmptyLine = true
     }
-    
-    
+    val list = csvReader.readAll(file).toList()
+
+    for (i in 1..<list.size) {
+      listOfIdioms.add(
+        Idiom(
+          regex.findAll(list[i][0]).map{it.groupValues[1]}.toList(),
+          regex.findAll(list[i][1]).map{it.groupValues[1]}.toList(),
+          regex.findAll(list[i][2]).map{it.groupValues[1]}.toList(),
+        )
+      )
+    }
+
     return listOfIdioms
   }
   

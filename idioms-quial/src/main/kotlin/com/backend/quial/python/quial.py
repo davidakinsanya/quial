@@ -107,7 +107,7 @@ for i in range(0, len(idiom_dict['a'][0])):
 
 '''
 
-'''
+
 field_names = ["basic-info", "meanings", "example-sentences"]
 
 
@@ -124,9 +124,10 @@ with open("quial2.csv", mode="w") as csvfile:
             field_names[1]: idiom_dict[letter][1][i],
             field_names[2]: idiom_dict[letter][2][i]
             })
+        break
 
 os.rename('quial2.csv', 'quial.csv')
-'''
+
  
 '''
 count = 0
