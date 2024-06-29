@@ -4,6 +4,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+src/main/kotlin/com/backend/quial/python/chromedriver.exe
+src/main/kotlin/com/backend/quial/python/quial.csv
+
 ### STS ###
 .apt_generated
 .classpath
