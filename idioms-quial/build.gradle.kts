@@ -25,6 +25,14 @@ repositories {
     mavenCentral()
 }
 
+tasks {
+    shadowJar {
+        manifest {
+            attributes(Pair("Main-Class", "com.backend.quial.main.ApplicationKt"))
+        }
+    }
+}
+
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("io.ktor:ktor-server-auth:$ktor_version")

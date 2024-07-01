@@ -29,6 +29,10 @@ RUN apt-get install -yqq unzip
 RUN wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
 RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 
+# install cron
+RUN apt-get install -y cron
+RUN apt-get update
+
 # Sets the working directory in the container
 WORKDIR /app
 
@@ -42,5 +46,5 @@ RUN pip3 --no-cache-dir install -r requirements.txt
 COPY . /app
 
 # Command to run on container start
-RUN crontab crontab
+RUN crontab /app/crontab
 CMD ["cron", "-f"]

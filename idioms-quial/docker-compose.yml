@@ -1,0 +1,18 @@
+services:
+ idiom-quial-microservice:
+    build: .
+    volumes:
+      - idiom-quial-microservice:/usr/src/app
+    ports:
+      - "5001:5001"
+
+ idiom-scraper-microservice:
+  build: ./src/main/kotlin/com/backend/quial/python
+  volumes:
+    - idiom-quial-microservice:/usr/src/app
+  ports:
+    - "5002:5002"
+
+volumes:
+  idiom-quial-microservice:
+  idiom-scraper-microservice:
