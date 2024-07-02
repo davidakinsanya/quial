@@ -1,12 +1,12 @@
 services:
- idiom-quial-microservice:
+ server:
     build: .
     volumes:
       - shared-volume:/usr/src/app
     ports:
       - "8080:8080"
 
- idiom-scraper-microservice:
+ scraper:
   build: ./src/main/kotlin/com/backend/quial/python
   volumes:
     - shared-volume:/usr/src/app
