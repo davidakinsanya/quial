@@ -17,7 +17,7 @@ class RetrieveIdiomsImpl: RetrieveIdioms {
   override fun readIdioms(): List<Idiom> {
     val listOfIdioms = mutableListOf<Idiom>()
 
-    val file = File(Paths.get("").toAbsolutePath().toString() + "\\app\\quial.csv")
+    val file = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/quial.csv").toAbsolutePath().toString())
     val fileInputStream = FileInputStream(file)
     val regex = """\[(.*?)]""".toRegex()
 

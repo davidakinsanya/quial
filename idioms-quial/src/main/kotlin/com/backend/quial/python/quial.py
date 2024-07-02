@@ -111,7 +111,7 @@ for i in range(0, len(idiom_dict['a'][0])):
 field_names = ["basic-info", "meanings", "example-sentences"]
 
 
-with open("quial2.csv", mode="w") as csvfile:
+with open("quial.csv", mode="w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=field_names)
     writer.writeheader()
     
@@ -126,7 +126,7 @@ with open("quial2.csv", mode="w") as csvfile:
             })
         break
 
-os.rename('quial2.csv', 'quial.csv')
+os.rename('quial.csv', '../usr/src/app/quial.csv')
 
  
 '''
