@@ -4,14 +4,14 @@ services:
     volumes:
       - shared-volume:/usr/src/app
     ports:
-      - "5001:5001"
+      - "8080:8080"
 
  idiom-scraper-microservice:
   build: ./src/main/kotlin/com/backend/quial/python
   volumes:
     - shared-volume:/usr/src/app
   ports:
-    - "5002:5002"
+    - "8081:8081"
 
 volumes:
   shared-volume:
