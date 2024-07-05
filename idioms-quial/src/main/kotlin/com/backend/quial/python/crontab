@@ -1,1 +1,1 @@
-* 0 * * * /python quial.py
+ * * * * * root /usr/bin/python3 /app/quial.py >> /var/log/cron.log
