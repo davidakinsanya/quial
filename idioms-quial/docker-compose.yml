@@ -7,11 +7,11 @@ services:
       - "8080:8080"
 
  scraper:
-  build: ./src/main/kotlin/com/backend/quial/python
-  volumes:
-    - shared-volume:/usr/src/app
-  ports:
-    - "8081:8081"
+    build: ./src/main/kotlin/com/backend/quial/python
+    volumes:
+      - shared-volume:/usr/src/app
+    ports:
+      - "8081:8081"
 
 volumes:
   shared-volume:
