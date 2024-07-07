@@ -5,7 +5,7 @@ from selenium.common import exceptions
 import string
 import re
 import csv
-import os
+import os, os.path
 
 alphabet = list(string.ascii_lowercase)
 url = "https://www.theidioms.com/"
