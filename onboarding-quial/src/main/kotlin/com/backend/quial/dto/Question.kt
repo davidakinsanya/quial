@@ -1,5 +1,8 @@
 package com.backend.quial.dto
 
-data class Question(val enums: OnboardingEnums = OnboardingEnums.QUESTION,
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Question(val enum: OnboardingEnums = OnboardingEnums.QUESTION,
                     val question: String,
                     val options: List<String>): OnboardingSequence

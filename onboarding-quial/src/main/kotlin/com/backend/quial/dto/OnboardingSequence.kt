@@ -1,5 +1,8 @@
 package com.backend.quial.dto
 
-interface OnboardingSequence {
+import kotlinx.serialization.Serializable
+
+@Serializable
+sealed interface OnboardingSequence {
 
 }

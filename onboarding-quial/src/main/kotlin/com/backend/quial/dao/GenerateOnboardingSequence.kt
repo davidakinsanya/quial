@@ -4,13 +4,10 @@ import com.backend.quial.dto.OnboardingEnums
 import com.backend.quial.dto.OnboardingSequence
 import com.backend.quial.dto.Question
 import com.backend.quial.dto.Statement
+import com.beust.klaxon.Klaxon
 
 class GenerateOnboardingSequence {
-
-    fun jsonToSequence(json: String): List<OnboardingSequence> {
-        return listOf()
-    }
-    fun generate(): List<OnboardingSequence> {
-        return listOf()
+    fun generate(json: String): List<OnboardingSequence>? {
+        return Klaxon().parse<List<OnboardingSequence>>(json)
     }
 }

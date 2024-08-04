@@ -28,7 +28,7 @@ repositories {
 
 dependencies {
     implementation("de.sharpmind.ktor:ktor-env-config:2.1.0")
-    implementation ("com.github.doyaaaaaken:kotlin-csv-jvm:1.9.3")
+    implementation("com.beust:klaxon:5.5")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("io.ktor:ktor-server-auth:$ktor_version")
