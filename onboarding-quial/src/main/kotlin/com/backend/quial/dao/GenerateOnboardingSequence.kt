@@ -8,7 +8,6 @@ import com.backend.quial.dto.Statement
 class GenerateOnboardingSequence {
 
     fun jsonToSequence(json: String): List<OnboardingSequence> {
-
         return listOf()
     }
     fun generate(): List<OnboardingSequence> {
