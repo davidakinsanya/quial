@@ -1,0 +1,17 @@
+services:
+ server:
+    build: ./idioms-quial
+    volumes:
+      - shared-volume:/usr/src/app
+    ports:
+      - "8080:8080"
+
+ scraper:
+    build: ./idioms-quial/src/main/kotlin/com/backend/quial/python
+    volumes:
+      - shared-volume:/usr/src/app
+    ports:
+      - "8081:8081"
+
+volumes:
+  shared-volume:
