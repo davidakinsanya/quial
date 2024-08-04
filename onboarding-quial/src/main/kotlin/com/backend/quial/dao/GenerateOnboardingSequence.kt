@@ -5,9 +5,15 @@ import com.backend.quial.dto.OnboardingSequence
 import com.backend.quial.dto.Question
 import com.backend.quial.dto.Statement
 import com.beust.klaxon.Klaxon
+import java.io.File
 
 class GenerateOnboardingSequence {
-    fun generate(json: String): List<OnboardingSequence>? {
-        return Klaxon().parse<List<OnboardingSequence>>(json)
+    fun generateNewSequence(json: String) {
+        val file = File("../usr/src/json.text")
+        file.writeText(json)
+    }
+
+    fun loadSequence(): List<OnboardingSequence>? {
+        return Klaxon().parse<List<OnboardingSequence>>(File("../usr/src/app/json.txt"))
     }
 }

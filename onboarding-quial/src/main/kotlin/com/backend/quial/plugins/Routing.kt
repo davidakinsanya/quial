@@ -7,8 +7,12 @@ import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
     routing {
-        get("/{json}") {
-            call.respond(GenerateOnboardingSequence().generate(call.parameters["json"]!!)!!)
+        get("/") {
+            call.respond(GenerateOnboardingSequence().loadSequence()!!)
+        }
+
+        get("/generate/{json}") {
+            call.respond(GenerateOnboardingSequence().generateNewSequence(call.parameters["json"]!!))
         }
     }
 }
