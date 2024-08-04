@@ -13,5 +13,13 @@ services:
     ports:
       - "8081:8081"
 
+ onboarding:
+   build: ./onboarding-quial
+   volumes:
+     - onboarding-quial:/usr/src/app
+   ports:
+     - "8082:8082"
+
 volumes:
   shared-volume:
+  onboarding-quial:

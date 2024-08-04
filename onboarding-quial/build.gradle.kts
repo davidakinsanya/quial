@@ -26,6 +26,14 @@ repositories {
     mavenCentral()
 }
 
+tasks {
+    shadowJar {
+        manifest {
+            attributes(Pair("Main-Class", "com.backend.quial.main.ApplicationKt"))
+        }
+    }
+}
+
 dependencies {
     implementation("de.sharpmind.ktor:ktor-env-config:2.1.0")
     implementation("com.beust:klaxon:5.5")
