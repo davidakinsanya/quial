@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Statement(
-    val enum: OnboardingEnums = OnboardingEnums.STATEMENT,
+    val enum: String = OnboardingEnums.STATEMENT.name,
     val header: String,
     val text: String): OnboardingSequence
