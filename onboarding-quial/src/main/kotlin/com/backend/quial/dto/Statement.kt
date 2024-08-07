@@ -22,7 +22,7 @@ data class Statement(
      *
      * @return a String representing a header.
      */
-    override fun getHeader(): String {
+    override fun getOnboardingHeader(): String {
        return this.header
     }
 
@@ -31,7 +31,7 @@ data class Statement(
      *
      * @return a String representing a question.
      */
-    override fun getQuestion(): String? {
+    override fun getOnboardingQuestion(): String? {
         return null
     }
 
@@ -40,7 +40,7 @@ data class Statement(
      *
      * @return a String representing text.
      */
-    override fun getText(): String {
+    override fun getOnboardingText(): String {
         return this.text
     }
 
@@ -49,7 +49,7 @@ data class Statement(
      *
      * @return a list object representing a list of answer options.
      */
-    override fun getOptions(): List<String>? {
+    override fun getOnboardingOptions(): List<String>? {
         return null
     }
 }

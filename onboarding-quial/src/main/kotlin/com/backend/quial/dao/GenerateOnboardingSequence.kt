@@ -11,13 +11,15 @@ import java.nio.file.Paths
 class GenerateOnboardingSequence {
     fun generateNewSequence(json: String) {
         val file =  File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/onboarding.json").toAbsolutePath().toString())
-        file.writeText(json)
+        file.printWriter().use { out ->
+            out.println(json)
+        }
     }
 
-    fun loadSequence(): List<OnboardingSequence> {
+    fun loadSequence(): List<Any> {
         val file = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/onboarding.json").toAbsolutePath().toString())
-        val list = mutableListOf<OnboardingSequence>()
-        val json = Klaxon().toJsonObject(file)
+        val list = mutableListOf<Any>()
+        val json = Klaxon().toJsonObject(file) // TODO: Make changes in the JSON parsing!
 
         for (obj in json) {
             when (obj.key) {

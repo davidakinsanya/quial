@@ -22,26 +22,26 @@ sealed interface OnboardingSequence {
      *
      * @return a String representing a header.
      */
-    fun getHeader(): String?
+    fun getOnboardingHeader(): String?
 
     /**
      * This method returns a string object for the question of a Question object of the onboarding sequence.
      *
      * @return a String representing a question.
      */
-    fun getQuestion(): String?
+    fun getOnboardingQuestion(): String?
 
     /**
      * This method returns a string object for the text of a Statement object of the onboarding sequence.
      *
      * @return a String representing text.
      */
-    fun getText(): String?
+    fun getOnboardingText(): String?
 
     /**
      * This method returns a list object for the answer options of a Question object of the onboarding sequence.
      *
      * @return a list object representing a list of answer options.
      */
-    fun getOptions(): List<String>?
+    fun getOnboardingOptions(): List<String>?
 }

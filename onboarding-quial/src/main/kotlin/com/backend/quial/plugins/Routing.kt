@@ -2,6 +2,7 @@ package com.backend.quial.plugins
 
 import com.backend.quial.dao.GenerateOnboardingSequence
 import com.backend.quial.dto.OnboardingSequence
+import com.beust.klaxon.Klaxon
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -14,8 +15,8 @@ fun Application.configureRouting() {
         }
 
         post("/generate") {
-            val json = call.receive(OnboardingSequence::class)
-            call.respond(GenerateOnboardingSequence().generateNewSequence(json.toString()))
+            val json = call.receive<String>()
+            call.respond(GenerateOnboardingSequence().generateNewSequence(json))
         }
     }
 }

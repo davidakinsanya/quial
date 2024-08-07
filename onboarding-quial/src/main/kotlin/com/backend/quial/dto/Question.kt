@@ -21,7 +21,7 @@ data class Question(val enum: String = OnboardingEnums.QUESTION.name,
      *
      * @return a String representing a header.
      */
-    override fun getHeader(): String? {
+    override fun getOnboardingHeader(): String? {
         return null
     }
 
@@ -30,7 +30,7 @@ data class Question(val enum: String = OnboardingEnums.QUESTION.name,
      *
      * @return a String representing a question.
      */
-    override fun getQuestion(): String {
+    override fun getOnboardingQuestion(): String {
        return this.question
     }
 
@@ -39,7 +39,7 @@ data class Question(val enum: String = OnboardingEnums.QUESTION.name,
      *
      * @return a String representing text.
      */
-    override fun getText(): String? {
+    override fun getOnboardingText(): String? {
        return null
     }
 
@@ -48,7 +48,7 @@ data class Question(val enum: String = OnboardingEnums.QUESTION.name,
      *
      * @return a list object representing a list of answer options.
      */
-    override fun getOptions(): List<String> {
+    override fun getOnboardingOptions(): List<String> {
         return this.options
     }
 }
