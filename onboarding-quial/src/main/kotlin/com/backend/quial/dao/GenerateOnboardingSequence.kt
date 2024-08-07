@@ -1,10 +1,11 @@
 package com.backend.quial.dao
 
 import com.backend.quial.dto.OnboardingEnums
-import com.backend.quial.dto.OnboardingSequence
 import com.backend.quial.dto.Question
 import com.backend.quial.dto.Statement
 import com.beust.klaxon.Klaxon
+import com.google.gson.JsonArray
+import com.google.gson.JsonParser
 import java.io.File
 import java.nio.file.Paths
 
@@ -19,11 +20,11 @@ class GenerateOnboardingSequence {
     fun loadSequence(): List<Any> {
         val file = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/onboarding.json").toAbsolutePath().toString())
         val list = mutableListOf<Any>()
-        val json = Klaxon().toJsonObject(file) // TODO: Make changes in the JSON parsing!
+        val jsonArray: JsonArray = JsonParser.parseString(file.toString()).asJsonArray
 
-        for (obj in json) {
-            when (obj.key) {
-                OnboardingEnums.STATEMENT.name -> {
+        for (obj in jsonArray) {
+            when (obj.toString().contains(OnboardingEnums.STATEMENT.name)) {
+                true -> {
                     val statement: Statement? = Klaxon().parse(obj.toString())
                     list.add(statement!!)
                 }
