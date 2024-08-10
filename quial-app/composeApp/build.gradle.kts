@@ -48,6 +48,9 @@ kotlin {
             implementation(libs.mongodb.realm)
             implementation(libs.kotlin.coroutines)
             implementation(libs.stately.common)
+
+            implementation(libs.kmprevenuecat.purchases)
+            implementation(libs.kmprevenuecat.purchases.ui)
         }
     }
 }

@@ -19,6 +19,7 @@ koin = "3.5.3"
 realm = "1.13.0"
 coroutines = "1.8.0"
 stately = "2.0.5"
+kmpRevenueCat="1.0.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -43,6 +44,10 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 mongodb-realm = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 stately-common = { module = "co.touchlab:stately-common", version.ref = "stately" }
+
+# KMPRevenuecat - Subscription lib
+kmprevenuecat-purchases = { group = "io.github.mirzemehdi", name = "kmprevenuecat-purchases", version.ref = "kmpRevenueCat" }
+kmprevenuecat-purchases-ui = { group = "io.github.mirzemehdi", name = "kmprevenuecat-purchases-ui", version.ref = "kmpRevenueCat" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
