@@ -1,4 +1,4 @@
-package com.quial.app
+package com.quial.app.main
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image

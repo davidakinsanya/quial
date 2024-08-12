@@ -1,4 +1,6 @@
-package com.quial.app
+package com.quial.app.main
+
+import com.quial.app.getPlatform
 
 class Greeting {
     private val platform = getPlatform()
