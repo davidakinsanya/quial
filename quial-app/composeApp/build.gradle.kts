@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -45,12 +47,14 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
-            implementation(libs.mongodb.realm)
             implementation(libs.kotlin.coroutines)
             implementation(libs.stately.common)
 
             implementation(libs.kmprevenuecat.purchases)
             implementation(libs.kmprevenuecat.purchases.ui)
+
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite.bundled)
         }
     }
 }
@@ -90,5 +94,12 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+dependencies {
+    ksp(libs.room.compiler)
 }
 
