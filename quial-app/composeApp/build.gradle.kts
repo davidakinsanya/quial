@@ -35,6 +35,9 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
         }
 
         commonMain.dependencies {
@@ -55,6 +58,10 @@ kotlin {
 
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
+
+            api(libs.koin.core)
+            api(libs.koin.compose)
+            api(libs.koin.compose.viewmodel)
         }
     }
 }
@@ -99,6 +106,7 @@ android {
 room {
     schemaDirectory("$projectDir/schemas")
 }
+
 dependencies {
     ksp(libs.room.compiler)
 }
