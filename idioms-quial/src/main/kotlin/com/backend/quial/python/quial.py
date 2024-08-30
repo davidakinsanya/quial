@@ -95,7 +95,9 @@ def scrape(letter, page):
 driver = main_driver()
 
 
-'''
+''' 
+### Testing Script
+
 scrape('a', 1)
 
 print(len(idiom_dict['a'][0]))
@@ -107,7 +109,7 @@ for i in range(0, len(idiom_dict['a'][0])):
 
 '''
 
-'''
+
 field_names = ["basic-info", "meanings", "example-sentences"]
 
 
@@ -124,17 +126,12 @@ with open("/usr/src/app/quial2.csv", mode="w") as csvfile:
             field_names[1]: idiom_dict[letter][1][i],
             field_names[2]: idiom_dict[letter][2][i]
             })
-        break
+
 
 if os.path.exists("/usr/src/app/quial.csv"):
     os.remove("/usr/src/app/quial.csv")
     
 os.rename("/usr/src/app/quial2.csv", "/usr/src/app/quial.csv")
-        
-'''
-
-print(os.path.isdir('/usr/src/app'))
-
 
 '''
 count = 0
