@@ -1,7 +1,7 @@
 FROM openjdk:17-jdk-slim
 
 WORKDIR /src
-COPY src /src
+COPY . /src
 
 ARG user=javauser
 ARG group=javauser
