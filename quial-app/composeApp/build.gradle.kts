@@ -38,6 +38,8 @@ kotlin {
 
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
+
+            implementation(libs.ktor.client.okhttp)
         }
 
         commonMain.dependencies {
@@ -62,6 +64,13 @@ kotlin {
             api(libs.koin.core)
             api(libs.koin.compose)
             api(libs.koin.compose.viewmodel)
+
+            implementation(libs.bundles.ktor)
+
+        }
+
+        nativeMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
     }
 }
@@ -102,6 +111,7 @@ android {
         debugImplementation(compose.uiTooling)
     }
 }
+
 
 room {
     schemaDirectory("$projectDir/schemas")
