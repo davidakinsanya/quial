@@ -66,6 +66,7 @@ kotlin {
             api(libs.koin.compose.viewmodel)
 
             implementation(libs.bundles.ktor)
+            implementation(libs.kotlinx.serialization.json)
 
         }
 
