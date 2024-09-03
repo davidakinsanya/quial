@@ -55,6 +55,12 @@ kotlin {
             implementation(libs.kotlin.coroutines)
             implementation(libs.stately.common)
 
+            implementation(libs.voyager.navigator.v110beta02)
+            implementation(libs.voyager.screenmodel.v110beta02)
+            implementation(libs.voyager.bottom.sheet.navigator)
+            implementation(libs.voyager.tab.navigator)
+            implementation(libs.voyager.transitions.v110beta02)
+
             implementation(libs.kmprevenuecat.purchases)
             implementation(libs.kmprevenuecat.purchases.ui)
 
