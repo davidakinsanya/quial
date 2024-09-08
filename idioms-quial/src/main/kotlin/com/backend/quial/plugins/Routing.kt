@@ -1,5 +1,6 @@
 package com.backend.quial.plugins
 
+import com.backend.quial.dao.impl.AddUserIdiomImpl
 import com.backend.quial.dao.impl.RetrieveIdiomsImpl
 import io.ktor.server.application.*
 import io.ktor.server.response.*
@@ -13,6 +14,12 @@ fun Application.configureRouting() {
         get("/") {
             val retrieveIdiomsImpl = RetrieveIdiomsImpl()
             call.respond(retrieveIdiomsImpl.readIdioms())
+        }
+
+        get("/add") {
+            val idiom = call.parameters["idiom"]!!
+            call.respond(AddUserIdiomImpl().add(idiom))
+
         }
 
         get("paths") {
