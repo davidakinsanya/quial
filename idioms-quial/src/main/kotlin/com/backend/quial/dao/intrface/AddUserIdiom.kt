@@ -1,7 +1,5 @@
 package com.backend.quial.dao.intrface
 
-import com.backend.quial.dto.Idiom
-
 /**
  * This interface holds the classes responsible for adding user generated idioms.
  *

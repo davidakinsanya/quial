@@ -1,6 +1,7 @@
 import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 from selenium.common import exceptions
+import pandas as pd
 
 import string
 import re
@@ -89,7 +90,13 @@ def scrape(letter, page):
         new_page = int(curr_page) + 1
         return scrape(letter, new_page)
     else:
-        return 
+        return
+
+def merge(csv1, csv2):
+    master_df = pd.DataFrame()
+    master_df.append(csv1)
+    master_df.append(csv2)
+    master_df.to_csv('quial.csv', index=False)
     
 
 driver = main_driver()
@@ -130,7 +137,10 @@ with open("/usr/src/app/quial2.csv", mode="w") as csvfile:
 
 if os.path.exists("/usr/src/app/quial.csv"):
     os.remove("/usr/src/app/quial.csv")
-    
+
+# merge("/usr/src/app/quial2.csv", "/usr/src/app/user-quial.csv")
+# os.remove("/usr/src/app/quial2.csv")
+
 os.rename("/usr/src/app/quial2.csv", "/usr/src/app/quial.csv")
 
 '''

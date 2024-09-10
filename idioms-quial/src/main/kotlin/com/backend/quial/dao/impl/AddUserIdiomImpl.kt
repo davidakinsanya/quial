@@ -3,7 +3,6 @@ package com.backend.quial.dao.impl
 import com.backend.quial.dao.intrface.AddUserIdiom
 import java.io.File
 import java.nio.file.Paths
-import kotlin.io.path.exists
 
 /**
  * This class holds the implementation of the classes responsible for adding user generated idioms.
