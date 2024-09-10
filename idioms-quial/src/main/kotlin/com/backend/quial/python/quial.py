@@ -138,8 +138,14 @@ with open("/usr/src/app/quial2.csv", mode="w") as csvfile:
 if os.path.exists("/usr/src/app/quial.csv"):
     os.remove("/usr/src/app/quial.csv")
 
-# merge("/usr/src/app/quial2.csv", "/usr/src/app/user-quial.csv")
-# os.remove("/usr/src/app/quial2.csv")
+'''
+if os.path.exists("/usr/src/app/user-quial.csv"):
+    merge("/usr/src/app/quial2.csv", "/usr/src/app/user-quial.csv")
+    os.remove("/usr/src/app/quial2.csv")
+else:
+    os.rename("/usr/src/app/quial2.csv", "/usr/src/app/quial.csv")
+'''
+
 
 os.rename("/usr/src/app/quial2.csv", "/usr/src/app/quial.csv")
 
