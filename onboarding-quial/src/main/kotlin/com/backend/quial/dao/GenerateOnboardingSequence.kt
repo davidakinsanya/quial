@@ -8,10 +8,26 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonParser
 import java.io.File
 import java.nio.file.Paths
+import kotlin.io.path.createFile
+import kotlin.io.path.exists
 
 class GenerateOnboardingSequence {
     fun generateNewSequence(json: String) {
-        val file =  File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/onboarding.json").toAbsolutePath().toString())
+
+        val fileCheck = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/onboarding.json").toAbsolutePath().toString()).exists()
+
+        val file = if (!fileCheck) {
+            File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/onboarding.json")
+                .createFile()
+                .toAbsolutePath()
+                .toString())
+
+        } else {
+            File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/onboarding.json")
+                .toAbsolutePath()
+                .toString())
+        }
+
         file.printWriter().use { out ->
             out.println(json)
         }

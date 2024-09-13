@@ -3,6 +3,7 @@ package com.backend.quial.dao.impl
 import com.backend.quial.dao.intrface.AddUserIdiom
 import java.io.File
 import java.nio.file.Paths
+import kotlin.io.path.createFile
 
 /**
  * This class holds the implementation of the classes responsible for adding user generated idioms.
@@ -20,9 +21,14 @@ class AddUserIdiomImpl : AddUserIdiom {
      */
     override fun add(idiom: String): Int {
 
-        val userFile = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/user-quial.csv").toAbsolutePath().toString())
-        userFile.printWriter().use {
-            out -> out.println(idiom)
+        var userFile = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/user-quial.csv").toAbsolutePath().toString())
+
+        if (!userFile.exists()) {
+            userFile = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/user-quial.csv").toAbsolutePath().createFile().toString())
+        }
+
+        userFile.printWriter().use { out ->
+            out.println(idiom)
         }
 
         val mainQuialFile = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/quial.csv").toAbsolutePath().toString())
