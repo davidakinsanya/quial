@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Question(val enum: String = OnboardingEnums.QUESTION.name,
-                    val question: String,
-                    val options: List<String>): OnboardingSequence {
+                    val question: String = "",
+                    val options: List<String> = listOf()): OnboardingSequence {
 
     /**
      * This method returns a string object for the type of element in the onboarding sequence.

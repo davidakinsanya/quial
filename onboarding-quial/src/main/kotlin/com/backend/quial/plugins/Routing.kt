@@ -16,6 +16,7 @@ import java.util.regex.Pattern
 fun Application.configureRouting() {
     routing {
         get("/") {
+            // GenerateOnboardingSequence().loadSequence()
             call.respond(GenerateOnboardingSequence().loadSequence())
         }
 
