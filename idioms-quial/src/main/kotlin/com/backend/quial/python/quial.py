@@ -2,6 +2,7 @@ import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 from selenium.common import exceptions
 import pandas as pd
+import chromedriver_autoinstaller as cd
 
 import string
 import re
@@ -13,6 +14,7 @@ url = "https://www.theidioms.com/"
 
 idiom_dict = {}
 
+cd.install()
 
 def main_driver():
     options = uc.ChromeOptions()
@@ -87,6 +89,7 @@ def scrape(letter, page):
         idiom_dict[letter][2] += [meanings_list[1]]
     
     if curr_page != max_page:
+        return
         new_page = int(curr_page) + 1
         return scrape(letter, new_page)
     else:
@@ -96,13 +99,14 @@ def merge(csv1, csv2):
     master_df = pd.DataFrame()
     master_df.append(csv1)
     master_df.append(csv2)
-    master_df.to_csv('quial.csv', index=False)
-    
+    master_df.to_csv('/usr/src/app/quial.csv', index=False)
 
+       
 driver = main_driver()
 
 
-''' 
+        
+'''
 ### Testing Script
 
 scrape('a', 1)
@@ -113,17 +117,41 @@ for i in range(0, len(idiom_dict['a'][0])):
     print(idiom_dict['a'][0][i])
     print(idiom_dict['a'][1][i])
     print(idiom_dict['a'][2][i], "\n")
-
 '''
 
 
+
+'''
+
+### Testing Script 2
+
 field_names = ["basic-info", "meanings", "example-sentences"]
 
+with open("/usr/src/app/quial2.csv", mode="w") as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=field_names)
+    writer.writeheader()   
+    
+    scrape("a", 1)
+    for i in range(0, len(idiom_dict["a"][0])):
+        writer.writerow({
+        field_names[0]: idiom_dict["a"][0][i],
+        field_names[1]: idiom_dict["a"][1][i],
+        field_names[2]: idiom_dict["a"][2][i]
+        })
+        break
+'''
+
+
+'''
+### Production Script
+
+field_names = ["basic-info", "meanings", "example-sentences"]
 
 with open("/usr/src/app/quial2.csv", mode="w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=field_names)
     writer.writeheader()
-    
+
+  
     for letter in alphabet:
         print(letter)
         scrape(letter, 1)
@@ -133,23 +161,25 @@ with open("/usr/src/app/quial2.csv", mode="w") as csvfile:
             field_names[1]: idiom_dict[letter][1][i],
             field_names[2]: idiom_dict[letter][2][i]
             })
-
+        
 
 if os.path.exists("/usr/src/app/quial.csv"):
     os.remove("/usr/src/app/quial.csv")
-
-'''
+    
 if os.path.exists("/usr/src/app/user-quial.csv"):
     merge("/usr/src/app/quial2.csv", "/usr/src/app/user-quial.csv")
     os.remove("/usr/src/app/quial2.csv")
 else:
     os.rename("/usr/src/app/quial2.csv", "/usr/src/app/quial.csv")
-'''
-
-
-os.rename("/usr/src/app/quial2.csv", "/usr/src/app/quial.csv")
 
 '''
+
+# os.rename("/usr/src/app/quial2.csv", "/usr/src/app/quial.csv")
+
+
+'''
+
+### Idiom Count
 count = 0
 
 for letter in alphabet:
@@ -159,6 +189,7 @@ for letter in alphabet:
         count = count + len(item)
 
 print("idiom count is: ", str(count))
+
 '''
 
 driver.close()
