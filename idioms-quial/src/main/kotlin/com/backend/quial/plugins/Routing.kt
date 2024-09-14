@@ -7,7 +7,6 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.nio.file.Files
 import java.nio.file.Paths
-import kotlin.io.path.exists
 
 fun Application.configureRouting() {
     routing {
