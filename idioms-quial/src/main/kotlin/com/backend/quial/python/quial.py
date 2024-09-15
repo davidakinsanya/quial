@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 from selenium.common import exceptions
 import pandas as pd
 import chromedriver_autoinstaller as cd
-from webdriver_manager.chrome import ChromeDriverManager
 
 import string
 import re
@@ -14,8 +13,6 @@ alphabet = list(string.ascii_lowercase)
 url = "https://www.theidioms.com/"
 
 idiom_dict = {}
-
-cd.install()
     
 
 def main_driver():
@@ -32,7 +29,8 @@ def main_driver():
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('--no-sandbox')
 
-    return uc.Chrome(options=options, driver_executable_path = ChromeDriverManager().install())
+    return uc.Chrome(options=options,
+                     driver_executable_path = cd.install())
 
 
 def get_additional_meaning(idiom, link):
