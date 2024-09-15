@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.common import exceptions
 import pandas as pd
 import chromedriver_autoinstaller as cd
+from webdriver_manager.chrome import ChromeDriverManager
 
 import string
 import re
@@ -15,6 +16,7 @@ url = "https://www.theidioms.com/"
 idiom_dict = {}
 
 cd.install()
+    
 
 def main_driver():
     options = uc.ChromeOptions()
@@ -30,7 +32,7 @@ def main_driver():
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('--no-sandbox')
 
-    return uc.Chrome(options=options)
+    return uc.Chrome(options=options, driver_executable_path = ChromeDriverManager().install())
 
 
 def get_additional_meaning(idiom, link):
@@ -105,8 +107,8 @@ def merge(csv1, csv2):
 driver = main_driver()
 
 
-        
-'''
+'''      
+
 ### Testing Script
 
 scrape('a', 1)
@@ -117,8 +119,8 @@ for i in range(0, len(idiom_dict['a'][0])):
     print(idiom_dict['a'][0][i])
     print(idiom_dict['a'][1][i])
     print(idiom_dict['a'][2][i], "\n")
-'''
 
+'''
 
 
 '''
