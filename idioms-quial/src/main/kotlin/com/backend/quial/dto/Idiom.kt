@@ -1,5 +1,7 @@
 package com.backend.quial.dto
 
+import kotlinx.serialization.Serializable
+
 
 /**
  * This class represents the data linked to a specific idiom.
@@ -8,6 +10,7 @@ package com.backend.quial.dto
  * @param meaning generalised meanings of the idiom.
  * @param exampleSentences examples of the idiom in a sentence.
  */
+@Serializable
 data class Idiom(val info: List<String>,
                  val meaning: List<String>,
                  val exampleSentences: List<String>)

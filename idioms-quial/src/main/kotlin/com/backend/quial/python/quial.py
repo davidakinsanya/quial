@@ -89,6 +89,7 @@ def scrape(letter, page):
         idiom_dict[letter][2] += [meanings_list[1]]
     
     if curr_page != max_page:
+        return
         # add a return here for testing.
         new_page = int(curr_page) + 1
         return scrape(letter, new_page)
@@ -121,13 +122,13 @@ for i in range(0, len(idiom_dict['a'][0])):
 '''
 
 
-'''
+
 
 ### Testing Script 2
 
 field_names = ["basic-info", "meanings", "example-sentences"]
 
-with open("/usr/src/app/quial2.csv", mode="w") as csvfile:
+with open("/usr/src/app/quial.csv", mode="w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=field_names)
     writer.writeheader()   
     
@@ -139,7 +140,8 @@ with open("/usr/src/app/quial2.csv", mode="w") as csvfile:
         field_names[2]: idiom_dict["a"][2][i]
         })
         break
-'''
+        
+
 
 
 '''

@@ -25,6 +25,7 @@ class OnboardingTest {
     }
 
     private val url = "http://localhost:8082/"
+
     @Test
     fun getOnboardingMap() = runTest {
         val res = httpClient.get(url)
