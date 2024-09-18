@@ -1,7 +1,6 @@
 package com.backend.quial.dao.intrface
 
 import com.backend.quial.dto.Idiom
-import com.backend.quial.dto.IdiomList
 
 interface RetrieveIdioms {
   /**
@@ -9,7 +8,7 @@ interface RetrieveIdioms {
    *
    * @return a collection of idioms
    */
-  fun readIdioms(): IdiomList
+  fun readIdioms(): List<Idiom>
   
   /**
    * This method sorts a collection of idioms according
