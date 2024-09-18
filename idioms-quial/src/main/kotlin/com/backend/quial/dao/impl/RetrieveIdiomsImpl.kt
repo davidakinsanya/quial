@@ -2,6 +2,7 @@ package com.backend.quial.dao.impl
 
 import com.backend.quial.dao.intrface.RetrieveIdioms
 import com.backend.quial.dto.Idiom
+import com.backend.quial.dto.IdiomList
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import java.io.File
 import java.io.FileInputStream
@@ -14,8 +15,9 @@ class RetrieveIdiomsImpl: RetrieveIdioms {
    *
    * @return a collection of idioms
    */
-  override fun readIdioms(): List<Idiom> {
+  override fun readIdioms(): IdiomList {
     val listOfIdioms = mutableListOf<Idiom>()
+    val idiomList = IdiomList(listOfIdioms)
 
     val file = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/quial.csv").toAbsolutePath().toString())
     val fileInputStream = FileInputStream(file)
@@ -36,7 +38,7 @@ class RetrieveIdiomsImpl: RetrieveIdioms {
       )
     }
 
-    return listOfIdioms
+    return idiomList
   }
   
   /**
