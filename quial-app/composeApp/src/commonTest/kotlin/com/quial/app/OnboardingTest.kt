@@ -1,12 +1,9 @@
 package com.quial.app
 
-import com.quial.app.http.onboarding.dto.OnboardingMap
-import com.quial.app.http.onboarding.dto.Statement
+import com.quial.app.data.onboarding.OnboardingMap
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.test.runTest

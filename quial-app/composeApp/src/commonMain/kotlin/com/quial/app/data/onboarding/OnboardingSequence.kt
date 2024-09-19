@@ -1,4 +1,4 @@
-package com.quial.app.http.onboarding.dto
+package com.quial.app.data.onboarding
 
 import kotlinx.serialization.Serializable
 

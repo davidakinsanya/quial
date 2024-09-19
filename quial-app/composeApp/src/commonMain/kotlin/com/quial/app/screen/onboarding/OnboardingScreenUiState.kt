@@ -1,7 +1,7 @@
 package com.quial.app.screen.onboarding
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import com.quial.app.http.onboarding.dto.OnboardingMap
+import com.quial.app.data.onboarding.OnboardingMap
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 
