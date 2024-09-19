@@ -1,6 +1,6 @@
 package com.quial.app.http.requests
 
-import com.quial.app.http.onboarding.dto.OnboardingMap
+import com.quial.app.data.onboarding.OnboardingMap
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

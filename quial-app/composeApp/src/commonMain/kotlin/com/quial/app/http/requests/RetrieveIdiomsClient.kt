@@ -1,6 +1,6 @@
 package com.quial.app.http.requests
 
-import com.quial.app.http.idioms.dto.Idiom
+import com.quial.app.data.idiom.Idiom
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.call.body

@@ -1,12 +1,12 @@
 package com.quial.app.http.onboarding.dto
 
+import com.quial.app.data.onboarding.OnboardingEnums
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Statement(
-    val enum: String = OnboardingEnums.STATEMENT.name,
-    val header: String,
-    val text: String): OnboardingSequence {
+data class Question(val enum: String = OnboardingEnums.QUESTION.name,
+                    val question: String,
+                    val options: List<String>): OnboardingSequence {
 
     /**
      * This method returns a string object for the type of element in the onboarding sequence.
@@ -22,8 +22,8 @@ data class Statement(
      *
      * @return a String representing a header.
      */
-    override fun getOnboardingHeader(): String {
-        return this.header
+    override fun getOnboardingHeader(): String? {
+        return null
     }
 
     /**
@@ -31,8 +31,8 @@ data class Statement(
      *
      * @return a String representing a question.
      */
-    override fun getOnboardingQuestion(): String? {
-        return null
+    override fun getOnboardingQuestion(): String {
+        return this.question
     }
 
     /**
@@ -40,8 +40,8 @@ data class Statement(
      *
      * @return a String representing text.
      */
-    override fun getOnboardingText(): String {
-        return this.text
+    override fun getOnboardingText(): String? {
+        return null
     }
 
     /**
@@ -49,7 +49,7 @@ data class Statement(
      *
      * @return a list object representing a list of answer options.
      */
-    override fun getOnboardingOptions(): List<String>? {
-        return null
+    override fun getOnboardingOptions(): List<String> {
+        return this.options
     }
 }

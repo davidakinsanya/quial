@@ -1,4 +1,4 @@
-package com.quial.app.http.idioms.dto
+package com.quial.app.data.idiom
 
 /**
  * This class represents the data linked to a specific idiom.
