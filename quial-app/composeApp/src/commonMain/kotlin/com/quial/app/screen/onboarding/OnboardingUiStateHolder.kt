@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class OnboardingUiStateHolder: UiStateHolder() {
-    private val _uiState = MutableStateFlow(OnboardingScreenUiState(map = null, sequence = null))
+class OnboardingUiStateHolder(private val state: OnboardingScreenUiState): UiStateHolder() {
+    private val _uiState = MutableStateFlow(state)
     val uiState = _uiState.asStateFlow()
 
     fun onClickNavigateNext() = uiStateHolderScope.launch {
