@@ -22,3 +22,5 @@ class OnboardingClient(
         return body
     }
 }
+
+// TODO: Write up a repository to connect this code to the data class OnboardingScreenUiState
