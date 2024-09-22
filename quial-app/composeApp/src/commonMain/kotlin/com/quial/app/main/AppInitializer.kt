@@ -5,6 +5,7 @@ import com.mmk.kmprevenuecat.purchases.Purchases
 import com.quial.app.di.appModules
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
+import secrets.BuildConfig
 
 
 object AppInitializer {
@@ -18,6 +19,6 @@ object AppInitializer {
         }
 
         Purchases.logLevel = LogLevel.DEBUG
-        // Purchases.configure(if (isAndroid()) BuildConfig.REVENUECAT_API_KEY_ANDROID else BuildConfig.REVENUECAT_API_KEY_IOS)
+        //Purchases.configure(if (isAndroid()) BuildConfig.REVENUECAT_API_KEY_ANDROID else BuildConfig.REVENUECAT_API_KEY_IOS)
     }
 }
