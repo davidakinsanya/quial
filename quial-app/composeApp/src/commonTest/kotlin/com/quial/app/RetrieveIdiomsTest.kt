@@ -7,6 +7,7 @@ import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
+import secrets.BuildConfig
 import kotlin.test.Test
 
 class RetrieveIdiomsTest {
@@ -19,7 +20,7 @@ class RetrieveIdiomsTest {
         }
     }
 
-    private val url = "http://localhost:8081/"
+    private val url = BuildConfig.IDIOM_URL
 
     @Test
     fun retrieveIdioms() = runTest {

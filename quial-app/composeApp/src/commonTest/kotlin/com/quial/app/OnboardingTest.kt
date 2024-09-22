@@ -8,6 +8,7 @@ import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
+import secrets.BuildConfig
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -21,7 +22,7 @@ class OnboardingTest {
         }
     }
 
-    private val url = "http://localhost:8082/"
+    private val url = BuildConfig.ONBOARDING_URL
 
     @Test
     fun getOnboardingMap() = runTest {
