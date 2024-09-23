@@ -34,7 +34,7 @@ coreKtx = "1.6.1"
 composeTest = "1.7.2"
 kmpNotifier = "1.0.0"
 kmpAuth = "2.0.0"
-firebaseBom="33.1.0"
+firebaseBom="33.3.0"
 googleServices="4.4.2"
 firebaseCrashlytics = "3.0.1"
 
@@ -60,17 +60,12 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "androidx-activityCompose" }
 
 # Voyager - Navigation
-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
-navigator-screen-model = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
-navigator-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 navigator-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
-
 voyager-bottom-sheet-navigator = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyagerNavigator" }
 voyager-navigator-v110beta02 = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyagerNavigator" }
 voyager-screenmodel-v110beta02 = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyagerVersion" }
 voyager-tab-navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyagerNavigator" }
 voyager-transitions-v110beta02 = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyagerTransitions" }
-
 
 # Koin
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
