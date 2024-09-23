@@ -25,6 +25,7 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
         |  const val IDIOM_URL = "${secretProperties.getPropertyValue("IDIOM_URL")}"
         |  const val REVENUECAT_API_KEY_ANDROID = "${secretProperties.getPropertyValue("REVENUECAT_API_KEY_ANDROID")}"
         |  const val REVENUECAT_API_KEY_IOS = "${secretProperties.getPropertyValue("REVENUECAT_API_KEY_IOS")}"
+        |  const val GOOGLE_AUTH = "${secretProperties.getPropertyValue("GOOGLE_AUTH")}"
         |}
         |
       """.trimMargin()
@@ -58,14 +59,21 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-                implementation(compose.preview)
-                implementation(libs.androidx.activity.compose)
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
 
-                implementation(libs.koin.android)
-                implementation(libs.koin.androidx.compose)
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
 
-                implementation(libs.ktor.client.okhttp)
-            }
+            implementation(libs.ktor.client.okhttp)
+
+
+            //Firebase
+            api(project.dependencies.platform(libs.firebase.bom))
+            api(libs.firebase.analytics)
+            api(libs.firebase.crashlytics)
+            api(libs.firebase.messaging)
+        }
 
         commonMain {
             kotlin.srcDir(
@@ -104,6 +112,12 @@ kotlin {
 
                     implementation(libs.bundles.ktor)
                     implementation(libs.kotlinx.serialization.json)
+
+                    api(libs.kmpNotifier)
+                    implementation(libs.kmpAuth.firebase)
+                    implementation(libs.kmpAuth.uihelper)
+                    implementation(libs.kmpAuth.google)
+
                 }
             }
 
