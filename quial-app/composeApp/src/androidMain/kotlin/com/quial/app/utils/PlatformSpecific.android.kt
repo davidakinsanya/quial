@@ -5,7 +5,7 @@ import androidx.compose.runtime.State
 import kotlinx.coroutines.flow.StateFlow
 
 actual fun isAndroid(): Boolean {
-    TODO("Not yet implemented")
+    return true
 }
 
 @Composable

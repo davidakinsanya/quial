@@ -1,5 +1,7 @@
 package com.quial.app
 
+import com.mmk.kmpnotifier.notification.NotifierManager
+import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import platform.UIKit.UIDevice
 
 class IOSPlatform: Platform {
@@ -7,3 +9,12 @@ class IOSPlatform: Platform {
 }
 
 actual fun getPlatform(): Platform = IOSPlatform()
+
+actual fun onApplicationStartPlatformSpecific() {
+    NotifierManager.initialize(
+        NotificationPlatformConfiguration.Ios(
+            showPushNotification = true,
+            askNotificationPermissionOnStart = false,
+        )
+    )
+}

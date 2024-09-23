@@ -3,6 +3,8 @@ package com.quial.app.main
 import com.mmk.kmpauth.google.GoogleAuthCredentials
 import com.mmk.kmpauth.google.GoogleAuthProvider
 import com.mmk.kmpnotifier.notification.NotifierManager
+import com.mmk.kmpnotifier.notification.PayloadData
+import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import com.mmk.kmprevenuecat.purchases.LogLevel
 import com.mmk.kmprevenuecat.purchases.Purchases
 import com.quial.app.di.appModules
@@ -27,11 +29,29 @@ object AppInitializer {
     }
 
     private fun KoinApplication.onApplicationStart() {
+
         NotifierManager.addListener(object : NotifierManager.Listener {
             override fun onNewToken(token: String) {
                 println("onNewToken: $token")
             }
+
+            override fun onPushNotification(title: String?, body: String?) {
+                super.onPushNotification(title, body)
+                println("Push Notification notification type message is received: Title: $title and Body: $body")
+            }
+
+            override fun onNotificationClicked(data: PayloadData) {
+                super.onNotificationClicked(data)
+                println("Notification clicked, Notification payloadData: $data")
+            }
+
+
         })
         GoogleAuthProvider.create(GoogleAuthCredentials(serverId = BuildConfig.GOOGLE_AUTH))
+    }
+
+    private fun askPushNotification() {
+        val permissionUtil = NotifierManager.getPermissionUtil()
+        permissionUtil.askNotificationPermission()
     }
 }
