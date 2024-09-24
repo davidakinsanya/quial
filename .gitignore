@@ -1,0 +1,5 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+/quial-app/composeApp/src/androidMain/google-services.json
+/quial-app/iosApp/iosApp/GoogleService-Info.plist
