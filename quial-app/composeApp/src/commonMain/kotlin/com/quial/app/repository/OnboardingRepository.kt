@@ -8,7 +8,6 @@ class OnboardingRepository(
     private val onboardingClient: OnboardingClient
 ) {
 
-
     suspend fun getOnboardingMap(): OnboardingMap? {
         var map: OnboardingMap? = null
         runBlocking {

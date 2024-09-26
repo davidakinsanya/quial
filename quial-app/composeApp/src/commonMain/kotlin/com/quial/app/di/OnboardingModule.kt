@@ -13,7 +13,7 @@ val onboardingModule = module {
     }
 
     single<OnboardingRepository> {
-        OnboardingRepository(onboardingClient = get())
+        OnboardingRepository(get())
     }
 
     single<OnboardingScreenUiState> {
