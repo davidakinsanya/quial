@@ -4,7 +4,6 @@ import com.mmk.kmpauth.google.GoogleAuthCredentials
 import com.mmk.kmpauth.google.GoogleAuthProvider
 import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.notification.PayloadData
-import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import com.mmk.kmprevenuecat.purchases.LogLevel
 import com.mmk.kmprevenuecat.purchases.Purchases
 import com.quial.app.di.appModules

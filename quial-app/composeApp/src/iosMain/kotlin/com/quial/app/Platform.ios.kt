@@ -2,6 +2,10 @@ package com.quial.app
 
 import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.engine.darwin.Darwin
+import io.ktor.client.engine.darwin.DarwinClientEngineConfig
 import platform.UIKit.UIDevice
 
 class IOSPlatform: Platform {
@@ -17,4 +21,12 @@ actual fun onApplicationStartPlatformSpecific() {
             askNotificationPermissionOnStart = false,
         )
     )
+}
+
+actual fun getHttpClient(): HttpClientEngine {
+    return Darwin.create()
+}
+
+actual fun getHttpConfig(): HttpClientConfig<*> {
+    return HttpClientConfig<DarwinClientEngineConfig>()
 }
