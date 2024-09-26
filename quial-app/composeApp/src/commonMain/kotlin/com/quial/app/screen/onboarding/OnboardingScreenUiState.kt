@@ -17,12 +17,21 @@ data class OnboardingScreenUiState(val repository: OnboardingRepository) {
 
     private fun reorderMap(map: OnboardingMap?): List<Any> {
         val list = mutableListOf<Any>()
-        if (map != null) {
-            val maxQuestion = if (map.questionMap.isNotEmpty()) map.questionMap.keys.max() else 0
+
+        if (map.toString().isNotEmpty()) {
+            val maxQuestion = if (map!!.questionMap.isNotEmpty()) map.questionMap.keys.max() else 0
             val maxStatement = if (map.statementMap.isNotEmpty()) map.statementMap.keys.max() else 0
 
             if (maxQuestion > maxStatement) {
                 for (num in 0..maxQuestion) {
+                    if (num in map.questionMap.keys) {
+                        list.add(map.questionMap[num] as Any)
+                    } else {
+                        list.add(map.statementMap[num] as Any)
+                    }
+                }
+            }  else {
+                for (num in 0..maxStatement) {
                     if (num in map.questionMap.keys) {
                         list.add(map.questionMap[num] as Any)
                     } else {
@@ -35,5 +44,3 @@ data class OnboardingScreenUiState(val repository: OnboardingRepository) {
         return list
     }
 }
-
-// TODO: Load This UiState with data

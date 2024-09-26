@@ -24,13 +24,6 @@ class OnboardingUiStateHolder(state: OnboardingScreenUiState): UiStateHolder() {
             listOf()
         )
 
-
-    init {
-        uiStateHolderScope.launch {
-            _onboardingMap.value = uiState.value.loadData()
-        }
-    }
-
     private fun loadData() = uiStateHolderScope.launch {
         _onboardingMap.value = uiState.value.loadData()
     }

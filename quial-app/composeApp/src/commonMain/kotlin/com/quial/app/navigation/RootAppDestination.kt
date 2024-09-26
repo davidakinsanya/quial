@@ -9,7 +9,6 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.quial.app.screen.onboarding.OnboardingScreen
 import com.quial.app.screen.onboarding.OnboardingUiStateHolder
 import com.quial.app.utils.getUiStateHolder
-import org.koin.compose.koinInject
 
 interface RootAppDestination {
 
