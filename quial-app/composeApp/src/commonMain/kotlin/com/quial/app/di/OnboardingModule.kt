@@ -1,6 +1,7 @@
 package com.quial.app.di
 
 import com.quial.app.getHttpClient
+import com.quial.app.getHttpConfig
 import com.quial.app.http.createHttpClient
 import com.quial.app.http.requests.OnboardingClient
 import com.quial.app.repository.OnboardingRepository
@@ -15,6 +16,10 @@ val onboardingModule = module {
 
     single <HttpClientEngine> {
         getHttpClient()
+    }
+
+    single<HttpClientConfig<*>> {
+        getHttpConfig()
     }
 
     single<HttpClient> {
