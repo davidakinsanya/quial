@@ -130,6 +130,8 @@ kotlin {
             commonTest.dependencies {
                 @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.uiTest)
+
+                implementation(libs.koin.test.junit4)
             }
 
             nativeMain.dependencies {

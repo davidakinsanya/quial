@@ -1,8 +1,15 @@
 package com.quial.app.di
 
+import com.quial.app.getPlatform
 import org.koin.core.module.Module
+import org.koin.dsl.module
 
 
-// internal expect val platformModule: Module
+val platformModule: Module = module {
+    single {
+        getPlatform()
+    }
+}
+
 val appModules: List<Module>
-    get() = listOf(onboardingModule)
+    get() = listOf(ktorModule, onboardingModule, platformModule)

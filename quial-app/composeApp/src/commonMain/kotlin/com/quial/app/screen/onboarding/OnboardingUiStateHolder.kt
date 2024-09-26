@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class OnboardingUiStateHolder(private val state: OnboardingScreenUiState): UiStateHolder() {
+class OnboardingUiStateHolder(state: OnboardingScreenUiState): UiStateHolder() {
     private val _uiState = MutableStateFlow(state)
     private val uiState = _uiState.asStateFlow()
 

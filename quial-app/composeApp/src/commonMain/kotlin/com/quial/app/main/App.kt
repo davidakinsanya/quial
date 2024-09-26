@@ -10,6 +10,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.quial.app.navigation.RootAppDestination
+import com.quial.app.navigation.RootAppNavigation
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import quial_app.composeapp.generated.resources.Res
@@ -20,6 +22,9 @@ import quial_app.composeapp.generated.resources.compose_multiplatform
 fun App() {
 
     MaterialTheme {
+        RootAppNavigation(true)
+    }
+        /**
         var showContent by remember { mutableStateOf(false) }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = { showContent = !showContent }) {
@@ -36,5 +41,15 @@ fun App() {
                 }
             }
         }
-    }
+    } **/
+
+
+
+}
+
+@Composable
+fun RootAppNavigation(isOnBoardShown: Boolean) {
+    val bool = isOnBoardShown
+    val startDestination = RootAppDestination.Onboarding
+    RootAppNavigation(startDestination = startDestination)
 }
