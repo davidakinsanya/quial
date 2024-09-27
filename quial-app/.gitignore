@@ -16,5 +16,5 @@ captures
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
-/quial-app/composeApp/src/androidMain/google-services.json
+/quial-app/composeApp/google-services.json
 /quial-app/iosApp/iosApp/GoogleService-Info.plist

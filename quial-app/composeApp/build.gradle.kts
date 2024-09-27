@@ -10,6 +10,8 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 val buildConfigGenerator by tasks.registering(Sync::class) {
@@ -117,7 +119,6 @@ kotlin {
                     implementation(libs.kmpAuth.firebase)
                     implementation(libs.kmpAuth.uihelper)
                     implementation(libs.kmpAuth.google)
-
                 }
             }
 
@@ -130,8 +131,7 @@ kotlin {
             commonTest.dependencies {
                 @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.uiTest)
-
-                implementation(libs.koin.test.junit4)
+                // implementation(libs.koin.test.junit4)
             }
 
             nativeMain.dependencies {
