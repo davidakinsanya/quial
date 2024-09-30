@@ -9,6 +9,7 @@ compose-plugin = "1.6.11"
 googleServicesVersion = "4.4.2"
 kotlin = "2.0.0"
 kotlinxSerializationJson = "1.7.2"
+landscapistGlide = "2.4.0"
 voyager = "1.0.0"
 koin = "3.5.6"
 koinComposeMultiplatform = "1.2.0-Beta4"
@@ -40,6 +41,8 @@ androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
 # Voyager - Navigation
+landscapist-coil3 = { module = "com.github.skydoves:landscapist-coil3", version.ref = "landscapistGlide" }
+landscapist-glide = { module = "com.github.skydoves:landscapist-glide", version.ref = "landscapistGlide" }
 navigator-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 voyager-bottom-sheet-navigator = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyagerNavigator" }
 voyager-navigator-v110beta02 = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyagerNavigator" }

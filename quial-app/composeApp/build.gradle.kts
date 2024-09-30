@@ -119,6 +119,8 @@ kotlin {
                     implementation(libs.kmpAuth.firebase)
                     implementation(libs.kmpAuth.uihelper)
                     implementation(libs.kmpAuth.google)
+
+                    implementation(libs.landscapist.coil3)
                 }
             }
 
