@@ -13,7 +13,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
 
     MaterialTheme {
-        // RootAppNavigation(true)
+        RootAppNavigation(true)
         // AuthUiHelperButtonsAndFirebaseAuth(modifier = Modifier, onFirebaseResult = {})
     }
 

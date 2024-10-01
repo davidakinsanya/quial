@@ -4,6 +4,8 @@ import com.quial.app.data.onboarding.OnboardingMap
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
+import kotlinx.serialization.json.Json
 import secrets.BuildConfig
 
 class OnboardingClient(
@@ -11,15 +13,11 @@ class OnboardingClient(
 ) {
 
     suspend fun getOnboardingSequence(): OnboardingMap? {
-        val response = httpClient.get(urlString = BuildConfig.ONBOARDING_URL)
-
-        val body: OnboardingMap? = when (response.status.value) {
-            in 200..299 -> {
-                response.body<OnboardingMap>()
-            }
-
-            else -> null
+        val response = httpClient.get(urlString = BuildConfig.ONBOARDING_URL).bodyAsText()
+        val serializer = Json {
+            ignoreUnknownKeys = true
+            isLenient = false
         }
-        return body
+        return serializer.decodeFromString(response)
     }
 }

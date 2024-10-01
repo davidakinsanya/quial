@@ -1,5 +1,5 @@
 [versions]
-agp = "8.2.2"
+agp = "8.5.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
@@ -7,7 +7,8 @@ androidx-activityCompose = "1.9.2"
 androidx-lifecycle = "2.8.0"
 compose-plugin = "1.6.11"
 googleServicesVersion = "4.4.2"
-kotlin = "2.0.0"
+gradle = "4.0.2"
+kotlin = "2.0.20"
 kotlinxSerializationJson = "1.7.2"
 landscapistGlide = "2.4.0"
 voyager = "1.0.0"
@@ -42,8 +43,6 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 
 # Voyager - Navigation
 landscapist-coil3 = { module = "com.github.skydoves:landscapist-coil3", version.ref = "landscapistGlide" }
-landscapist-glide = { module = "com.github.skydoves:landscapist-glide", version.ref = "landscapistGlide" }
-navigator-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 voyager-bottom-sheet-navigator = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyagerNavigator" }
 voyager-navigator-v110beta02 = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyagerNavigator" }
 voyager-screenmodel-v110beta02 = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyagerVersion" }

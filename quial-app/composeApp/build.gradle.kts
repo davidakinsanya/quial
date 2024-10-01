@@ -69,7 +69,6 @@ kotlin {
 
             implementation(libs.ktor.client.okhttp)
 
-
             //Firebase
             api(project.dependencies.platform(libs.firebase.bom))
             api(libs.firebase.analytics)
@@ -170,7 +169,9 @@ kotlin {
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_11
             targetCompatibility = JavaVersion.VERSION_11
+            isCoreLibraryDesugaringEnabled = false
         }
+
         buildFeatures {
             compose = true
         }
