@@ -93,9 +93,9 @@ fun WormIndicator(
             repeat(pagerState.pageCount) {
                 Box(
                     modifier = Modifier
-                        .size(if (pagerState.pageCount == 1) 20.dp else 10.dp)
+                        .size(10.dp)
                         .background(
-                            color = Color.Black,
+                            color = Color.White,
                             shape = CircleShape
                         )
                 )
