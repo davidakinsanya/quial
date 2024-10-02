@@ -6,7 +6,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.quial.app.screen.onboarding.OnboardingScreen
+import com.quial.app.screen.onboarding.comps.OnboardingScreen
 import com.quial.app.screen.onboarding.OnboardingUiStateHolder
 import com.quial.app.utils.getUiStateHolder
 
