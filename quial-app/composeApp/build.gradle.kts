@@ -28,6 +28,8 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
         |  const val REVENUECAT_API_KEY_ANDROID = "${secretProperties.getPropertyValue("REVENUECAT_API_KEY_ANDROID")}"
         |  const val REVENUECAT_API_KEY_IOS = "${secretProperties.getPropertyValue("REVENUECAT_API_KEY_IOS")}"
         |  const val GOOGLE_AUTH = "${secretProperties.getPropertyValue("GOOGLE_AUTH")}"
+        |  const val QUIAL_LOGO = "${secretProperties.getPropertyValue("QUIAL_LOGO")}"
+        |  const val SIGN_IN_GRAPHIC = "${secretProperties.getPropertyValue("SIGN_IN_GRAPHIC")}"
         |}
         |
       """.trimMargin()

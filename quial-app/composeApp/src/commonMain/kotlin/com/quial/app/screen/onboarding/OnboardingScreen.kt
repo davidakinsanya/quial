@@ -6,7 +6,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.Button
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -36,14 +35,23 @@ fun OnboardingScreen(
     onNavigateMain: () -> Unit
 ) {
     Scaffold(modifier = modifier
-        .fillMaxSize()
+        .fillMaxSize(),
+        backgroundColor = Color(125, 184, 107)
     ) {
         val map by uiStateHolder.onboardingMap.collectAsState()
         val pagerState = rememberPagerState(pageCount = { map.size })
+
+        Column(modifier = modifier
+            .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            QuialLogo(modifier)
+        }
+
             Column(
                 modifier = modifier
                     .fillMaxSize()
-                    .padding(top = 70.dp, bottom = 80.dp, start = 25.dp, end = 25.dp),
+                    .padding(top = 100.dp, bottom = 80.dp, start = 25.dp, end = 25.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -54,7 +62,9 @@ fun OnboardingScreen(
 
                     Box(
                         modifier = modifier
-                            .border(border = BorderStroke(1.dp, Color.Black))
+                            .border(border = BorderStroke(3.dp, Color.Black),
+                                    shape = RoundedCornerShape(15.dp)
+                            )
                             .fillMaxWidth()
                             .fillMaxHeight(0.9f),
                         contentAlignment = Alignment.Center
@@ -84,21 +94,21 @@ fun OnboardingScreen(
                     }
                 }
 
-                if (uiStateHolder.onboardingMap.collectAsState().value.isNotEmpty()) {
-                    Spacer(modifier = modifier.padding(top = 40.dp))
-                    OnboardingNavigationButtons()
-                }
+                Spacer(modifier.padding(10.dp))
 
+                if (pagerState.currentPage != pagerState.pageCount - 1
+                    && uiStateHolder.onboardingMap.collectAsState().value.isNotEmpty())
+                    WormIndicator(pagerState = pagerState)
+
+                Box(modifier = modifier
+                    .fillMaxSize()
+                    .padding(top = 15.dp),
+                    contentAlignment = Alignment.Center
+                    ) {
+                    if (uiStateHolder.onboardingMap.collectAsState().value.isNotEmpty()) {
+                        OnboardingNavigationButtons(pagerState)
+                    }
+                }
             }
         }
     }
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun OnboardingNavigationButtons() {
-    Row() {
-        Button(onClick = {  }) {
-            Text(text = "Continue")
-        }
-    }
-}

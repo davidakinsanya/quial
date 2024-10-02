@@ -1,4 +1,4 @@
-package com.quial.app.auth
+package com.quial.app.screen.auth
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
@@ -23,6 +22,7 @@ import com.mmk.kmpauth.uihelper.google.GoogleSignInButtonIconOnly
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
 import dev.gitlive.firebase.auth.FirebaseUser
+import secrets.BuildConfig
 
 @Composable
 fun AuthUiHelperButtonsAndFirebaseAuth(
@@ -32,7 +32,8 @@ fun AuthUiHelperButtonsAndFirebaseAuth(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        backgroundColor = Color(125, 184, 107)) {
+        backgroundColor = Color(125, 184, 107)
+    ) {
 
         Column(modifier = modifier,
                verticalArrangement = Arrangement.spacedBy(150.dp),
@@ -40,7 +41,7 @@ fun AuthUiHelperButtonsAndFirebaseAuth(
 
             CoilImage(
                 modifier = modifier.fillMaxWidth(),
-                imageModel = {"https://i.imgur.com/UcfkuY0.png" }, // loading a network image or local resource using an URL.
+                imageModel = { BuildConfig.QUIAL_LOGO }, // loading a network image or local resource using an URL.
                 imageOptions = ImageOptions(
                     contentScale = ContentScale.Crop,
                     alignment = Alignment.Center
@@ -75,7 +76,7 @@ fun AuthUiHelperButtonsAndFirebaseAuth(
 
                 CoilImage(
                     modifier = modifier.size(150.dp),
-                    imageModel = { "https://i.imgur.com/H6UuMVI.png" }, // loading a network image or local resource using an URL.
+                    imageModel = { BuildConfig.SIGN_IN_GRAPHIC }, // loading a network image or local resource using an URL.
                     imageOptions = ImageOptions(
                         contentScale = ContentScale.Crop,
                         alignment = Alignment.Center
