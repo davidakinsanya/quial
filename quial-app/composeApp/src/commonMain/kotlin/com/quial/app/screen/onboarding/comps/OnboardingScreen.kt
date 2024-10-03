@@ -77,7 +77,7 @@ fun OnboardingScreen(
 
                     if (uiStateHolder.questionObjectCheck(map[index])) {
                         val question = map[index] as Question
-                        QuestionComposable(modifier, question)
+                        QuestionComposable(modifier, question, uiStateHolder)
                     } else {
                         val statement = map[index] as Statement
                         StatementComposable(modifier, statement)

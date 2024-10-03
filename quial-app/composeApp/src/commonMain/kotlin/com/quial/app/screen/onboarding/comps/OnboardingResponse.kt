@@ -1,4 +1,6 @@
 package com.quial.app.screen.onboarding.comps
 
-data class OnboardingResponse(val question: String,
-                              val answer: String)
+import com.quial.app.data.onboarding.Question
+
+data class OnboardingResponse(val question: Question,
+                              val answerIndex: Int)
