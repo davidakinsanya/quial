@@ -188,6 +188,7 @@ kotlin {
     }
 
     dependencies {
+        implementation(libs.androidx.ui.android)
         ksp(libs.room.compiler)
     }
 

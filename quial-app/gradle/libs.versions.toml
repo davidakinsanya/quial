@@ -32,6 +32,7 @@ kmpAuth = "2.0.0"
 firebaseBom="33.3.0"
 googleServices="4.4.2"
 firebaseCrashlytics = "3.0.2"
+uiAndroid = "1.7.3"
 
 
 [libraries]
@@ -98,6 +99,7 @@ assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assert
 compose-ui-test-junit4-android = { module = "androidx.compose.ui:ui-test-junit4-android", version.ref = "composeTest" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "composeTest" }
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtx" }
+androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
 
 
 [plugins]
