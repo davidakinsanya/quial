@@ -15,10 +15,10 @@ voyager = "1.0.0"
 koin = "3.5.6"
 koinComposeMultiplatform = "1.2.0-Beta4"
 coroutines = "1.8.0"
+sqldelight = "2.0.2"
+coroutinesExtensions = "2.0.2"
 stately = "2.0.5"
 kmpRevenueCat="1.0.0"
-room = "2.7.0-alpha07"
-ksp = "2.0.20-1.0.24"
 sqlite = "2.5.0-SNAPSHOT"
 ktor = "2.3.12"
 voyagerNavigator = "1.1.0-beta02"
@@ -58,17 +58,18 @@ koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinComp
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koinComposeMultiplatform" }
 
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
-stately-common = { module = "co.touchlab:stately-common", version.ref = "stately" }
 
 # KMPRevenuecat - Subscription lib
 kmprevenuecat-purchases = { group = "io.github.mirzemehdi", name = "kmprevenuecat-purchases", version.ref = "kmpRevenueCat" }
 kmprevenuecat-purchases-ui = { group = "io.github.mirzemehdi", name = "kmprevenuecat-purchases-ui", version.ref = "kmpRevenueCat" }
 
-# Room Database
-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-room-runtime-android = { module = "androidx.room:room-runtime-android", version.ref = "room" }
-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+
+# SQLDelight
+android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "coroutinesExtensions" }
+stately-common = { module = "co.touchlab:stately-common", version.ref = "stately" } # (needed by SQLDeligt)
 
 # Ktor Client
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -112,8 +113,6 @@ jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-room = { id = "androidx.room", version.ref = "room" }
 
 
 [bundles]

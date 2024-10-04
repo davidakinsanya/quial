@@ -7,8 +7,6 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.room)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
@@ -76,6 +74,8 @@ kotlin {
             api(libs.firebase.analytics)
             api(libs.firebase.crashlytics)
             api(libs.firebase.messaging)
+
+            // SQLDelight
         }
 
         commonMain {
@@ -105,9 +105,6 @@ kotlin {
 
                     implementation(libs.kmprevenuecat.purchases)
                     implementation(libs.kmprevenuecat.purchases.ui)
-
-                    implementation(libs.room.runtime)
-                    implementation(libs.sqlite.bundled)
 
                     api(libs.koin.core)
                     api(libs.koin.compose)
@@ -139,6 +136,7 @@ kotlin {
 
             nativeMain.dependencies {
                 implementation(libs.ktor.client.darwin)
+                implementation(libs.sqldelight.native.driver)
             }
         }
     }
@@ -182,14 +180,8 @@ kotlin {
         }
     }
 
-
-    room {
-        schemaDirectory("$projectDir/schemas")
-    }
-
     dependencies {
         implementation(libs.androidx.ui.android)
-        ksp(libs.room.compiler)
     }
 
 
