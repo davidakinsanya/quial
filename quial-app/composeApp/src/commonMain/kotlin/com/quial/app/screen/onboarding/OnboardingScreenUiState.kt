@@ -10,7 +10,9 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
     ExperimentalFoundationApi::class,
     ExperimentalResourceApi::class
 )
-data class OnboardingScreenUiState(val repository: OnboardingRepository) {
+data class OnboardingScreenUiState(
+    val repository: OnboardingRepository
+) {
     suspend fun loadData(): List<Any> {
         return reorderMap(map = repository.getOnboardingMap())
     }

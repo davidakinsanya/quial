@@ -39,7 +39,7 @@ fun OnboardingNavigationButtons(state: PagerState,
     Row {
         if (state.currentPage == state.pageCount - 1)
             Button(onClick = { navigate.invoke() },
-                shape = RoundedCornerShape(15.dp),
+                shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.outlinedButtonColors(Color.White)
                    ) {
                 Text(text = "Continue",
