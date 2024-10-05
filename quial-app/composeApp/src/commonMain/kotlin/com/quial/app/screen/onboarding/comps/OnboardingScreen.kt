@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,8 +22,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.data.onboarding.Question
 import com.quial.app.data.onboarding.Statement
+import com.quial.app.images.QuialImage
 import com.quial.app.screen.onboarding.OnboardingUiStateHolder
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -30,6 +33,7 @@ import com.quial.app.screen.onboarding.OnboardingUiStateHolder
 fun OnboardingScreen(
     modifier: Modifier = Modifier,
     uiStateHolder: OnboardingUiStateHolder,
+    dataStateHolder: DataStoreStateHolder,
     onNavigateMain: () -> Unit
 ) {
     Scaffold(modifier = modifier
@@ -44,7 +48,7 @@ fun OnboardingScreen(
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            QuialLogo(modifier)
+            QuialImage(modifier.size(130.dp))
         }
 
         Column(
@@ -98,7 +102,12 @@ fun OnboardingScreen(
                 contentAlignment = Alignment.Center
             ) {
                 if (uiStateHolder.onboardingMap.collectAsState().value.isNotEmpty()) {
-                    OnboardingNavigationButtons(pagerState, onNavigateMain)
+                    OnboardingNavigationButtons(
+                        state = pagerState,
+                        navigate = onNavigateMain,
+                        dataStateHolder = dataStateHolder,
+                        uiStateHolder = uiStateHolder
+                    )
                 }
             }
         }

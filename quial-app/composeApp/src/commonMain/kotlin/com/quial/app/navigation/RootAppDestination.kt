@@ -6,6 +6,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.screen.onboarding.comps.OnboardingScreen
 import com.quial.app.screen.onboarding.OnboardingUiStateHolder
 import com.quial.app.utils.getUiStateHolder
@@ -17,10 +18,10 @@ interface RootAppDestination {
         @Composable
         override fun Content() {
             val navigator = LocalNavigator.currentOrThrow
-            val onBoardingUiStateHolder = getUiStateHolder<OnboardingUiStateHolder>()
             OnboardingScreen(
                 modifier = Modifier,
-                uiStateHolder = onBoardingUiStateHolder,
+                uiStateHolder = getUiStateHolder<OnboardingUiStateHolder>(),
+                dataStateHolder = getUiStateHolder<DataStoreStateHolder>(),
                 onNavigateMain = {}
             )
         }

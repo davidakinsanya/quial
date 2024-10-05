@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.PagerState
@@ -13,7 +12,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,42 +20,22 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.coil3.CoilImage
+import com.quial.app.data.datastore.DataStoreStateHolder
+import com.quial.app.screen.onboarding.OnboardingUiStateHolder
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
 import quial_app.composeapp.generated.resources.Res
-import secrets.BuildConfig
-
-
-@Composable
-fun QuialLogo(modifier: Modifier) {
-    CoilImage(
-        modifier = modifier.size(130.dp),
-        imageModel = { BuildConfig.QUIAL_LOGO }, // loading a network image or local resource using an URL.
-        imageOptions = ImageOptions(
-            contentScale = ContentScale.Crop,
-            alignment = Alignment.Center
-        ),
-        loading = {
-            Box(
-                modifier = modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(modifier = modifier.size(2.dp))
-            }
-        }
-    )
-}
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnboardingNavigationButtons(state: PagerState, navigate: () -> Unit) {
+fun OnboardingNavigationButtons(state: PagerState,
+                                navigate: () -> Unit,
+                                uiStateHolder: OnboardingUiStateHolder,
+                                dataStateHolder: DataStoreStateHolder) {
     Row {
         if (state.currentPage == state.pageCount - 1)
             Button(onClick = { navigate.invoke() },

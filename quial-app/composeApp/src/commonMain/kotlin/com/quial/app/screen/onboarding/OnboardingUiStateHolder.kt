@@ -74,6 +74,4 @@ class OnboardingUiStateHolder(state: OnboardingScreenUiState): UiStateHolder() {
          if (responseRemoved != null) this.onboardingResponse.value.remove(responseRemoved!!)
          this.onboardingResponse.value.add(OnboardingResponse(question, indexChecked))
      }
-
-
 }

@@ -10,7 +10,6 @@ googleServicesVersion = "4.4.2"
 gradle = "4.0.2"
 kotlin = "2.0.20"
 kotlinxSerializationJson = "1.7.2"
-landscapistGlide = "2.4.0"
 voyager = "1.0.0"
 koin = "3.5.6"
 koinComposeMultiplatform = "1.2.0-Beta4"
@@ -29,6 +28,8 @@ firebaseBom="33.3.0"
 googleServices="4.4.2"
 firebaseCrashlytics = "3.0.2"
 uiAndroid = "1.7.3"
+datastore = "1.1.1"
+datastoreCoreJvm = "1.1.1"
 
 
 [libraries]
@@ -39,7 +40,6 @@ androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
 # Voyager - Navigation
-landscapist-coil3 = { module = "com.github.skydoves:landscapist-coil3", version.ref = "landscapistGlide" }
 voyager-bottom-sheet-navigator = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyagerNavigator" }
 voyager-navigator-v110beta02 = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyagerNavigator" }
 voyager-screenmodel-v110beta02 = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyagerVersion" }
@@ -89,6 +89,10 @@ compose-ui-test-junit4-android = { module = "androidx.compose.ui:ui-test-junit4-
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "composeTest" }
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtx" }
 androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
+
+# DataStore
+datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
 
 [plugins]

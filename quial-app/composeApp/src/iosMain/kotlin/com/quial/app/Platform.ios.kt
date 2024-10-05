@@ -1,5 +1,13 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package com.quial.app
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import kotlinx.cinterop.ExperimentalForeignApi
+import platform.Foundation.NSDocumentDirectory
+import platform.Foundation.NSFileManager
+import platform.Foundation.NSUserDomainMask
 import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import io.ktor.client.HttpClientConfig
@@ -29,4 +37,17 @@ actual fun getHttpClient(): HttpClientEngine {
 
 actual fun getHttpConfig(): HttpClientConfig<*> {
     return HttpClientConfig<DarwinClientEngineConfig>()
+}
+
+fun createDataStore(): DataStore<Preferences> {
+    return createDataStore {
+        val directory = NSFileManager.defaultManager.URLForDirectory(
+            directory = NSDocumentDirectory,
+            inDomain = NSUserDomainMask,
+            appropriateForURL = null,
+            create = false,
+            error = null
+        )
+        requireNotNull(directory).path + "/$DATA_STORE_FILE_NAME"
+    }
 }

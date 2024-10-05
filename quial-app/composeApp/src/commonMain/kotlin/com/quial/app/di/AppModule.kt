@@ -12,4 +12,4 @@ val platformModule: Module = module {
 }
 
 val appModules: List<Module>
-    get() = listOf(ktorModule, onboardingModule, platformModule)
+    get() = listOf(ktorModule, dataStoreModule, onboardingModule, platformModule)

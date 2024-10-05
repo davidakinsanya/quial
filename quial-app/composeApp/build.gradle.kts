@@ -117,7 +117,9 @@ kotlin {
                     implementation(libs.kmpAuth.uihelper)
                     implementation(libs.kmpAuth.google)
 
-                    implementation(libs.landscapist.coil3)
+                    api(libs.datastore.preferences)
+                    api(libs.datastore)
+
                 }
             }
 
@@ -179,7 +181,7 @@ kotlin {
     }
 
     dependencies {
-        implementation(libs.androidx.ui.android)
+
     }
 
 
