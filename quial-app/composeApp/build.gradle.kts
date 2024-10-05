@@ -95,7 +95,6 @@ kotlin {
                     implementation(libs.androidx.lifecycle.runtime.compose)
 
                     implementation(libs.kotlin.coroutines)
-                    implementation(libs.stately.common)
 
                     implementation(libs.voyager.navigator.v110beta02)
                     implementation(libs.voyager.screenmodel.v110beta02)
@@ -136,7 +135,6 @@ kotlin {
 
             nativeMain.dependencies {
                 implementation(libs.ktor.client.darwin)
-                implementation(libs.sqldelight.native.driver)
             }
         }
     }
