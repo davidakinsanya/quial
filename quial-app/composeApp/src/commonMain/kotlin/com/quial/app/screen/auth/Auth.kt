@@ -13,7 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mmk.kmpauth.firebase.apple.AppleButtonUiContainer
-import com.mmk.kmpauth.firebase.google.GoogleButtonUiContainerFirebase
+import com.mmk.kmpauth.google.GoogleButtonUiContainer
+import com.mmk.kmpauth.google.GoogleUser
 import com.mmk.kmpauth.uihelper.apple.AppleSignInButtonIconOnly
 import com.mmk.kmpauth.uihelper.google.GoogleSignInButtonIconOnly
 import com.quial.app.images.QuialImage
@@ -24,6 +25,7 @@ import dev.gitlive.firebase.auth.FirebaseUser
 fun AuthUiHelperButtonsAndFirebaseAuth(
     modifier: Modifier = Modifier,
     onFirebaseResult: (Result<FirebaseUser?>) -> Unit,
+    onGoogleSignInResult: (GoogleUser?) -> Unit,
 ) {
 
     Scaffold(
@@ -45,7 +47,7 @@ fun AuthUiHelperButtonsAndFirebaseAuth(
             ) {
 
                 //Google Sign-In Button and authentication with Firebase
-                GoogleButtonUiContainerFirebase(onResult = onFirebaseResult) {
+                GoogleButtonUiContainer(onGoogleSignInResult = onGoogleSignInResult) {
                     GoogleSignInButtonIconOnly(
                         modifier = modifier.size(75.dp),
                         onClick = { this.onClick() },

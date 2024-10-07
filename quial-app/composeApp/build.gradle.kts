@@ -28,6 +28,7 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
         |  const val GOOGLE_AUTH = "${secretProperties.getPropertyValue("GOOGLE_AUTH")}"
         |  const val QUIAL_LOGO = "${secretProperties.getPropertyValue("QUIAL_LOGO")}"
         |  const val SIGN_IN_GRAPHIC = "${secretProperties.getPropertyValue("SIGN_IN_GRAPHIC")}"
+        |  const val TOKEN_URL = "${secretProperties.getPropertyValue("TOKEN_URL")}"
         |}
         |
       """.trimMargin()

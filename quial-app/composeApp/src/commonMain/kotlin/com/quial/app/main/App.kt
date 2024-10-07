@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import com.quial.app.navigation.RootAppDestination
 import com.quial.app.navigation.RootAppNavigation
 import com.quial.app.screen.auth.AuthUiHelperButtonsAndFirebaseAuth
-import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -14,13 +13,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
 
     MaterialTheme {
-        // RootAppNavigation(true)
-        AuthUiHelperButtonsAndFirebaseAuth(modifier = Modifier, onFirebaseResult = {
-           googleUser ->
-            runBlocking {
-                val idToken = googleUser.getOrNull()?.getIdToken(false)
-            }
-        })
+        RootAppNavigation(true)
+        /*
+        AuthUiHelperButtonsAndFirebaseAuth(modifier = Modifier,
+            onGoogleSignInResult = { googleUser -> println(googleUser?.idToken) },
+            onFirebaseResult = {})
+
+         */
     }
 }
 

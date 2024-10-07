@@ -9,11 +9,13 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.mmk.kmprevenuecat.purchases.data.CustomerInfo
 import com.mmk.kmprevenuecat.purchases.ui.PaywallListener
 import com.quial.app.data.datastore.DataStoreStateHolder
+import com.quial.app.http.requests.TokenClient
 import com.quial.app.paywall.SubscriptionPaywall
 import com.quial.app.screen.auth.AuthUiHelperButtonsAndFirebaseAuth
 import com.quial.app.screen.onboarding.comps.OnboardingScreen
 import com.quial.app.screen.onboarding.OnboardingUiStateHolder
 import com.quial.app.utils.getUiStateHolder
+import org.koin.compose.koinInject
 
 interface RootAppDestination {
 
@@ -22,6 +24,7 @@ interface RootAppDestination {
         @Composable
         override fun Content() {
             val navigator = LocalNavigator.currentOrThrow
+
             OnboardingScreen(
                 modifier = Modifier,
                 uiStateHolder = getUiStateHolder<OnboardingUiStateHolder>(),
@@ -35,8 +38,12 @@ interface RootAppDestination {
 
         @Composable
         override fun Content() {
+            val tokenClient = koinInject<TokenClient>()
+            val navigator = LocalNavigator.currentOrThrow
+
             AuthUiHelperButtonsAndFirebaseAuth(
                 modifier = Modifier,
+                onGoogleSignInResult = {},
                 onFirebaseResult = {}
             )
         }
@@ -75,8 +82,6 @@ interface RootAppDestination {
             )
         }
     }
-
-
 
 }
 
