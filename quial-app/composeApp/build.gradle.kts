@@ -180,10 +180,6 @@ kotlin {
         }
     }
 
-    dependencies {
-
-    }
-
 
 /**
  * Property File name example secrets.properties
