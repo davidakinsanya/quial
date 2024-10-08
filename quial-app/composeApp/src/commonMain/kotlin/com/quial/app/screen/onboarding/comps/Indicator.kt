@@ -38,7 +38,9 @@ fun OnboardingNavigationButtons(state: PagerState,
                                 dataStateHolder: DataStoreStateHolder) {
     Row {
         if (state.currentPage == state.pageCount - 1)
-            Button(onClick = { navigate.invoke() },
+            Button(onClick = {
+                dataStateHolder.saveOnboardingResponse(uiStateHolder.getOnboardingResponse())
+                navigate.invoke() },
                 shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.outlinedButtonColors(Color.White)
                    ) {

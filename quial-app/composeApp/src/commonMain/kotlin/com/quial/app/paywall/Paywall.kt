@@ -18,18 +18,18 @@ fun SubscriptionPaywall(onDismiss: () -> Unit, listener: PaywallListener? = null
             properties = DialogProperties(usePlatformDefaultWidth = false),
             onDismissRequest = onDismiss
         ) {
-            Surface(modifier = Modifier.fillMaxSize(0.85f)) {
+            Surface(modifier = Modifier.fillMaxSize(0.9f)) {
                 Paywall(
-                    shouldDisplayDismissButton = false,
+                    shouldDisplayDismissButton = true,
                     onDismiss = onDismiss,
                     listener = listener
                 )
             }
         }
     } else {
-        Surface(modifier = Modifier.fillMaxSize(0.85f)) {
+        Surface(modifier = Modifier.fillMaxSize(0.9f)) {
             Paywall(
-                shouldDisplayDismissButton = false,
+                shouldDisplayDismissButton = true,
                 onDismiss = onDismiss,
                 listener = listener
             )

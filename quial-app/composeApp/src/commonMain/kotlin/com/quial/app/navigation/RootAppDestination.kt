@@ -5,7 +5,6 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import com.mmk.kmprevenuecat.purchases.data.CustomerInfo
 import com.mmk.kmprevenuecat.purchases.ui.PaywallListener
 import com.quial.app.data.datastore.DataStoreStateHolder
@@ -23,13 +22,13 @@ interface RootAppDestination {
 
         @Composable
         override fun Content() {
-            val navigator = LocalNavigator.currentOrThrow
+            val navigator = LocalNavigator.current
 
             OnboardingScreen(
                 modifier = Modifier,
                 uiStateHolder = getUiStateHolder<OnboardingUiStateHolder>(),
                 dataStateHolder = getUiStateHolder<DataStoreStateHolder>(),
-                onNavigateMain = {}
+                onNavigateMain = { navigator?.push(Paywall) }
             )
         }
     }
@@ -39,11 +38,14 @@ interface RootAppDestination {
         @Composable
         override fun Content() {
             val tokenClient = koinInject<TokenClient>()
-            val navigator = LocalNavigator.currentOrThrow
+            val navigator = LocalNavigator.current
 
             AuthUiHelperButtonsAndFirebaseAuth(
                 modifier = Modifier,
-                onGoogleSignInResult = {},
+                onGoogleSignInResult = { /* googleUser ->
+                    if (googleUser?.idToken?.let { tokenClient.verifyToken(it) } == true)
+                        navigator?.push(Feed) */
+                },
                 onFirebaseResult = {}
             )
         }
@@ -53,14 +55,15 @@ interface RootAppDestination {
 
         @Composable
         override fun Content() {
-            val navigator = LocalNavigator.currentOrThrow
+            val navigator = LocalNavigator.current
 
             SubscriptionPaywall(
-                onDismiss = {}, // uiStateHolder::onDismissSubscriptionPlansView,
+                onDismiss = { navigator?.push(Auth) }, // uiStateHolder::onDismissSubscriptionPlansView,
                 listener = object: PaywallListener {
                     override fun onPurchaseCompleted(customerInfo: CustomerInfo?) {
                         super.onPurchaseCompleted(customerInfo)
                         // uiStateHolder.onSubscriptionPurchaseCompleted()
+                        navigator?.push(Auth)
                     }
 
                     override fun onPurchaseError(error: String?) {
@@ -72,6 +75,7 @@ interface RootAppDestination {
                     override fun onRestoreCompleted(customerInfo: CustomerInfo?) {
                         super.onRestoreCompleted(customerInfo)
                         // uiStateHolder.onSubscriptionPurchaseCompleted()
+                        navigator?.push(Auth)
                     }
 
                     override fun onRestoreError(error: String?) {
@@ -81,6 +85,11 @@ interface RootAppDestination {
                 }
             )
         }
+    }
+
+    object Feed : Screen, RootAppDestination {
+        @Composable
+        override fun Content() {}
     }
 
 }
