@@ -16,6 +16,6 @@ class TokenClient (
                 .bodyAsText()
 
         }
-        return response.contains("error")
+        return !response.contains("error")
     }
 }

@@ -11,6 +11,8 @@ import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.http.requests.TokenClient
 import com.quial.app.paywall.SubscriptionPaywall
 import com.quial.app.screen.auth.AuthUiHelperButtonsAndFirebaseAuth
+import com.quial.app.screen.feed.FeedUiStateHolder
+import com.quial.app.screen.feed.comps.FeedScreen
 import com.quial.app.screen.onboarding.comps.OnboardingScreen
 import com.quial.app.screen.onboarding.OnboardingUiStateHolder
 import com.quial.app.utils.getUiStateHolder
@@ -42,9 +44,9 @@ interface RootAppDestination {
 
             AuthUiHelperButtonsAndFirebaseAuth(
                 modifier = Modifier,
-                onGoogleSignInResult = { /* googleUser ->
+                onGoogleSignInResult = { googleUser ->
                     if (googleUser?.idToken?.let { tokenClient.verifyToken(it) } == true)
-                        navigator?.push(Feed) */
+                        navigator?.push(Feed)
                 },
                 onFirebaseResult = {}
             )
@@ -58,29 +60,25 @@ interface RootAppDestination {
             val navigator = LocalNavigator.current
 
             SubscriptionPaywall(
-                onDismiss = { navigator?.push(Auth) }, // uiStateHolder::onDismissSubscriptionPlansView,
+                onDismiss = { navigator?.push(Auth) },
                 listener = object: PaywallListener {
                     override fun onPurchaseCompleted(customerInfo: CustomerInfo?) {
                         super.onPurchaseCompleted(customerInfo)
-                        // uiStateHolder.onSubscriptionPurchaseCompleted()
                         navigator?.push(Auth)
                     }
 
                     override fun onPurchaseError(error: String?) {
                         super.onPurchaseError(error)
-                        // uiStateHolder.onSubscriptionPurchaseError(error)
                     }
 
 
                     override fun onRestoreCompleted(customerInfo: CustomerInfo?) {
                         super.onRestoreCompleted(customerInfo)
-                        // uiStateHolder.onSubscriptionPurchaseCompleted()
                         navigator?.push(Auth)
                     }
 
                     override fun onRestoreError(error: String?) {
                         super.onRestoreError(error)
-                        //uiStateHolder.onSubscriptionPurchaseError(error)
                     }
                 }
             )
@@ -89,7 +87,12 @@ interface RootAppDestination {
 
     object Feed : Screen, RootAppDestination {
         @Composable
-        override fun Content() {}
+        override fun Content() {
+            FeedScreen(
+                uiStateHolder = getUiStateHolder<FeedUiStateHolder>(),
+                dataHolder = getUiStateHolder<DataStoreStateHolder>(),
+            )
+        }
     }
 
 }
