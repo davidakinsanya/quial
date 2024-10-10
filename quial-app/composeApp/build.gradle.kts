@@ -121,6 +121,8 @@ kotlin {
                     api(libs.datastore.preferences)
                     api(libs.datastore)
 
+                    implementation(libs.kotlinx.datetime)
+
                 }
             }
 

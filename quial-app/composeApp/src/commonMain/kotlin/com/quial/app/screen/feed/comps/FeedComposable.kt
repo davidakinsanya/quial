@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
@@ -16,13 +17,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.preferences.core.intPreferencesKey
+import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.data.idiom.Idiom
+import kotlinx.coroutines.flow.map
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
 import quial_app.composeapp.generated.resources.Res
 
 @Composable
-fun FeedComposable(modifier: Modifier, idiom: Idiom) {
+fun FeedComposable(modifier: Modifier,
+                   idiom: Idiom,
+                   dataHolder: DataStoreStateHolder) {
+
+    val blockContent = dataHolder.getPref().data.map {
+        val countKey = intPreferencesKey("dailyFreeCount")
+        it[countKey] ?: 0
+    }.collectAsState(0).value >= 4
+
     Row(horizontalArrangement = Arrangement.SpaceAround) {
         Text(
             text = splitText(idiom.info[0])[0].substring(0, 2),
@@ -44,49 +56,72 @@ fun FeedComposable(modifier: Modifier, idiom: Idiom) {
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxHeight(0.7f)
-                .fillMaxWidth(0.85f)
+                .fillMaxWidth()
         ) {
-            if (idiom.meaning[0].isNotEmpty()) {
-                repeat(idiom.meaning.size) { index ->
+            Column {
+                Text(
+                    text = "Meaning:",
+                    modifier = modifier.fillMaxWidth(),
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.End,
+                    fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                )
+
+                if (idiom.meaning[0].isNotEmpty()) {
+                    repeat(idiom.meaning.size) { index ->
+                        Text(
+                            text = splitText(idiom.meaning[0])[index],
+                            modifier = modifier.fillMaxWidth(),
+                            fontSize = 18.sp,
+                            textAlign = TextAlign.End,
+                            fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                        )
+                    }
+                } else {
                     Text(
-                        text = splitText(idiom.meaning[0])[index],
+                        text = splitText(idiom.info[0])[1],
+                        modifier = modifier.fillMaxWidth(),
                         fontSize = 18.sp,
-                        textAlign = TextAlign.Center,
+                        textAlign = TextAlign.End,
                         fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
                     )
                 }
-            } else {
-                Text(
-                    text = splitText(idiom.info[0])[1],
-                    fontSize = 18.sp,
-                    textAlign = TextAlign.Center,
-                    fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
-                )
             }
         }
 
 
         Box(
             modifier = modifier
-                .fillMaxWidth(0.7f)
-                .padding(bottom = 10.dp)
-                .fillMaxHeight(),
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(bottom = 10.dp),
             contentAlignment = Alignment.Center
         ) {
-            if (idiom.exampleSentences[0].isNotEmpty()) {
-                repeat(idiom.meaning.size) { index ->
+            Column {
+                Text(
+                    text = "Example:",
+                    modifier = modifier.fillMaxWidth(),
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.End,
+                    fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                )
+                if (idiom.exampleSentences[0].isNotEmpty()) {
+                    repeat(idiom.meaning.size) { index ->
+                        Text(
+                            text = "'" + splitText(idiom.exampleSentences[0])[index] + "'",
+                            modifier = modifier.fillMaxWidth(),
+                            textAlign = TextAlign.End,
+                            fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                        )
+                    }
+                } else {
                     Text(
-                        text = "'" + splitText(idiom.exampleSentences[0])[index] + "'",
-                        textAlign = TextAlign.Center,
+                        text = "'" + splitText(idiom.info[0])[2] + "'",
+                        modifier = modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End,
                         fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
                     )
                 }
-            } else {
-                Text(
-                    text = "'" + splitText(idiom.info[0])[2] + "'",
-                    textAlign = TextAlign.Center,
-                    fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
-                )
             }
         }
     }
