@@ -55,6 +55,7 @@ fun FeedComposable(modifier: Modifier,
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
+                .padding(start = 20.dp)
                 .fillMaxHeight(0.7f)
                 .fillMaxWidth()
         ) {
@@ -94,7 +95,7 @@ fun FeedComposable(modifier: Modifier,
             modifier = modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(bottom = 10.dp),
+                .padding(start = 20.dp, bottom = 10.dp),
             contentAlignment = Alignment.Center
         ) {
             Column {

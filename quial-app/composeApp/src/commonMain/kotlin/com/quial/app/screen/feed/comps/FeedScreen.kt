@@ -83,7 +83,7 @@ fun FeedScreen(
                     contentAlignment = Alignment.TopCenter
                 ) {
                     if (idioms.isNotEmpty()) {
-                        // dataHolder.dailyFreeCount(currentCount)
+                        dataHolder.dailyFreeCount(currentCount)
                         FeedComposable(idiom = idioms[index % idioms.size],
                                         modifier = modifier,
                                         dataHolder = dataHolder)

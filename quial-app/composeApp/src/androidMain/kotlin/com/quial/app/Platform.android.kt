@@ -1,5 +1,6 @@
 package com.quial.app
 
+import android.content.Context
 import android.os.Build
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -35,10 +36,9 @@ actual fun getHttpConfig(): HttpClientConfig<*> {
    return HttpClientConfig<OkHttpConfig>()
 }
 
-fun createDataStore(): DataStore<Preferences> {
+fun createDataStore(context: Context): DataStore<Preferences> {
     return createDataStore {
-        MainApplication()
-            .applicationContext
+        context
             .filesDir
             .resolve(DATA_STORE_FILE_NAME)
             .absolutePath

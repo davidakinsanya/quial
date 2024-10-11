@@ -15,6 +15,5 @@ val appModules: List<Module>
     get() = listOf(platformModule,
                    ktorModule,
                    tokenModule,
-                   dataStoreModule,
                    onboardingModule,
                    feedModule)

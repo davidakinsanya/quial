@@ -20,6 +20,17 @@ import org.koin.compose.koinInject
 
 interface RootAppDestination {
 
+    companion object {
+        private var dataHolder: DataStoreStateHolder? = null
+        fun setDataHolder(dataHolder: DataStoreStateHolder) {
+            this.dataHolder = dataHolder
+        }
+
+        fun getDataHolder(): DataStoreStateHolder {
+            return dataHolder!!
+        }
+    }
+
     object Onboarding: Screen, RootAppDestination {
 
         @Composable
@@ -29,7 +40,7 @@ interface RootAppDestination {
             OnboardingScreen(
                 modifier = Modifier,
                 uiStateHolder = getUiStateHolder<OnboardingUiStateHolder>(),
-                dataStateHolder = getUiStateHolder<DataStoreStateHolder>(),
+                dataStateHolder = getDataHolder(),
                 onNavigateMain = { navigator?.push(Paywall) }
             )
         }
@@ -90,7 +101,7 @@ interface RootAppDestination {
         override fun Content() {
             FeedScreen(
                 uiStateHolder = getUiStateHolder<FeedUiStateHolder>(),
-                dataHolder = getUiStateHolder<DataStoreStateHolder>(),
+                dataHolder = getDataHolder(),
             )
         }
     }

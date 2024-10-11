@@ -10,10 +10,10 @@ import org.koin.compose.koinInject
 
 @Composable
 @Preview
-fun App() {
+fun App(dataHolder: DataStoreStateHolder) {
 
     MaterialTheme {
-        val dataHolder = koinInject<DataStoreStateHolder>()
+        RootAppDestination.setDataHolder(dataHolder)
         RootAppNavigation(dataHolder)
     }
 }
