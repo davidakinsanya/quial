@@ -60,7 +60,7 @@ fun FeedScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(top = 100.dp, bottom = 40.dp, start = 25.dp, end = 25.dp),
+                .padding(top = 100.dp, bottom = 90.dp, start = 25.dp, end = 25.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             VerticalPager(state = pagerState,
@@ -83,7 +83,8 @@ fun FeedScreen(
                     contentAlignment = Alignment.TopCenter
                 ) {
                     if (idioms.isNotEmpty()) {
-                        dataHolder.dailyFreeCount(currentCount)
+                        dataHolder.appendDailyCount(currentCount)
+                        println(currentCount)
                         FeedComposable(idiom = idioms[index % idioms.size],
                                         modifier = modifier,
                                         dataHolder = dataHolder)

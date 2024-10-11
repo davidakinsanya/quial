@@ -9,18 +9,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.datastore.preferences.core.intPreferencesKey
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.data.idiom.Idiom
-import kotlinx.coroutines.flow.map
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
 import quial_app.composeapp.generated.resources.Res
@@ -30,10 +28,10 @@ fun FeedComposable(modifier: Modifier,
                    idiom: Idiom,
                    dataHolder: DataStoreStateHolder) {
 
-    val blockContent = dataHolder.getPref().data.map {
-        val countKey = intPreferencesKey("dailyFreeCount")
-        it[countKey] ?: 0
-    }.collectAsState(0).value >= 4
+    val bool = (dataHolder.checkCountLimit() && !dataHolder.isPremium())
+    val bool2 = true
+
+    val blurRadius = if (bool) 8.dp else 0.dp
 
     val textSize = 20.sp
     val font =  FontFamily(Font(Res.font.DMSans_Bold))
@@ -78,7 +76,9 @@ fun FeedComposable(modifier: Modifier,
                     repeat(idiom.meaning.size) { index ->
                         Text(
                             text = splitText(idiomMeaning)[index].capitalizeFirstLetter(),
-                            modifier = modifier.fillMaxWidth(),
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .blur(radius = blurRadius),
                             fontSize = textSize,
                             textAlign = TextAlign.End,
                             fontFamily = font
@@ -87,7 +87,9 @@ fun FeedComposable(modifier: Modifier,
                 } else {
                     Text(
                         text = splitText(idiomText)[1].capitalizeFirstLetter(),
-                        modifier = modifier.fillMaxWidth(),
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .blur(radius = blurRadius),
                         fontSize = textSize,
                         textAlign = TextAlign.End,
                         fontFamily = font
@@ -116,20 +118,22 @@ fun FeedComposable(modifier: Modifier,
                     repeat(idiom.exampleSentences.size) { index ->
                         Text(
                             text = "'" + splitText(idiomExample)[index].capitalizeFirstLetter() + "'",
-                            modifier = modifier.fillMaxWidth(),
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .blur(radius = blurRadius),
                             textAlign = TextAlign.End,
                             fontFamily = font
                         )
                     }
                 } else {
                     val strings = splitText(idiomText)
-                    println(strings)
-                    println(strings.size)
-
                     val edgeCaseIndex = if (strings.size == 3) 2 else 0
+
                     Text(
                         text = "'" + strings[edgeCaseIndex].capitalizeFirstLetter() + "'",
-                        modifier = modifier.fillMaxWidth(),
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .blur(radius = blurRadius),
                         textAlign = TextAlign.End,
                         fontSize = textSize,
                         fontFamily = font

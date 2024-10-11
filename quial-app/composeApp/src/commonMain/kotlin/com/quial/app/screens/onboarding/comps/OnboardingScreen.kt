@@ -33,7 +33,7 @@ import com.quial.app.screens.onboarding.OnboardingUiStateHolder
 fun OnboardingScreen(
     modifier: Modifier = Modifier,
     uiStateHolder: OnboardingUiStateHolder,
-    dataStateHolder: DataStoreStateHolder,
+    dataHolder: DataStoreStateHolder,
     onNavigateMain: () -> Unit
 ) {
     Scaffold(modifier = modifier
@@ -78,13 +78,16 @@ fun OnboardingScreen(
                         .fillMaxHeight(0.9f),
                     contentAlignment = Alignment.TopCenter
                 ) {
-
-                    if (uiStateHolder.questionObjectCheck(map[index])) {
-                        val question = map[index] as Question
-                        QuestionComposable(modifier, question, uiStateHolder)
+                    if (uiStateHolder.onboardingMap.collectAsState().value.isNotEmpty()) {
+                        if (uiStateHolder.questionObjectCheck(map[index])) {
+                            val question = map[index] as Question
+                            QuestionComposable(modifier, question, uiStateHolder)
+                        } else {
+                            val statement = map[index] as Statement
+                            StatementComposable(modifier, statement)
+                        }
                     } else {
-                        val statement = map[index] as Statement
-                        StatementComposable(modifier, statement)
+                        // TODO: shimmer loading animation.
                     }
                 }
             }
@@ -105,7 +108,7 @@ fun OnboardingScreen(
                     OnboardingNavigationButtons(
                         state = pagerState,
                         navigate = onNavigateMain,
-                        dataStateHolder = dataStateHolder,
+                        dataStateHolder = dataHolder,
                         uiStateHolder = uiStateHolder
                     )
                 }

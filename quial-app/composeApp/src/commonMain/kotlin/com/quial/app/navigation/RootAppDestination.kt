@@ -40,7 +40,7 @@ interface RootAppDestination {
             OnboardingScreen(
                 modifier = Modifier,
                 uiStateHolder = getUiStateHolder<OnboardingUiStateHolder>(),
-                dataStateHolder = getDataHolder(),
+                dataHolder = getDataHolder(),
                 onNavigateMain = { navigator?.push(Paywall) }
             )
         }
