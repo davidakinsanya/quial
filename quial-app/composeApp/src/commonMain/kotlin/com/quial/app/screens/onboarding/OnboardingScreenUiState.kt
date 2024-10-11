@@ -1,4 +1,4 @@
-package com.quial.app.screen.onboarding
+package com.quial.app.screens.onboarding
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import com.quial.app.data.onboarding.OnboardingMap

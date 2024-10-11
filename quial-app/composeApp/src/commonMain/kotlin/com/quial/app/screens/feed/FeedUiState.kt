@@ -1,4 +1,4 @@
-package com.quial.app.screen.feed
+package com.quial.app.screens.feed
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import com.quial.app.data.idiom.Idiom

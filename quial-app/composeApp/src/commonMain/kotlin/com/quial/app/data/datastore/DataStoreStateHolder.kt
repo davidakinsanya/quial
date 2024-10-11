@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.quial.app.screen.onboarding.comps.OnboardingResponse
+import com.quial.app.screens.onboarding.comps.OnboardingResponse
 import com.quial.app.utils.UiStateHolder
 import com.quial.app.utils.uiStateHolderScope
 import kotlinx.coroutines.launch

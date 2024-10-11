@@ -1,4 +1,4 @@
-package com.quial.app.screen.onboarding.comps
+package com.quial.app.screens.onboarding.comps
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.quial.app.data.onboarding.Question
-import com.quial.app.screen.onboarding.OnboardingUiStateHolder
+import com.quial.app.screens.onboarding.OnboardingUiStateHolder
 
 @Composable
 fun CustomizedCheckbox(uiStateHolder: OnboardingUiStateHolder,

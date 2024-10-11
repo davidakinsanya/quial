@@ -10,11 +10,11 @@ import com.mmk.kmprevenuecat.purchases.ui.PaywallListener
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.http.requests.TokenClient
 import com.quial.app.paywall.SubscriptionPaywall
-import com.quial.app.screen.auth.AuthUiHelperButtonsAndFirebaseAuth
-import com.quial.app.screen.feed.FeedUiStateHolder
-import com.quial.app.screen.feed.comps.FeedScreen
-import com.quial.app.screen.onboarding.comps.OnboardingScreen
-import com.quial.app.screen.onboarding.OnboardingUiStateHolder
+import com.quial.app.screens.auth.AuthUiHelperButtonsAndFirebaseAuth
+import com.quial.app.screens.feed.FeedUiStateHolder
+import com.quial.app.screens.feed.comps.FeedScreen
+import com.quial.app.screens.onboarding.comps.OnboardingScreen
+import com.quial.app.screens.onboarding.OnboardingUiStateHolder
 import com.quial.app.utils.getUiStateHolder
 import org.koin.compose.koinInject
 
@@ -105,7 +105,6 @@ interface RootAppDestination {
             )
         }
     }
-
 }
 
 @Composable

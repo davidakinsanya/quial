@@ -1,16 +1,17 @@
-package com.quial.app.screen.feed.comps
+package com.quial.app.screens.onboarding.comps
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.pager.VerticalPager
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
@@ -21,33 +22,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.datastore.preferences.core.intPreferencesKey
 import com.quial.app.data.datastore.DataStoreStateHolder
+import com.quial.app.data.onboarding.Question
+import com.quial.app.data.onboarding.Statement
 import com.quial.app.images.QuialImage
-import com.quial.app.screen.feed.FeedUiStateHolder
-import kotlinx.coroutines.flow.map
+import com.quial.app.screens.onboarding.OnboardingUiStateHolder
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun FeedScreen(
+fun OnboardingScreen(
     modifier: Modifier = Modifier,
-    uiStateHolder: FeedUiStateHolder,
-    dataHolder: DataStoreStateHolder,
+    uiStateHolder: OnboardingUiStateHolder,
+    dataStateHolder: DataStoreStateHolder,
+    onNavigateMain: () -> Unit
 ) {
     Scaffold(modifier = modifier
         .fillMaxSize(),
         backgroundColor = Color(125, 184, 107)
     ) {
-        val idioms by uiStateHolder.idiomsList.collectAsState()
-        val pageCount = idioms.size * 400
-        val pagerState = rememberPagerState(pageCount = { pageCount })
-
-
-        val currentCount by dataHolder.getPref().data.map {
-            val countKey = intPreferencesKey("dailyFreeCount")
-            it[countKey] ?: 0
-        }.collectAsState(0)
-
+        val map by uiStateHolder.onboardingMap.collectAsState()
+        val pagerState = rememberPagerState(pageCount = { map.size })
 
         Column(
             modifier = modifier
@@ -60,11 +54,13 @@ fun FeedScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(top = 100.dp, bottom = 90.dp, start = 25.dp, end = 25.dp),
+                .padding(top = 100.dp, bottom = 70.dp, start = 25.dp, end = 25.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            VerticalPager(state = pagerState,
-                          pageSpacing = 10.dp) { index ->
+            HorizontalPager(
+                state = pagerState,
+                pageSpacing = 100.dp
+            ) { index ->
 
                 Box(
                     modifier = modifier
@@ -82,14 +78,37 @@ fun FeedScreen(
                         .fillMaxHeight(0.9f),
                     contentAlignment = Alignment.TopCenter
                 ) {
-                    if (idioms.isNotEmpty()) {
-                        dataHolder.dailyFreeCount(currentCount)
-                        FeedComposable(idiom = idioms[index % idioms.size],
-                                        modifier = modifier,
-                                        dataHolder = dataHolder)
+
+                    if (uiStateHolder.questionObjectCheck(map[index])) {
+                        val question = map[index] as Question
+                        QuestionComposable(modifier, question, uiStateHolder)
+                    } else {
+                        val statement = map[index] as Statement
+                        StatementComposable(modifier, statement)
                     }
                 }
+            }
 
+            Spacer(modifier.padding(10.dp))
+
+            if (pagerState.currentPage != pagerState.pageCount - 1
+                && uiStateHolder.onboardingMap.collectAsState().value.isNotEmpty()
+            )
+                WormIndicator(pagerState = pagerState)
+
+            Box(
+                modifier = modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                if (uiStateHolder.onboardingMap.collectAsState().value.isNotEmpty()) {
+                    OnboardingNavigationButtons(
+                        state = pagerState,
+                        navigate = onNavigateMain,
+                        dataStateHolder = dataStateHolder,
+                        uiStateHolder = uiStateHolder
+                    )
+                }
             }
         }
     }

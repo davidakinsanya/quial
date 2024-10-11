@@ -1,4 +1,4 @@
-package com.quial.app.screen.auth
+package com.quial.app.screens.auth
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -1,4 +1,4 @@
-package com.quial.app.screen.feed.comps
+package com.quial.app.screens.feed.comps
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,18 +35,24 @@ fun FeedComposable(modifier: Modifier,
         it[countKey] ?: 0
     }.collectAsState(0).value >= 4
 
+    val textSize = 20.sp
+    val font =  FontFamily(Font(Res.font.DMSans_Bold))
+    val idiomText = idiom.info[0]
+    val idiomMeaning = idiom.meaning[0]
+    val idiomExample = idiom.exampleSentences[0]
+
     Row(horizontalArrangement = Arrangement.SpaceAround) {
         Text(
-            text = splitText(idiom.info[0])[0].substring(0, 2),
+            text = splitText(idiomText)[0].substring(0, 2),
             fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
         )
 
         Text(
-            text = splitText(idiom.info[0])[0],
+            text = splitText(idiomText)[0],
             textDecoration = TextDecoration.Underline,
             modifier = modifier.padding(start = 10.dp).fillMaxWidth(0.9f),
             textAlign = TextAlign.End,
-            fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+            fontFamily = font
         )
     }
 
@@ -62,29 +68,29 @@ fun FeedComposable(modifier: Modifier,
             Column {
                 Text(
                     text = "Meaning:",
-                    modifier = modifier.fillMaxWidth(),
-                    fontSize = 18.sp,
+                    modifier = modifier.fillMaxWidth().padding(bottom = 5.dp),
+                    fontSize = textSize,
                     textAlign = TextAlign.End,
-                    fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                    fontFamily = font
                 )
 
-                if (idiom.meaning[0].isNotEmpty()) {
+                if (idiomMeaning.isNotEmpty()) {
                     repeat(idiom.meaning.size) { index ->
                         Text(
-                            text = splitText(idiom.meaning[0])[index],
+                            text = splitText(idiomMeaning)[index].capitalizeFirstLetter(),
                             modifier = modifier.fillMaxWidth(),
-                            fontSize = 18.sp,
+                            fontSize = textSize,
                             textAlign = TextAlign.End,
-                            fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                            fontFamily = font
                         )
                     }
                 } else {
                     Text(
-                        text = splitText(idiom.info[0])[1],
+                        text = splitText(idiomText)[1].capitalizeFirstLetter(),
                         modifier = modifier.fillMaxWidth(),
-                        fontSize = 18.sp,
+                        fontSize = textSize,
                         textAlign = TextAlign.End,
-                        fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                        fontFamily = font
                     )
                 }
             }
@@ -95,32 +101,38 @@ fun FeedComposable(modifier: Modifier,
             modifier = modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(start = 20.dp, bottom = 10.dp),
+                .padding(start = 20.dp, bottom = 0.dp),
             contentAlignment = Alignment.Center
         ) {
             Column {
                 Text(
                     text = "Example:",
-                    modifier = modifier.fillMaxWidth(),
-                    fontSize = 18.sp,
+                    modifier = modifier.fillMaxWidth().padding(bottom = 5.dp),
+                    fontSize = textSize,
                     textAlign = TextAlign.End,
-                    fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                    fontFamily = font
                 )
-                if (idiom.exampleSentences[0].isNotEmpty()) {
-                    repeat(idiom.meaning.size) { index ->
+                if (idiomExample.isNotEmpty()) {
+                    repeat(idiom.exampleSentences.size) { index ->
                         Text(
-                            text = "'" + splitText(idiom.exampleSentences[0])[index] + "'",
+                            text = "'" + splitText(idiomExample)[index].capitalizeFirstLetter() + "'",
                             modifier = modifier.fillMaxWidth(),
                             textAlign = TextAlign.End,
-                            fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                            fontFamily = font
                         )
                     }
                 } else {
+                    val strings = splitText(idiomText)
+                    println(strings)
+                    println(strings.size)
+
+                    val edgeCaseIndex = if (strings.size == 3) 2 else 0
                     Text(
-                        text = "'" + splitText(idiom.info[0])[2] + "'",
+                        text = "'" + strings[edgeCaseIndex].capitalizeFirstLetter() + "'",
                         modifier = modifier.fillMaxWidth(),
                         textAlign = TextAlign.End,
-                        fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                        fontSize = textSize,
+                        fontFamily = font
                     )
                 }
             }
@@ -128,12 +140,20 @@ fun FeedComposable(modifier: Modifier,
     }
 }
 
+
 fun splitText(text: String): List<String> {
     val regex = Regex(pattern = "'[^']*'", options = setOf(RegexOption.IGNORE_CASE))
+    val doubleQuote = "\""
+
     return regex.findAll(text).map {
         it.groupValues[0]
             .substring(1, it.groupValues[0].length - 1)
+            .replace(doubleQuote, "")
             .replace("Meaning:", "")
             .replace("Example:", "")
     }.toList()
+}
+
+fun String.capitalizeFirstLetter(): String {
+    return substring(0, 1).uppercase() + substring(1)
 }

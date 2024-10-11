@@ -1,4 +1,4 @@
-package com.quial.app.screen.onboarding.comps
+package com.quial.app.screens.onboarding.comps
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.quial.app.data.datastore.DataStoreStateHolder
-import com.quial.app.screen.onboarding.OnboardingUiStateHolder
+import com.quial.app.screens.onboarding.OnboardingUiStateHolder
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
 import quial_app.composeapp.generated.resources.Res

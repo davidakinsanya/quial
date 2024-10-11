@@ -1,8 +1,8 @@
-package com.quial.app.screen.onboarding
+package com.quial.app.screens.onboarding
 
 import androidx.compose.runtime.MutableState
 import com.quial.app.data.onboarding.Question
-import com.quial.app.screen.onboarding.comps.OnboardingResponse
+import com.quial.app.screens.onboarding.comps.OnboardingResponse
 import com.quial.app.utils.UiStateHolder
 import com.quial.app.utils.uiStateHolderScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class OnboardingUiStateHolder(state: OnboardingScreenUiState): UiStateHolder() {
     private val _uiState = MutableStateFlow(state)

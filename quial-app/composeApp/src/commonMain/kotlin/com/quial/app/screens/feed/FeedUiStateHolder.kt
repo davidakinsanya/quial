@@ -1,4 +1,4 @@
-package com.quial.app.screen.feed
+package com.quial.app.screens.feed
 
 import com.quial.app.data.idiom.Idiom
 import com.quial.app.utils.UiStateHolder
