@@ -28,4 +28,38 @@ class FeedUiStateHolder(
     private fun loadData() = uiStateHolderScope.launch {
         _idiomsList.value = _uiState.value.retrieveIdioms()!!
     }
+
+    fun splitText(text: String): List<String> {
+        val regex = Regex(pattern = "'[^']*'", options = setOf(RegexOption.IGNORE_CASE))
+        val doubleQuote = "\""
+
+        return regex.findAll(text).map {
+            it.groupValues[0]
+                .substring(1, it.groupValues[0].length - 1)
+                .replace(doubleQuote, "")
+                .replace("Meaning:", "")
+                .replace("Example:", "")
+                .capitalizeFirstLetter()
+        }.toList()
+    }
+
+    private fun String.capitalizeFirstLetter(): String {
+        return substring(0, 1).uppercase() + substring(1)
+    }
+
+    fun randomInt(): Int {
+        return (1..2).random()
+    }
+
+    private fun getBoolean(bool: Boolean, randomInt: Int, number: Int): Boolean {
+        return bool && (randomInt == number)
+    }
+
+    fun getListOfBools(bool: Boolean, randomInt: Int): List<Boolean> {
+        return listOf(
+            getBoolean(bool = bool, randomInt = randomInt, number = 1) ,
+            getBoolean(bool = bool, randomInt = randomInt, number = 2),
+            getBoolean(bool = bool, randomInt = randomInt, number = 1)
+        )
+    }
 }

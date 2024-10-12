@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.data.idiom.Idiom
+import com.quial.app.screens.feed.FeedUiStateHolder
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
 import quial_app.composeapp.generated.resources.Res
@@ -26,12 +27,16 @@ import quial_app.composeapp.generated.resources.Res
 @Composable
 fun FeedComposable(modifier: Modifier,
                    idiom: Idiom,
+                   uiHolder: FeedUiStateHolder,
                    dataHolder: DataStoreStateHolder) {
 
-    val bool = (dataHolder.checkCountLimit() && !dataHolder.isPremium())
-    val bool2 = true
-
-    val blurRadius = if (bool) 8.dp else 0.dp
+    val bool = !dataHolder.isPremium()
+    val randomInt = uiHolder.randomInt()
+    val booleanList = uiHolder.getListOfBools(bool = bool, randomInt = randomInt)
+    
+    val blurRadius1 = booleanList[0]
+    val blurRadius2 = booleanList[1]
+    val blurRadius3 = booleanList[2]
 
     val textSize = 20.sp
     val font =  FontFamily(Font(Res.font.DMSans_Bold))
@@ -41,14 +46,17 @@ fun FeedComposable(modifier: Modifier,
 
     Row(horizontalArrangement = Arrangement.SpaceAround) {
         Text(
-            text = splitText(idiomText)[0].substring(0, 2),
+            text = uiHolder.splitText(idiomText)[0].substring(0, 2),
             fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
         )
 
         Text(
-            text = splitText(idiomText)[0],
+            text = uiHolder.splitText(idiomText)[0],
             textDecoration = TextDecoration.Underline,
-            modifier = modifier.padding(start = 10.dp).fillMaxWidth(0.9f),
+            modifier = modifier
+                .padding(start = 10.dp)
+                .fillMaxWidth(0.9f)
+                .blur(if (blurRadius1) 8.dp else 0.dp),
             textAlign = TextAlign.End,
             fontFamily = font
         )
@@ -75,10 +83,10 @@ fun FeedComposable(modifier: Modifier,
                 if (idiomMeaning.isNotEmpty()) {
                     repeat(idiom.meaning.size) { index ->
                         Text(
-                            text = splitText(idiomMeaning)[index].capitalizeFirstLetter(),
+                            text = uiHolder.splitText(idiomMeaning)[index],
                             modifier = modifier
                                 .fillMaxWidth()
-                                .blur(radius = blurRadius),
+                                .blur(radius = if (blurRadius2) 8.dp else 0.dp),
                             fontSize = textSize,
                             textAlign = TextAlign.End,
                             fontFamily = font
@@ -86,10 +94,10 @@ fun FeedComposable(modifier: Modifier,
                     }
                 } else {
                     Text(
-                        text = splitText(idiomText)[1].capitalizeFirstLetter(),
+                        text = uiHolder.splitText(idiomText)[1],
                         modifier = modifier
                             .fillMaxWidth()
-                            .blur(radius = blurRadius),
+                            .blur(radius = if (blurRadius2) 8.dp else 0.dp),
                         fontSize = textSize,
                         textAlign = TextAlign.End,
                         fontFamily = font
@@ -103,7 +111,7 @@ fun FeedComposable(modifier: Modifier,
             modifier = modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(start = 20.dp, bottom = 0.dp),
+                .padding(start = 20.dp, bottom = 5.dp),
             contentAlignment = Alignment.Center
         ) {
             Column {
@@ -117,23 +125,25 @@ fun FeedComposable(modifier: Modifier,
                 if (idiomExample.isNotEmpty()) {
                     repeat(idiom.exampleSentences.size) { index ->
                         Text(
-                            text = "'" + splitText(idiomExample)[index].capitalizeFirstLetter() + "'",
+                            text = "'" + uiHolder.splitText(idiomExample)[index] + "'",
                             modifier = modifier
                                 .fillMaxWidth()
-                                .blur(radius = blurRadius),
+                                .blur(radius = if (blurRadius3) 8.dp else 0.dp)
+                                .padding(bottom = 5.dp),
                             textAlign = TextAlign.End,
                             fontFamily = font
                         )
                     }
                 } else {
-                    val strings = splitText(idiomText)
+                    val strings = uiHolder.splitText(idiomText)
                     val edgeCaseIndex = if (strings.size == 3) 2 else 0
 
                     Text(
-                        text = "'" + strings[edgeCaseIndex].capitalizeFirstLetter() + "'",
+                        text = "'" + strings[edgeCaseIndex] + "'",
                         modifier = modifier
                             .fillMaxWidth()
-                            .blur(radius = blurRadius),
+                            .blur(radius = if (blurRadius3) 8.dp else 0.dp)
+                            .padding(bottom = 5.dp),
                         textAlign = TextAlign.End,
                         fontSize = textSize,
                         fontFamily = font
@@ -142,22 +152,4 @@ fun FeedComposable(modifier: Modifier,
             }
         }
     }
-}
-
-
-fun splitText(text: String): List<String> {
-    val regex = Regex(pattern = "'[^']*'", options = setOf(RegexOption.IGNORE_CASE))
-    val doubleQuote = "\""
-
-    return regex.findAll(text).map {
-        it.groupValues[0]
-            .substring(1, it.groupValues[0].length - 1)
-            .replace(doubleQuote, "")
-            .replace("Meaning:", "")
-            .replace("Example:", "")
-    }.toList()
-}
-
-fun String.capitalizeFirstLetter(): String {
-    return substring(0, 1).uppercase() + substring(1)
 }

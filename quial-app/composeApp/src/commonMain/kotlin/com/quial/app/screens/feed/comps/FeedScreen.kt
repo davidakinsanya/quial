@@ -21,11 +21,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.datastore.preferences.core.intPreferencesKey
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.images.QuialImage
 import com.quial.app.screens.feed.FeedUiStateHolder
-import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -43,12 +41,6 @@ fun FeedScreen(
         val pagerState = rememberPagerState(pageCount = { pageCount })
 
 
-        val currentCount by dataHolder.getPref().data.map {
-            val countKey = intPreferencesKey("dailyFreeCount")
-            it[countKey] ?: 0
-        }.collectAsState(0)
-
-
         Column(
             modifier = modifier
                 .fillMaxWidth(),
@@ -60,7 +52,7 @@ fun FeedScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(top = 100.dp, bottom = 90.dp, start = 25.dp, end = 25.dp),
+                .padding(top = 100.dp, bottom = 60.dp, start = 25.dp, end = 25.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             VerticalPager(state = pagerState,
@@ -83,10 +75,9 @@ fun FeedScreen(
                     contentAlignment = Alignment.TopCenter
                 ) {
                     if (idioms.isNotEmpty()) {
-                        dataHolder.appendDailyCount(currentCount)
-                        println(currentCount)
                         FeedComposable(idiom = idioms[index % idioms.size],
                                         modifier = modifier,
+                                        uiHolder = uiStateHolder,
                                         dataHolder = dataHolder)
                     }
                 }
