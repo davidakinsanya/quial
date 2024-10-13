@@ -21,9 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.images.QuialImage
 import com.quial.app.screens.feed.FeedUiStateHolder
+import com.quial.app.utils.sameDateCheck
+import kotlinx.coroutines.flow.map
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -39,7 +43,6 @@ fun FeedScreen(
         val idioms by uiStateHolder.idiomsList.collectAsState()
         val pageCount = idioms.size * 400
         val pagerState = rememberPagerState(pageCount = { pageCount })
-
 
         Column(
             modifier = modifier
@@ -57,6 +60,18 @@ fun FeedScreen(
         ) {
             VerticalPager(state = pagerState,
                           pageSpacing = 10.dp) { index ->
+
+                val string by dataHolder.getPref().data.map {
+                    val stamp = stringPreferencesKey("timeStamp")
+                    it[stamp]?: ""
+                }.collectAsState("")
+
+                val stampCheck = sameDateCheck(string)
+
+                if (index > 3 && !stampCheck && !dataHolder.isPremium()) {
+                    // TODO: :)
+                    dataHolder.updateTimeStamp()
+                }
 
                 Box(
                     modifier = modifier
@@ -78,7 +93,9 @@ fun FeedScreen(
                         FeedComposable(idiom = idioms[index % idioms.size],
                                         modifier = modifier,
                                         uiHolder = uiStateHolder,
-                                        dataHolder = dataHolder)
+                                        dataHolder = dataHolder,
+                                        stampCheck = stampCheck
+                                        )
                     }
                 }
 

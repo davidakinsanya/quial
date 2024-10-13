@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.mmk.kmprevenuecat.purchases.Purchases
 import com.quial.app.screens.onboarding.comps.OnboardingResponse
 import com.quial.app.utils.UiStateHolder
+import com.quial.app.utils.getCurrentDate
 import com.quial.app.utils.uiStateHolderScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -18,6 +19,10 @@ import kotlinx.serialization.json.encodeToJsonElement
 class DataStoreStateHolder(
     private val preferences: DataStore<Preferences>
 ): UiStateHolder() {
+
+    fun getPref(): DataStore<Preferences> {
+        return preferences
+    }
 
     fun isOnboardingShown(): Boolean  {
         var bool = false
@@ -66,5 +71,12 @@ class DataStoreStateHolder(
             }
         }
         return boolean
+    }
+
+    fun updateTimeStamp() = uiStateHolderScope.launch {
+        preferences.edit {
+            val stamp = stringPreferencesKey("timeStamp")
+            it[stamp] = getCurrentDate()
+        }
     }
 }

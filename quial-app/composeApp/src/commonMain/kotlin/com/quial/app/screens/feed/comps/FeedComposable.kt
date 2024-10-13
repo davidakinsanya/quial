@@ -28,9 +28,12 @@ import quial_app.composeapp.generated.resources.Res
 fun FeedComposable(modifier: Modifier,
                    idiom: Idiom,
                    uiHolder: FeedUiStateHolder,
-                   dataHolder: DataStoreStateHolder) {
+                   dataHolder: DataStoreStateHolder,
+                   stampCheck: Boolean) {
 
-    val bool = !dataHolder.isPremium()
+
+
+    val bool = dataHolder.isPremium() || stampCheck
     val randomInt = uiHolder.randomInt()
     val booleanList = uiHolder.getListOfBools(bool = bool, randomInt = randomInt)
     
