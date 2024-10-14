@@ -35,24 +35,8 @@ class OnboardingUiStateHolder(state: OnboardingScreenUiState): UiStateHolder() {
         _onboardingMap.value = uiState.value.loadData()
     }
 
-    fun objectCount(): Int {
-        return _onboardingMap.value.size
-    }
-
     fun questionObjectCheck(obj: Any): Boolean {
         return (obj is Question)
-    }
-
-    fun onClickNavigateNext() = uiStateHolderScope.launch {
-        /**
-        if (_uiState.value.isPrivacyPolicyChecked.not()) return@launch
-        withContext(Dispatchers.IO) {
-            userPreferences.putBoolean(UserPreferences.KEY_IS_ONBOARD_SHOWN, true)
-        }
-        _uiState.update { it.copy(onBoardIsShown = true) }
-        **/
-
-        // TODO: Figure out what to do with this portion of code.
     }
 
     @Composable
