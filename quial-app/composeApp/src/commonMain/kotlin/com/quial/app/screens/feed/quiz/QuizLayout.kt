@@ -31,11 +31,14 @@ import quial_app.composeapp.generated.resources.Res
 @Composable
 fun QuizLayout(
     quizHolder: QuizStateHolder,
-    modifier: Modifier = Modifier,
-    items: List<Any>,
+    modifier: Modifier = Modifier
 ) {
 
     val font =  FontFamily(Font(Res.font.DMSans_Bold))
+
+    quizHolder.setIdiomGuess()
+    val idiomText = quizHolder.getIdiomGuess().info[0]
+    val cleanText = quizHolder.splitText(idiomText)[0]
 
     Row(horizontalArrangement = Arrangement.SpaceAround) {
         Text(
@@ -61,24 +64,26 @@ fun QuizLayout(
             contentAlignment = Alignment.Center,
             modifier = modifier
                 .fillMaxHeight(0.3f)
-                .border(
-                    BorderStroke(
-                        width = 3.dp,
-                        color = Color.Black
-                    ),
-                    shape = RoundedCornerShape(15.dp)
-                )
+                .fillMaxWidth()
         ) {
-            Column(verticalArrangement = Arrangement.SpaceEvenly,
-                   horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally,
+                   modifier = modifier.fillMaxSize().padding(top = 55.dp)) {
                 Text(
-                    text = "Guess: ",
+                    text = "Guess The Meaning Of .. ",
                     textAlign = TextAlign.Center,
                     fontFamily = font,
-                    fontSize = 25.sp,
+                    fontSize = 18.sp,
                     modifier = modifier
-                        .padding(top = 35.dp, bottom = 5.dp)
-                        .fillMaxSize())
+                        .padding(top = 35.dp, bottom = 5.dp))
+
+                Text(
+                    text = cleanText,
+                    textAlign = TextAlign.Center,
+                    textDecoration = TextDecoration.Underline,
+                    fontFamily = font,
+                    fontSize = 20.sp,
+                    modifier = modifier
+                        .padding(top = 10.dp, bottom = 5.dp))
             }
         }
 
@@ -86,7 +91,7 @@ fun QuizLayout(
             Column(verticalArrangement = Arrangement.SpaceEvenly,
                    horizontalAlignment = Alignment.CenterHorizontally) {
                 Spacer(modifier.padding(35.dp))
-                OptionsPager(quizHolder = quizHolder, items = items)
+                OptionsPager(quizHolder = quizHolder)
                 Spacer(modifier.padding(10.dp))
                 ContinueButton()
             }

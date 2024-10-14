@@ -101,12 +101,15 @@ fun FeedScreen(
                                        dataHolder = dataHolder,
                                         stampCheck = stampCheck
                         )
-
+                        /*
                         if (dataHolder.isPremium() && !quizHolder.getQuizMaterial().contains(idiomView)) {
                             quizHolder.addToQuiz(idiomView)
                         }
 
-                        // QuizLayout(quizHolder = quizHolder, items = listOf(1,2,3,4))
+                        quizHolder.addToQuiz(idiomView)
+                        if (quizHolder.getOptions().size >= 4)
+                            QuizLayout(quizHolder = quizHolder)
+                         */
                     }
                 }
 
