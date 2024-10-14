@@ -27,6 +27,7 @@ import com.quial.app.data.onboarding.Question
 import com.quial.app.data.onboarding.Statement
 import com.quial.app.images.QuialImage
 import com.quial.app.screens.onboarding.OnboardingUiStateHolder
+import com.quial.app.utils.WormIndicator
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

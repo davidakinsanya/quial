@@ -13,6 +13,7 @@ import com.quial.app.paywall.SubscriptionPaywall
 import com.quial.app.screens.auth.AuthUiHelperButtonsAndFirebaseAuth
 import com.quial.app.screens.feed.FeedUiStateHolder
 import com.quial.app.screens.feed.comps.FeedScreen
+import com.quial.app.screens.feed.quiz.QuizStateHolder
 import com.quial.app.screens.onboarding.comps.OnboardingScreen
 import com.quial.app.screens.onboarding.OnboardingUiStateHolder
 import com.quial.app.utils.getUiStateHolder
@@ -102,6 +103,7 @@ interface RootAppDestination {
             FeedScreen(
                 uiStateHolder = getUiStateHolder<FeedUiStateHolder>(),
                 dataHolder = getDataHolder(),
+                quizHolder = getUiStateHolder<QuizStateHolder>()
             )
         }
     }

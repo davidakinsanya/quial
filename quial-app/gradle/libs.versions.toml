@@ -31,6 +31,7 @@ firebaseCrashlytics = "3.0.2"
 uiAndroid = "1.7.3"
 datastore = "1.1.1"
 datastoreCoreJvm = "1.1.1"
+foundationLayoutAndroid = "1.7.3"
 
 
 [libraries]
@@ -95,6 +96,7 @@ androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", vers
 # DataStore
 datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
 
 
 [plugins]

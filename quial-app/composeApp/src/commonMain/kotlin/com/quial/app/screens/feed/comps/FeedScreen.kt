@@ -25,6 +25,8 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.images.QuialImage
 import com.quial.app.screens.feed.FeedUiStateHolder
+import com.quial.app.screens.feed.quiz.QuizLayout
+import com.quial.app.screens.feed.quiz.QuizStateHolder
 import com.quial.app.utils.sameDateCheck
 import kotlinx.coroutines.flow.map
 
@@ -35,6 +37,7 @@ fun FeedScreen(
     modifier: Modifier = Modifier,
     uiStateHolder: FeedUiStateHolder,
     dataHolder: DataStoreStateHolder,
+    quizHolder: QuizStateHolder
 ) {
     Scaffold(modifier = modifier
         .fillMaxSize(),
@@ -90,12 +93,20 @@ fun FeedScreen(
                     contentAlignment = Alignment.TopCenter
                 ) {
                     if (idioms.isNotEmpty()) {
-                        FeedComposable(idiom = idioms[index % idioms.size],
-                                        modifier = modifier,
-                                        uiHolder = uiStateHolder,
-                                        dataHolder = dataHolder,
+                        val idiomView = idioms[index % idioms.size]
+
+                        FeedComposable(idiom = idiomView,
+                            modifier = modifier,
+                                       uiHolder = uiStateHolder,
+                                       dataHolder = dataHolder,
                                         stampCheck = stampCheck
-                                        )
+                        )
+
+                        if (dataHolder.isPremium() && !quizHolder.getQuizMaterial().contains(idiomView)) {
+                            quizHolder.addToQuiz(idiomView)
+                        }
+
+                        // QuizLayout(quizHolder = quizHolder, items = listOf(1,2,3,4))
                     }
                 }
 

@@ -1,6 +1,9 @@
 package com.quial.app.screens.onboarding
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import com.quial.app.data.onboarding.Question
 import com.quial.app.screens.onboarding.comps.OnboardingResponse
 import com.quial.app.utils.UiStateHolder
@@ -50,6 +53,16 @@ class OnboardingUiStateHolder(state: OnboardingScreenUiState): UiStateHolder() {
         **/
 
         // TODO: Figure out what to do with this portion of code.
+    }
+
+    @Composable
+    fun listOfStates(index: Int): MutableList<MutableState<Boolean>> {
+        val listOfStates = mutableListOf<MutableState<Boolean>>()
+        for (i in 0..index) {
+            listOfStates.add(remember {  mutableStateOf(false) })
+
+        }
+        return listOfStates
     }
 
     fun uiCheckBoxState(optionState: MutableList<MutableState<Boolean>>,

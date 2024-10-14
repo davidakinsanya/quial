@@ -4,6 +4,7 @@ import com.quial.app.http.requests.RetrieveIdiomsClient
 import com.quial.app.repository.FeedRepository
 import com.quial.app.screens.feed.FeedUiState
 import com.quial.app.screens.feed.FeedUiStateHolder
+import com.quial.app.screens.feed.quiz.QuizStateHolder
 import org.koin.dsl.module
 
 val feedModule = module {
@@ -21,5 +22,9 @@ val feedModule = module {
 
     single<FeedUiStateHolder> {
         FeedUiStateHolder(get())
+    }
+
+    single<QuizStateHolder> {
+        QuizStateHolder()
     }
 }
