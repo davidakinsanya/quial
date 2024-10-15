@@ -6,12 +6,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.quial.app.data.idiom.Idiom
 import com.quial.app.utils.UiStateHolder
+import com.quial.app.utils.uiStateHolderScope
+import kotlinx.coroutines.launch
 
 class QuizStateHolder: UiStateHolder() {
 
-    private val listOfIdioms = mutableListOf<Idiom>()
+    private val listOfIdioms = mutableStateOf(mutableListOf<Idiom>())
     private var idiomGuess: Idiom? = null
     private val listOfStates = mutableListOf<MutableState<Boolean>>()
+    private val quizOptions = mutableStateOf(listOf<Idiom>())
+    private val correctAnswer = mutableStateOf<Boolean?>(null)
 
     @Composable
     fun listOfStates(index: Int): MutableList<MutableState<Boolean>> {
@@ -22,7 +26,7 @@ class QuizStateHolder: UiStateHolder() {
         return listOfStates
     }
 
-    fun getTrueState(): Int {
+    private fun getTrueState(): Int {
         var index = 0
         for (state in this.listOfStates) {
             if (state.value) {
@@ -42,37 +46,67 @@ class QuizStateHolder: UiStateHolder() {
     }
 
     fun addToQuiz(idiom: Idiom) {
-        listOfIdioms.add(idiom)
-        println(listOfIdioms.size)
+        listOfIdioms.value.add(idiom)
     }
 
-    fun getQuizMaterial(): List<Idiom> {
-        return listOfIdioms
+    private fun getQuizMaterial(): List<Idiom> {
+        return listOfIdioms.value
+    }
+
+    fun getQuizOptions(): List<Idiom> {
+        return quizOptions.value
+    }
+
+    fun setQuizOptions(list: List<Idiom>) {
+        quizOptions.value = list
     }
 
     fun setIdiomGuess() {
-        this.idiomGuess = this.getQuizMaterial()[(0..<this.listOfIdioms.size).random()]
+        val material = this.getQuizMaterial()
+        var randomIdiom: Idiom? = null
+
+        uiStateHolderScope.launch {
+            randomIdiom = material[material.indices.random()]
+        }
+
+        this.idiomGuess = randomIdiom
     }
 
-    fun getOptions(): List<Idiom> {
+    fun quizOptions(): List<Idiom> {
         val newList = mutableListOf<Idiom>()
-        if (idiomGuess != null)
-            newList.add(idiomGuess!!)
-        this.getQuizMaterial().filter { it != idiomGuess }.map {
-            newList.add(it)
+        val list = (0..2).toList()
+        val material = this.getQuizMaterial()
+
+        while (newList.size != 3) {
+            val option = material[material.indices.random()]
+            if (!newList.contains(option)) { newList.add(option) }
         }
-        newList.reversed()
-        return  newList.toSet().toList().take(4)
+        val pos = list.random()
+        if (idiomGuess != null) newList[pos] = idiomGuess!!
+
+        return newList.toSet().toList()
     }
 
     fun getIdiomGuess(): Idiom {
         return idiomGuess!!
     }
 
-    fun resetQuiz() {
-        this.idiomGuess = null
-        this.listOfIdioms.clear()
+    fun assessAnswer(): Boolean {
+        // if (idiomGuess != null)  println(getIdiomGuess())
+
+        correctAnswer.value = quizOptions.value[getTrueState()] == getIdiomGuess()
+        return quizOptions.value[getTrueState()] == getIdiomGuess()
+    }
+
+    fun getAnswerState(): Boolean? {
+        return correctAnswer.value
+    }
+
+    fun answerReset() {
         this.listOfStates.clear()
+        if (correctAnswer.value != null) this.listOfIdioms.value.clear()
+        correctAnswer.value = null
+        this.idiomGuess = null
     }
 
     fun splitText(text: String): List<String> {

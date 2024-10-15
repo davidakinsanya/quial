@@ -1,7 +1,5 @@
 package com.quial.app.screens.feed.quiz
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +37,7 @@ fun QuizLayout(
     quizHolder.setIdiomGuess()
     val idiomText = quizHolder.getIdiomGuess().info[0]
     val cleanText = quizHolder.splitText(idiomText)[0]
+    // println(cleanText)
 
     Row(horizontalArrangement = Arrangement.SpaceAround) {
         Text(
@@ -74,7 +73,7 @@ fun QuizLayout(
                     fontFamily = font,
                     fontSize = 18.sp,
                     modifier = modifier
-                        .padding(top = 35.dp, bottom = 5.dp))
+                        .padding(top = 30.dp, bottom = 5.dp))
 
                 Text(
                     text = cleanText,
@@ -93,15 +92,17 @@ fun QuizLayout(
                 Spacer(modifier.padding(35.dp))
                 OptionsPager(quizHolder = quizHolder)
                 Spacer(modifier.padding(10.dp))
-                ContinueButton()
+                ContinueButton(quizHolder = quizHolder)
             }
         }
     }
 }
 @Composable
-fun ContinueButton() {
+fun ContinueButton(quizHolder: QuizStateHolder) {
     Row {
-        Button(onClick = {},
+        Button(onClick = {
+            quizHolder.assessAnswer()
+        },
             shape = RoundedCornerShape(30.dp),
             colors = ButtonDefaults.outlinedButtonColors(Color.White)
         ) {

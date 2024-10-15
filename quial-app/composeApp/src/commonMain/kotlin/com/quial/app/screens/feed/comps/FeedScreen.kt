@@ -27,6 +27,7 @@ import com.quial.app.images.QuialImage
 import com.quial.app.screens.feed.FeedUiStateHolder
 import com.quial.app.screens.feed.quiz.QuizLayout
 import com.quial.app.screens.feed.quiz.QuizStateHolder
+import com.quial.app.screens.loading.FeedLoadingScreen
 import com.quial.app.utils.sameDateCheck
 import kotlinx.coroutines.flow.map
 
@@ -46,6 +47,19 @@ fun FeedScreen(
         val idioms by uiStateHolder.idiomsList.collectAsState()
         val pageCount = idioms.size * 400
         val pagerState = rememberPagerState(pageCount = { pageCount })
+        val correctAnswer = quizHolder.getAnswerState()
+
+        val borderColor = when (correctAnswer) {
+            null -> {
+                Color.Black
+            }
+            false -> {
+                Color.Red
+            }
+            else -> {
+                Color.Green
+            }
+        }
 
         Column(
             modifier = modifier
@@ -79,7 +93,7 @@ fun FeedScreen(
                 Box(
                     modifier = modifier
                         .border(
-                            border = BorderStroke(3.dp, Color.Black),
+                            border = BorderStroke(3.dp, borderColor),
                             shape = RoundedCornerShape(15.dp)
                         )
                         .padding(
@@ -92,27 +106,27 @@ fun FeedScreen(
                         .fillMaxHeight(0.9f),
                     contentAlignment = Alignment.TopCenter
                 ) {
+
                     if (idioms.isNotEmpty()) {
                         val idiomView = idioms[index % idioms.size]
 
-                        FeedComposable(idiom = idiomView,
-                            modifier = modifier,
-                                       uiHolder = uiStateHolder,
-                                       dataHolder = dataHolder,
-                                        stampCheck = stampCheck
-                        )
-                        /*
-                        if (dataHolder.isPremium() && !quizHolder.getQuizMaterial().contains(idiomView)) {
+                        if (pagerState.currentPage % 5 == 0 && pagerState.currentPage >= 5) {
+                            QuizLayout(quizHolder)
+                        } else {
+                            quizHolder.answerReset()
                             quizHolder.addToQuiz(idiomView)
+                            FeedComposable(
+                                idiom = idiomView,
+                                modifier = modifier,
+                                uiHolder = uiStateHolder,
+                                dataHolder = dataHolder,
+                                stampCheck = stampCheck
+                            )
                         }
-
-                        quizHolder.addToQuiz(idiomView)
-                        if (quizHolder.getOptions().size >= 4)
-                            QuizLayout(quizHolder = quizHolder)
-                         */
+                    } else {
+                        FeedLoadingScreen()
                     }
                 }
-
             }
         }
     }

@@ -66,10 +66,12 @@ fun BoxItem(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OptionsPager(quizHolder: QuizStateHolder) {
-    val options = remember { mutableStateOf(quizHolder.getOptions().shuffled()) }
+    val options = remember { mutableStateOf(quizHolder.quizOptions()) }
+    quizHolder.setQuizOptions(options.value)
 
     val pagerState = rememberPagerState(pageCount = { options.value.size })
     val optionState = quizHolder.listOfStates(options.value.size)
+    val alphabet = listOf("A", "B", "C")
 
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -99,14 +101,22 @@ fun OptionsPager(quizHolder: QuizStateHolder) {
                     content = {
                         Column(modifier = Modifier.fillMaxSize(),
                                verticalArrangement = Arrangement.Center,
-                               horizontalAlignment = Alignment.CenterHorizontally) {
+                               horizontalAlignment = Alignment.CenterHorizontally) { // "${ABC[index]}\n
+
                             Text(
                                 text =
-                                text,
+                                alphabet[index],
+                                fontSize = 18.sp,
+                                fontFamily = FontFamily(Font(Res.font.DMSans_Bold)),
+                                textAlign = TextAlign.Center
+                            )
+
+                            Text(
+                                text = text,
                                 fontSize = 14.sp,
                                 fontFamily = FontFamily(Font(Res.font.DMSans_Bold)),
                                 textAlign = TextAlign.Center,
-                                modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+                                modifier = Modifier.padding(top = 2.dp, start = 12.dp, end = 12.dp)
                             )
                         }
                     }
