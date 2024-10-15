@@ -66,7 +66,8 @@ fun BoxItem(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OptionsPager(quizHolder: QuizStateHolder) {
-    val options = remember { mutableStateOf(quizHolder.quizOptions()) }
+    val index = remember { mutableStateOf(quizHolder.getQuizMaterial().indices.shuffled().take(3)) }
+    val options = remember { mutableStateOf(quizHolder.quizOptions(index.value)) }
     quizHolder.setQuizOptions(options.value)
 
     val pagerState = rememberPagerState(pageCount = { options.value.size })

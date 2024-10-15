@@ -37,7 +37,6 @@ fun QuizLayout(
     quizHolder.setIdiomGuess()
     val idiomText = quizHolder.getIdiomGuess().info[0]
     val cleanText = quizHolder.splitText(idiomText)[0]
-    // println(cleanText)
 
     Row(horizontalArrangement = Arrangement.SpaceAround) {
         Text(
