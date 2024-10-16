@@ -50,11 +50,7 @@ class QuizStateHolder: UiStateHolder() {
 
      fun getQuizMaterial(): List<Idiom> {
         return listOfIdioms.value
-    }
-
-    fun getQuizOptions(): List<Idiom> {
-        return quizOptions.value
-    }
+     }
 
     fun setQuizOptions(list: List<Idiom>) {
         quizOptions.value = list
@@ -72,7 +68,6 @@ class QuizStateHolder: UiStateHolder() {
 
         newList.add(material[index[0]])
         newList.add(material[index[1]])
-        newList.add(material[index[2]])
         newList.add(material[index[2]])
 
         val pos = list.random()
