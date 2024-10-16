@@ -72,7 +72,10 @@ interface RootAppDestination {
             val navigator = LocalNavigator.current
 
             SubscriptionPaywall(
-                onDismiss = { navigator?.push(Auth) },
+                onDismiss = {
+                    if (navigator?.items?.contains(Auth) == true)
+                        navigator.pop() else navigator?.push(Auth)
+                },
                 listener = object: PaywallListener {
                     override fun onPurchaseCompleted(customerInfo: CustomerInfo?) {
                         super.onPurchaseCompleted(customerInfo)

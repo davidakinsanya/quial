@@ -31,7 +31,6 @@ import com.quial.app.screens.loading.FeedLoadingScreen
 import com.quial.app.utils.sameDateCheck
 import kotlinx.coroutines.flow.map
 
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FeedScreen(
@@ -86,7 +85,6 @@ fun FeedScreen(
                 val stampCheck = sameDateCheck(string)
 
                 if (index > 3 && !stampCheck && !dataHolder.isPremium()) {
-                    // TODO: :)
                     dataHolder.updateTimeStamp()
                 }
 
