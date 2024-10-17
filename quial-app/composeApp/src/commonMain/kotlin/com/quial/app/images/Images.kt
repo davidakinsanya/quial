@@ -1,11 +1,13 @@
 package com.quial.app.images
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import org.jetbrains.compose.resources.painterResource
 import quial_app.composeapp.generated.resources.Res
+import quial_app.composeapp.generated.resources.more
 import quial_app.composeapp.generated.resources.quial_img
 import quial_app.composeapp.generated.resources.sign_in_img
 
@@ -23,4 +25,14 @@ fun SignInImage(modifier: Modifier) {
         contentDescription = "",
         contentScale = ContentScale.Crop,
         modifier = modifier)
+}
+
+@Composable
+fun ThreeDots(modifier: Modifier, onClick: () -> Unit) {
+    Image(painter = painterResource(Res.drawable.more),
+          contentDescription = "",
+          contentScale = ContentScale.Crop,
+          modifier = modifier.clickable {
+              onClick.invoke()
+          } )
 }

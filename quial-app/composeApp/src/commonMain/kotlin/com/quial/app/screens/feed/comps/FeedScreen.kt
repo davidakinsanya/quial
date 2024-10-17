@@ -3,8 +3,11 @@ package com.quial.app.screens.feed.comps
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.images.QuialImage
+import com.quial.app.images.ThreeDots
 import com.quial.app.screens.feed.FeedUiStateHolder
 import com.quial.app.screens.feed.quiz.QuizLayout
 import com.quial.app.screens.feed.quiz.QuizStateHolder
@@ -65,13 +69,18 @@ fun FeedScreen(
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            QuialImage(modifier.size(130.dp))
+            Row(horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = modifier.fillMaxWidth()) {
+                QuialImage(modifier.size(130.dp).padding(end = 35.dp))
+                ThreeDots(modifier.size(50.dp), { println("click") })
+            }
         }
 
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(top = 100.dp, bottom = 60.dp, start = 25.dp, end = 25.dp),
+                .padding(top = 100.dp, bottom = 10.dp, start = 25.dp, end = 25.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             VerticalPager(state = pagerState,
