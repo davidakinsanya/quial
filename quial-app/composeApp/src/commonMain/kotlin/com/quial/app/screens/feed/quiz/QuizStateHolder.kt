@@ -48,31 +48,26 @@ class QuizStateHolder: UiStateHolder() {
         listOfIdioms.value.add(idiom)
     }
 
-     fun getQuizMaterial(): List<Idiom> {
+     private fun getQuizMaterial(): List<Idiom> {
         return listOfIdioms.value
      }
-
-    fun setQuizOptions(list: List<Idiom>) {
-        quizOptions.value = list
-    }
 
     fun setIdiomGuess() {
         val material = this.getQuizMaterial()
         this.idiomGuess = material[index.value]
     }
 
-    fun quizOptions(index: List<Int>): List<Idiom> {
+    fun quizOptions(): List<Idiom> {
         val newList = mutableListOf<Idiom>()
-        val list = (0..2).toList()
         val material = this.getQuizMaterial()
 
-        newList.add(material[index[0]])
-        newList.add(material[index[1]])
-        newList.add(material[index[2]])
+        newList.add(material[material.size -1])
+        newList.add(idiomGuess!!)
+        newList.add(material[material.size -3])
 
-        val pos = list.random()
-        if (idiomGuess != null) newList[pos] = idiomGuess!!
-        return newList.toSet().toList()
+        quizOptions.value = newList
+
+        return quizOptions.value
     }
 
     fun getIdiomGuess(): Idiom {
@@ -80,16 +75,8 @@ class QuizStateHolder: UiStateHolder() {
     }
 
     fun assessAnswer(): Boolean {
-        if (idiomGuess != null)  println(getIdiomGuess())
-
-        val index = if (getTrueState() == quizOptions.value.size)
-            getTrueState() - 1
-        else getTrueState()
-
-        // println(index)
-
-        correctAnswer.value = quizOptions.value[index] == getIdiomGuess()
-        return quizOptions.value[index] == getIdiomGuess()
+        correctAnswer.value = quizOptions.value[getTrueState()] == getIdiomGuess()
+        return quizOptions.value[getTrueState()] == getIdiomGuess()
     }
 
     fun getAnswerState(): Boolean? {

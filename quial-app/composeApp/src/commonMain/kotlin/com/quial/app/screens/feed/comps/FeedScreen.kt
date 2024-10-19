@@ -57,15 +57,15 @@ fun FeedScreen(
         val correctAnswer = quizHolder.getAnswerState()
         val showMenu = remember { mutableStateOf(false) }
 
-        val borderColor = when (correctAnswer) {
+        val borderStroke: BorderStroke = when (correctAnswer) {
             null -> {
-                Color.Black
+                BorderStroke(3.dp, Color.Black)
             }
             false -> {
-                Color.Red
+                BorderStroke(3.dp, Color.Red)
             }
             else -> {
-                Color.Green
+                BorderStroke(6.dp, Color.Green)
             }
         }
 
@@ -112,7 +112,7 @@ fun FeedScreen(
                 Box(
                     modifier = modifier
                         .border(
-                            border = BorderStroke(3.dp, borderColor),
+                            border = borderStroke,
                             shape = RoundedCornerShape(15.dp)
                         )
                         .padding(
@@ -130,7 +130,9 @@ fun FeedScreen(
                         val idiomView = idioms[index % idioms.size]
 
                         if (pagerState.currentPage % 5 == 0 && pagerState.currentPage >= 5) {
-                            QuizLayout(quizHolder)
+                            quizHolder.setIdiomGuess()
+                            val options = remember { mutableStateOf(quizHolder.quizOptions()) }
+                            QuizLayout(quizHolder = quizHolder, options = options)
                         } else {
                             quizHolder.answerReset()
                             quizHolder.addToQuiz(idiomView)

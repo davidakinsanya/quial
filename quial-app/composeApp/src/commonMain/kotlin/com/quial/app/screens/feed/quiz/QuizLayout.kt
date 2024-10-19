@@ -14,6 +14,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.quial.app.data.idiom.Idiom
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
 import quial_app.composeapp.generated.resources.Res
@@ -29,12 +31,12 @@ import quial_app.composeapp.generated.resources.Res
 @Composable
 fun QuizLayout(
     quizHolder: QuizStateHolder,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    options: MutableState<List<Idiom>>
 ) {
 
     val font =  FontFamily(Font(Res.font.DMSans_Bold))
 
-    quizHolder.setIdiomGuess()
     val idiomText = quizHolder.getIdiomGuess().info[0]
     val cleanText = quizHolder.splitText(idiomText)[0]
 
@@ -89,7 +91,7 @@ fun QuizLayout(
             Column(verticalArrangement = Arrangement.SpaceEvenly,
                    horizontalAlignment = Alignment.CenterHorizontally) {
                 Spacer(modifier.padding(35.dp))
-                OptionsPager(quizHolder = quizHolder)
+                OptionsPager(quizHolder = quizHolder, options = options)
                 Spacer(modifier.padding(10.dp))
                 ContinueButton(quizHolder = quizHolder)
             }

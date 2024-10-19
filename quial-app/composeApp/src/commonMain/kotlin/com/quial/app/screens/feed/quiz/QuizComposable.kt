@@ -18,8 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +25,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.quial.app.data.idiom.Idiom
 import com.quial.app.utils.WormIndicator
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
@@ -65,11 +64,7 @@ fun BoxItem(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OptionsPager(quizHolder: QuizStateHolder) {
-    val index = remember { mutableStateOf(quizHolder.getQuizMaterial().indices.shuffled().take(3)) }
-    val options = remember { mutableStateOf(quizHolder.quizOptions(index.value)) }
-    quizHolder.setQuizOptions(options.value)
-
+fun OptionsPager(quizHolder: QuizStateHolder, options: MutableState<List<Idiom>>) {
     val pagerState = rememberPagerState(pageCount = { options.value.size })
     val optionState = quizHolder.listOfStates(options.value.size)
     val alphabet = listOf("A", "B", "C")
