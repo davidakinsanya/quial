@@ -29,6 +29,8 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
         |  const val QUIAL_LOGO = "${secretProperties.getPropertyValue("QUIAL_LOGO")}"
         |  const val SIGN_IN_GRAPHIC = "${secretProperties.getPropertyValue("SIGN_IN_GRAPHIC")}"
         |  const val TOKEN_URL = "${secretProperties.getPropertyValue("TOKEN_URL")}"
+        |  const val FEEDBACK_URL = "${secretProperties.getPropertyValue("FEEDBACK_URL")}"
+        |  
         |}
         |
       """.trimMargin()

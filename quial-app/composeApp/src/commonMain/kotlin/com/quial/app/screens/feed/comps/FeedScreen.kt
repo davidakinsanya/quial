@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.VerticalPager
@@ -20,6 +21,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,6 +32,7 @@ import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.images.QuialImage
 import com.quial.app.images.ThreeDots
 import com.quial.app.screens.feed.FeedUiStateHolder
+import com.quial.app.screens.feed.dropdown.OptionsMenu
 import com.quial.app.screens.feed.quiz.QuizLayout
 import com.quial.app.screens.feed.quiz.QuizStateHolder
 import com.quial.app.screens.loading.FeedLoadingScreen
@@ -51,6 +55,7 @@ fun FeedScreen(
         val pageCount = idioms.size * 400
         val pagerState = rememberPagerState(pageCount = { pageCount })
         val correctAnswer = quizHolder.getAnswerState()
+        val showMenu = remember { mutableStateOf(false) }
 
         val borderColor = when (correctAnswer) {
             null -> {
@@ -73,9 +78,16 @@ fun FeedScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = modifier.fillMaxWidth()) {
                 QuialImage(modifier.size(130.dp).padding(end = 35.dp))
-                ThreeDots(modifier.size(50.dp), { println("click") })
+                ThreeDots(modifier.size(50.dp), { showMenu.value = !showMenu.value })
             }
         }
+
+        Column(modifier = modifier
+            .fillMaxWidth(),
+            horizontalAlignment = Alignment.End) {
+            OptionsMenu(showMenu, modifier)
+        }
+
 
         Column(
             modifier = modifier
