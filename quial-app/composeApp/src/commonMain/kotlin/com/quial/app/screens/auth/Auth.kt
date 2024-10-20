@@ -34,7 +34,7 @@ fun AuthUiHelperButtonsAndFirebaseAuth(
     ) {
 
         Column(modifier = modifier,
-               verticalArrangement = Arrangement.spacedBy(110.dp),
+               verticalArrangement = Arrangement.spacedBy(140.dp),
                horizontalAlignment = Alignment.CenterHorizontally) {
 
             QuialImage(modifier.fillMaxWidth())
