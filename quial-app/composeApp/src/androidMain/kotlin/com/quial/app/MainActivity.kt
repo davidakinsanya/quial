@@ -1,6 +1,5 @@
 package com.quial.app
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
@@ -8,22 +7,28 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.main.App
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val color =  Color(125, 184, 107)
+        installSplashScreen()
         enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
-            navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+            statusBarStyle = SystemBarStyle.light(color.toArgb(), color.toArgb()),
+            navigationBarStyle = SystemBarStyle.light(color.toArgb(), color.toArgb())
         )
 
         setContent {
             onApplicationStartPlatformSpecific()
-            App(dataHolder = remember { DataStoreStateHolder(createDataStore(applicationContext)) })
+            App(dataHolder = remember {
+                DataStoreStateHolder(createDataStore(applicationContext))
+            })
         }
     }
 }

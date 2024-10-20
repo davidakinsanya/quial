@@ -71,6 +71,7 @@ kotlin {
             implementation(libs.koin.androidx.compose)
 
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.core.splashscreen)
 
             //Firebase
             api(project.dependencies.platform(libs.firebase.bom))

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="android:windowSplashScreenBackground">#7CB86B</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/quial_img</item>
+        <item name="android:theme">@android:style/Theme.Material.NoActionBar</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+</resources>

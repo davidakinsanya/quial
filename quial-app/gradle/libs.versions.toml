@@ -30,8 +30,8 @@ googleServices="4.4.2"
 firebaseCrashlytics = "3.0.2"
 uiAndroid = "1.7.3"
 datastore = "1.1.1"
-datastoreCoreJvm = "1.1.1"
 foundationLayoutAndroid = "1.7.3"
+core-splashscreen = "1.0.1"
 
 
 [libraries]
@@ -41,6 +41,9 @@ androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", nam
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
+# Splash Screen
+core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen" }
 
 # Voyager - Navigation
 voyager-bottom-sheet-navigator = { module = "cafe.adriel.voyager:voyager-bottom-sheet-navigator", version.ref = "voyagerNavigator" }
