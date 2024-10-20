@@ -6,7 +6,6 @@ import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.navigation.RootAppDestination
 import com.quial.app.navigation.RootAppNavigation
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.koinInject
 
 @Composable
 @Preview

@@ -185,6 +185,7 @@ kotlin {
             debugImplementation(compose.uiTooling)
         }
     }
+
 dependencies {
     implementation(libs.androidx.foundation.layout.android)
 }

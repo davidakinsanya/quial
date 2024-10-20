@@ -1,5 +1,7 @@
 package com.quial.app
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
@@ -15,10 +17,15 @@ import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.main.App
 
 class MainActivity : ComponentActivity() {
+
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val color =  Color(125, 184, 107)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         installSplashScreen()
+
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.light(color.toArgb(), color.toArgb()),
             navigationBarStyle = SystemBarStyle.light(color.toArgb(), color.toArgb())
