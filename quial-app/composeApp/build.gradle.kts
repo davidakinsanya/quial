@@ -188,6 +188,8 @@ kotlin {
 
 dependencies {
     implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.play.core.ktx)
+    implementation(libs.review.ktx)
 }
 
 

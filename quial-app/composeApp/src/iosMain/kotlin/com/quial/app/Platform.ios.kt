@@ -15,6 +15,10 @@ import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.darwin.Darwin
 import io.ktor.client.engine.darwin.DarwinClientEngineConfig
 import platform.UIKit.UIDevice
+import StoreKit
+import org.koin.core.module.Module
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.module
 
 class IOSPlatform: Platform {
     override val name: String = UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
@@ -50,4 +54,14 @@ fun createDataStore(): DataStore<Preferences> {
         )
         requireNotNull(directory).path + "/$DATA_STORE_FILE_NAME"
     }
+}
+
+actual class Growth {
+    actual fun inAppRating() {
+        SKStoreReviewController.requestReview()
+    }
+}
+
+actual fun sharedPlatformModule(): Module = module {
+    singleOf(::Growth)
 }

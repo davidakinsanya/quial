@@ -1,10 +1,13 @@
 package com.quial.app.di
 
+import com.quial.app.Growth
 import com.quial.app.http.requests.RetrieveIdiomsClient
 import com.quial.app.repository.FeedRepository
 import com.quial.app.screens.feed.FeedUiState
 import com.quial.app.screens.feed.FeedUiStateHolder
 import com.quial.app.screens.feed.quiz.QuizStateHolder
+import org.koin.core.module.Module
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val feedModule = module {

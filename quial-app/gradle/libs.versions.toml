@@ -32,6 +32,8 @@ uiAndroid = "1.7.3"
 datastore = "1.1.1"
 foundationLayoutAndroid = "1.7.3"
 core-splashscreen = "1.0.1"
+coreKtxVersion = "1.10.3"
+reviewKtx = "2.0.2"
 
 
 [libraries]
@@ -100,6 +102,8 @@ androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", vers
 datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
+play-core-ktx = { group = "com.google.android.play", name = "core-ktx", version.ref = "coreKtxVersion" }
+review-ktx = { group = "com.google.android.play", name = "review-ktx", version.ref = "reviewKtx" }
 
 [plugins]
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesVersion"}
