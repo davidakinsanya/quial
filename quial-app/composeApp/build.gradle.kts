@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.cocoapods)
 }
 
 val buildConfigGenerator by tasks.registering(Sync::class) {
@@ -61,6 +62,11 @@ kotlin {
             isStatic = true
         }
     }
+
+    cocoapods {
+        version = "1.0"
+    }
+
 
     sourceSets {
         androidMain.dependencies {
