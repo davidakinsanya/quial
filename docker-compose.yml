@@ -20,6 +20,6 @@ services:
    ports:
      - "8082:8082"
 
-  volumes:
-    shared-volume:
-    onboarding-quial:
+ volumes:
+   shared-volume:
+   onboarding-quial:
