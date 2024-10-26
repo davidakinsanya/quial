@@ -122,7 +122,7 @@ for i in range(0, len(idiom_dict['a'][0])):
 '''
 
 
-
+'''
 
 ### Testing Script 2
 
@@ -142,9 +142,9 @@ with open("/usr/src/app/quial.csv", mode="w") as csvfile:
         break
         
 
-
-
 '''
+
+
 ### Production Script
 
 field_names = ["basic-info", "meanings", "example-sentences"]
@@ -173,10 +173,6 @@ if os.path.exists("/usr/src/app/user-quial.csv"):
     os.remove("/usr/src/app/quial2.csv")
 else:
     os.rename("/usr/src/app/quial2.csv", "/usr/src/app/quial.csv")
-
-'''
-
-# os.rename("/usr/src/app/quial2.csv", "/usr/src/app/quial.csv")
 
 
 '''
