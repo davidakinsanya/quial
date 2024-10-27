@@ -89,7 +89,6 @@ def scrape(letter, page):
         idiom_dict[letter][2] += [meanings_list[1]]
     
     if curr_page != max_page:
-        return
         # add a return here for testing.
         new_page = int(curr_page) + 1
         return scrape(letter, new_page)
