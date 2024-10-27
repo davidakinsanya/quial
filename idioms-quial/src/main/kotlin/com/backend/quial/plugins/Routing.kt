@@ -15,6 +15,11 @@ fun Application.configureRouting() {
             call.respond(retrieveIdiomsImpl.readIdioms())
         }
 
+        get("/count") {
+            val retrieveIdiomsImpl = RetrieveIdiomsImpl()
+            call.respond(retrieveIdiomsImpl.readIdioms().size)
+        }
+
         get("/add") {
             val idiom = call.parameters["idiom"]!!
             call.respond(AddUserIdiomImpl().add(idiom))
