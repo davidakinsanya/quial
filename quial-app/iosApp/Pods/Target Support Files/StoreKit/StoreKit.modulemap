@@ -1,0 +1,6 @@
+framework module StoreKit {
+  umbrella header "StoreKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
