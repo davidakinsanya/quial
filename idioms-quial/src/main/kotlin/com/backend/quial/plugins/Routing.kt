@@ -12,7 +12,7 @@ fun Application.configureRouting() {
     routing {
         get("/") {
             val retrieveIdiomsImpl = RetrieveIdiomsImpl()
-            call.respond(retrieveIdiomsImpl.readIdioms())
+            call.respond(retrieveIdiomsImpl.readIdioms().shuffled())
         }
 
         get("/count") {
