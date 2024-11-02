@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppContext.setUp(this@MainActivity.applicationContext)
 
         val color =  Color(125, 184, 107)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT

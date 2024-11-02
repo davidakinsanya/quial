@@ -16,8 +16,5 @@ expect fun getHttpClient(): HttpClientEngine
 
 expect fun getHttpConfig(): HttpClientConfig<*>
 
-expect fun sharedPlatformModule(): Module
+expect fun inAppRating()
 
-expect class Growth {
-    fun inAppRating()
-}

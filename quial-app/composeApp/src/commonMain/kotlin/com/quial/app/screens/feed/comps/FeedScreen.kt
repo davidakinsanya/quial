@@ -85,7 +85,11 @@ fun FeedScreen(
         Column(modifier = modifier
             .fillMaxWidth(),
             horizontalAlignment = Alignment.End) {
-            OptionsMenu(showMenu, modifier)
+            OptionsMenu(
+                premiumBool = !dataHolder.isPremium(),
+                showMenu = showMenu,
+                modifier = modifier
+            )
         }
 
 
@@ -105,7 +109,7 @@ fun FeedScreen(
 
                 val stampCheck = sameDateCheck(string)
 
-                if (index > 3 && !stampCheck && !dataHolder.isPremium()) {
+                if (index > 5 && !stampCheck && !dataHolder.isPremium()) {
                     dataHolder.updateTimeStamp()
                 }
 
@@ -129,13 +133,21 @@ fun FeedScreen(
                     if (idioms.isNotEmpty()) {
                         val idiomView = idioms[index % idioms.size]
 
-                        if (pagerState.currentPage % 5 == 0 && pagerState.currentPage >= 5) {
+                        if (pagerState.currentPage % 7 == 0
+                            && pagerState.currentPage >= 7
+                            && dataHolder.isPremium()) {
+
                             quizHolder.setIdiomGuess()
                             val options = remember { mutableStateOf(quizHolder.quizOptions()) }
                             QuizLayout(quizHolder = quizHolder, options = options)
+
                         } else {
-                            quizHolder.answerReset()
-                            quizHolder.addToQuiz(idiomView)
+
+                            if (dataHolder.isPremium()) {
+                                quizHolder.answerReset()
+                                quizHolder.addToQuiz(idiomView)
+                            }
+
                             FeedComposable(
                                 idiom = idiomView,
                                 modifier = modifier,

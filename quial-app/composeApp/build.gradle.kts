@@ -74,7 +74,7 @@ kotlin {
             isStatic = true
         }
 
-
+        /*
         pod("StoreKit") {
             version = libs.versions.pods.storekit.get()
             extraOpts += listOf("-compiler-option", "-fmodules")
@@ -83,7 +83,7 @@ kotlin {
 
         pod("FirebaseCore") {
             moduleName = "FirebaseCore"
-            version = libs.versions.pods.firebase.get()git
+            version = libs.versions.pods.firebase.get()
             extraOpts += listOf("-compiler-option", "-fmodules")
         }
 
@@ -92,6 +92,7 @@ kotlin {
             version = libs.versions.pods.signin.get()
             extraOpts += listOf("-compiler-option", "-fmodules")
         }
+        */
     }
 
     tasks.withType<org.jetbrains.kotlin.gradle.targets.native.tasks.PodGenTask>().configureEach {
@@ -227,7 +228,6 @@ kotlin {
 
 dependencies {
     implementation(libs.androidx.foundation.layout.android)
-    implementation(libs.play.core.ktx)
     implementation(libs.review.ktx)
 }
 

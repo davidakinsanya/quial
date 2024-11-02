@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.quial.app.inAppRating
 import com.quial.app.navigation.RootAppDestination
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
@@ -21,28 +22,31 @@ import quial_app.composeapp.generated.resources.Res
 import secrets.BuildConfig
 
 @Composable
-fun OptionsMenu(showMenu: MutableState<Boolean>, modifier: Modifier) {
+fun OptionsMenu(premiumBool: Boolean,
+                showMenu: MutableState<Boolean>,
+                modifier: Modifier) {
     val navigator = LocalNavigator.current
     val uriHandler = LocalUriHandler.current
 
     Box(contentAlignment = Alignment.TopEnd,
         modifier = modifier.padding(end = 20.dp)) {
+        if (premiumBool) {
+            DropdownMenu(
+                expanded = showMenu.value,
+                onDismissRequest = { showMenu.value = false },
+                modifier = modifier
+            ) {
 
-        DropdownMenu(
-            expanded = showMenu.value,
-            onDismissRequest = { showMenu.value = false },
-            modifier = modifier
-        ) {
-
-            DropdownMenuItem(onClick = {
-                showMenu.value = !showMenu.value
-                navigator?.push(RootAppDestination.Paywall)
-            }) {
-                Text(
-                    text = "Upgrade",
-                    fontFamily = FontFamily(Font(Res.font.DMSans_Bold)),
-                    color = Color.Red
-                )
+                DropdownMenuItem(onClick = {
+                    showMenu.value = !showMenu.value
+                    navigator?.push(RootAppDestination.Paywall)
+                }) {
+                    Text(
+                        text = "Upgrade",
+                        fontFamily = FontFamily(Font(Res.font.DMSans_Bold)),
+                        color = Color.Red
+                    )
+                }
             }
 
             DropdownMenuItem(onClick = {
@@ -51,6 +55,16 @@ fun OptionsMenu(showMenu: MutableState<Boolean>, modifier: Modifier) {
             }) {
                 Text(
                     text = "Feedback",
+                    fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                )
+            }
+
+            DropdownMenuItem(onClick = {
+                showMenu.value = !showMenu.value
+                inAppRating()
+            }) {
+                Text(
+                    text = "Rating",
                     fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
                 )
             }

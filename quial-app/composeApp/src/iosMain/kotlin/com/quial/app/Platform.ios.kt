@@ -56,12 +56,6 @@ fun createDataStore(): DataStore<Preferences> {
     }
 }
 
-actual class Growth {
-    actual fun inAppRating() {
-        SKStoreReviewController.requestReview()
-    }
-}
-
-actual fun sharedPlatformModule(): Module = module {
-    singleOf(::Growth)
+actual fun inAppRating() {
+    SKStoreReviewController.requestReview()
 }
