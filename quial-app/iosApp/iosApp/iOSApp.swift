@@ -1,6 +1,5 @@
 import SwiftUI
-import FirebaseCore
-
+import AuthenticationServices
 
 class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,

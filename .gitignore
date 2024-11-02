@@ -4,3 +4,8 @@
 /quial-app/composeApp/google-services.json
 /quial-app/iosApp/iosApp/GoogleService-Info.plist
 /quial-app/iosApp/iosApp/Info.plist
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
