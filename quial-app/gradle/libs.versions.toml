@@ -35,6 +35,10 @@ core-splashscreen = "1.0.1"
 coreKtxVersion = "1.10.3"
 reviewKtx = "2.0.2"
 
+pods-storekit = "1.0"
+pods-firebase = "11.4.2"
+pods-signin = "8.0"
+
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
