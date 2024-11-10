@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -53,10 +54,25 @@ fun FeedComposable(modifier: Modifier,
     val navigator = LocalNavigator.current
 
     Row(horizontalArrangement = Arrangement.SpaceAround) {
-        Text(
-            text = uiHolder.splitText(idiomText)[0].substring(0, 2),
-            fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
-        )
+        Column {
+            Text(
+                text = uiHolder.splitText(idiomText)[0].substring(0, 2),
+                fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+            )
+            if (stampCheck && !dataHolder.isPremium()) {
+                Text(
+                    text = "Upgrade To Quial+",
+                    modifier = modifier.padding(top = 15.dp).clickable {
+                        navigator?.push(RootAppDestination.Paywall)
+                    },
+                    fontFamily = FontFamily(Font(Res.font.DMSans_Bold)),
+                    textAlign = TextAlign.Center,
+                    textDecoration = TextDecoration.Underline,
+                    color = Color.Red
+                )
+            }
+
+        }
 
         Text(
             text = uiHolder.splitText(idiomText)[0],
