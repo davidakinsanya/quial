@@ -55,7 +55,8 @@ class DataStoreStateHolder(
             val isPremium = booleanPreferencesKey("isPremium")
             var boolean = false
             Purchases.syncPurchases { customerInfo ->
-                boolean = customerInfo.getOrNull()?.entitlements.toString().isNotEmpty()
+                boolean = customerInfo.getOrNull()?.entitlements?.all?.size == 1
+                println("Info: " + customerInfo.getOrNull()?.entitlements?.all?.size)
             }
             it[isPremium] = boolean
         }

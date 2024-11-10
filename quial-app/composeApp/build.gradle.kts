@@ -31,7 +31,7 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
         |  const val SIGN_IN_GRAPHIC = "${secretProperties.getPropertyValue("SIGN_IN_GRAPHIC")}"
         |  const val TOKEN_URL = "${secretProperties.getPropertyValue("TOKEN_URL")}"
         |  const val FEEDBACK_URL = "${secretProperties.getPropertyValue("FEEDBACK_URL")}"
-        |  
+        |  const val APP_STORE_RATING_ANDROID = "${secretProperties.getPropertyValue("APP_STORE_RATING_ANDROID")}"
         |}
         |
       """.trimMargin()
@@ -199,7 +199,7 @@ kotlin {
             applicationId = "com.quial.app"
             minSdk = libs.versions.android.minSdk.get().toInt()
             targetSdk = libs.versions.android.targetSdk.get().toInt()
-            versionCode = 1
+            versionCode = 5
             versionName = "1.0"
         }
         packaging {

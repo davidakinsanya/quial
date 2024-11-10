@@ -21,7 +21,7 @@ fun App(dataHolder: DataStoreStateHolder) {
 @Composable
 fun RootAppNavigation(dataHolder: DataStoreStateHolder) {
     val startDestination = if (dataHolder.isOnboardingShown())
-        RootAppDestination.Auth
+        RootAppDestination.Feed
     else
         RootAppDestination.Onboarding
 

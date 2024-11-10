@@ -30,13 +30,14 @@ fun OptionsMenu(premiumBool: Boolean,
 
     Box(contentAlignment = Alignment.TopEnd,
         modifier = modifier.padding(end = 20.dp)) {
-        if (premiumBool) {
+
             DropdownMenu(
                 expanded = showMenu.value,
                 onDismissRequest = { showMenu.value = false },
                 modifier = modifier
             ) {
 
+            if (premiumBool) {
                 DropdownMenuItem(onClick = {
                     showMenu.value = !showMenu.value
                     navigator?.push(RootAppDestination.Paywall)
@@ -61,14 +62,13 @@ fun OptionsMenu(premiumBool: Boolean,
 
             DropdownMenuItem(onClick = {
                 showMenu.value = !showMenu.value
-                inAppRating()
+                uriHandler.openUri(BuildConfig.APP_STORE_RATING_ANDROID)
             }) {
                 Text(
                     text = "Rating",
                     fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
                 )
             }
-
         }
     }
 }
