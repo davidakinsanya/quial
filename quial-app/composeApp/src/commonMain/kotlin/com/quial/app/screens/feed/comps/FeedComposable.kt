@@ -37,7 +37,8 @@ fun FeedComposable(modifier: Modifier,
 
 
 
-    val bool = dataHolder.isPremium() || stampCheck
+    val bool = !dataHolder.isPremium() && stampCheck
+
     val randomInt = uiHolder.randomInt()
     val booleanList = uiHolder.getListOfBools(bool = bool, randomInt = randomInt)
     
@@ -59,9 +60,9 @@ fun FeedComposable(modifier: Modifier,
                 text = uiHolder.splitText(idiomText)[0].substring(0, 2),
                 fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
             )
-            if (stampCheck && !dataHolder.isPremium()) {
+            if (bool) {
                 Text(
-                    text = "Upgrade To Quial+",
+                    text = "Upgrade",
                     modifier = modifier.padding(top = 15.dp).clickable {
                         navigator?.push(RootAppDestination.Paywall)
                     },

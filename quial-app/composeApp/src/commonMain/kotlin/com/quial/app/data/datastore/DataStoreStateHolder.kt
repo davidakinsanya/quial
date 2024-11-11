@@ -1,9 +1,11 @@
 package com.quial.app.data.datastore
 
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.mmk.kmprevenuecat.purchases.Purchases
@@ -50,28 +52,22 @@ class DataStoreStateHolder(
       }
     }
 
-    private fun getPurchasesData() = uiStateHolderScope.launch {
-        preferences.edit {
-            val isPremium = booleanPreferencesKey("isPremium")
-            var boolean = false
-            Purchases.syncPurchases { customerInfo ->
-                boolean = customerInfo.getOrNull()?.entitlements?.all?.size == 1
-                println("Info: " + customerInfo.getOrNull()?.entitlements?.all?.size)
+    @Composable
+    private fun getPurchasesData(): Boolean {
+        val purchase = remember {  mutableStateOf(false) }
+        Purchases.syncPurchases { customerInfo ->
+            customerInfo.getOrNull()?.entitlements?.all?.values?.iterator()?.forEach {
+                if (!purchase.value && it.isActive) purchase.value = true
             }
-            it[isPremium] = boolean
         }
+        println("purchase: " + purchase.value)
+        return purchase.value
     }
 
+    @Composable
     fun isPremium(): Boolean {
-        var boolean = false
-        uiStateHolderScope.launch {
-            getPurchasesData()
-            preferences.edit {
-                val isPremium = booleanPreferencesKey("isPremium")
-                boolean = it[isPremium] == true
-            }
-        }
-        return boolean
+        println("data: " + getPurchasesData())
+        return getPurchasesData()
     }
 
     fun updateTimeStamp() = uiStateHolderScope.launch {

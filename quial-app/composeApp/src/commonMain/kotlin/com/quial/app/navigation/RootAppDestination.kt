@@ -79,7 +79,7 @@ interface RootAppDestination {
                 listener = object: PaywallListener {
                     override fun onPurchaseCompleted(customerInfo: CustomerInfo?) {
                         super.onPurchaseCompleted(customerInfo)
-                        navigator?.push(Auth)
+                        navigator?.push(Feed) // Should be Auth
                     }
 
                     override fun onPurchaseError(error: String?) {
