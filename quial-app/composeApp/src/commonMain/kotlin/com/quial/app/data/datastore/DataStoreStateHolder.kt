@@ -55,7 +55,7 @@ class DataStoreStateHolder(
     @Composable
     private fun getPurchasesData(): Boolean {
         val purchase = remember {  mutableStateOf(false) }
-        Purchases.syncPurchases { customerInfo ->
+        Purchases.getCustomerInfo { customerInfo ->
             customerInfo.getOrNull()?.entitlements?.all?.values?.iterator()?.forEach {
                 if (!purchase.value && it.isActive) purchase.value = true
             }

@@ -107,7 +107,7 @@ fun FeedScreen(
                     it[stamp]?: ""
                 }.collectAsState("")
 
-                val stampCheck = if (!dataHolder.isPremium()) sameDateCheck(string) else false
+                val stampCheck = sameDateCheck(string)
 
                 if (index > 5 && !stampCheck && !dataHolder.isPremium()) {
                     dataHolder.updateTimeStamp()

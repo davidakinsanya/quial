@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.mmk.kmprevenuecat.purchases.Purchases
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.data.idiom.Idiom
 import com.quial.app.navigation.RootAppDestination
@@ -34,7 +35,6 @@ fun FeedComposable(modifier: Modifier,
                    uiHolder: FeedUiStateHolder,
                    dataHolder: DataStoreStateHolder,
                    stampCheck: Boolean) {
-
 
 
     val bool = !dataHolder.isPremium() && stampCheck
