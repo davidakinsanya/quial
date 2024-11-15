@@ -12,7 +12,6 @@ import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import secrets.BuildConfig
 
-
 object AppInitializer {
 
     fun initialize(isDebug: Boolean = false,
@@ -31,6 +30,7 @@ object AppInitializer {
 
         NotifierManager.addListener(object : NotifierManager.Listener {
             override fun onNewToken(token: String) {
+                super.onNewToken(token)
                 println("onNewToken: $token")
             }
 
@@ -47,10 +47,5 @@ object AppInitializer {
 
         })
         GoogleAuthProvider.create(GoogleAuthCredentials(serverId = BuildConfig.GOOGLE_AUTH))
-    }
-
-    private fun askPushNotification() {
-        val permissionUtil = NotifierManager.getPermissionUtil()
-        permissionUtil.askNotificationPermission()
     }
 }

@@ -83,12 +83,14 @@ fun OnboardingScreen(
                         if (uiStateHolder.questionObjectCheck(map[index])) {
                             val question = map[index] as Question
                             QuestionComposable(modifier, question, uiStateHolder)
+                            // Firebase event trigger here.
                         } else {
                             val statement = map[index] as Statement
                             StatementComposable(modifier, statement)
+                            // Firebase event trigger here.
                         }
                     } else {
-                        // TODO: shimmer loading animation.
+                        //
                     }
                 }
             }

@@ -74,12 +74,12 @@ interface RootAppDestination {
             SubscriptionPaywall(
                 onDismiss = {
                     if (navigator?.items?.contains(Auth) == true)
-                        navigator.pop() else navigator?.push(Feed) // Should be Auth
+                        navigator.pop() else navigator?.push(Auth)
                 },
                 listener = object: PaywallListener {
                     override fun onPurchaseCompleted(customerInfo: CustomerInfo?) {
                         super.onPurchaseCompleted(customerInfo)
-                        navigator?.push(Feed) // Should be Auth
+                        navigator?.push(Auth)
                     }
 
                     override fun onPurchaseError(error: String?) {
@@ -89,7 +89,7 @@ interface RootAppDestination {
 
                     override fun onRestoreCompleted(customerInfo: CustomerInfo?) {
                         super.onRestoreCompleted(customerInfo)
-                        navigator?.push(Feed) // Should be Auth
+                        navigator?.push(Auth)
                     }
 
                     override fun onRestoreError(error: String?) {

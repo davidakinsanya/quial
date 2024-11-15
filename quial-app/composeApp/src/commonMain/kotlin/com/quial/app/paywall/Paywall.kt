@@ -18,6 +18,8 @@ fun SubscriptionPaywall(onDismiss: () -> Unit, listener: PaywallListener? = null
             properties = DialogProperties(usePlatformDefaultWidth = false),
             onDismissRequest = onDismiss
         ) {
+            // Write ktor server to remote control this
+            // and add it to the app backend at 'true'
             Surface(modifier = Modifier.fillMaxSize()) {
                 Paywall(
                     shouldDisplayDismissButton = true,

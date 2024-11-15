@@ -60,13 +60,11 @@ class DataStoreStateHolder(
                 if (!purchase.value && it.isActive) purchase.value = true
             }
         }
-        println("purchase: " + purchase.value)
         return purchase.value
     }
 
     @Composable
     fun isPremium(): Boolean {
-        println("data: " + getPurchasesData())
         return getPurchasesData()
     }
 
