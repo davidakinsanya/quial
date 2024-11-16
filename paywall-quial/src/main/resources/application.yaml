@@ -1,0 +1,7 @@
+ktor:
+    application:
+        modules:
+            - com.backend.quial.ApplicationKt.module
+    deployment:
+        port: 8083
+        host: 0.0.0.0

@@ -28,6 +28,7 @@ import com.quial.app.data.onboarding.Statement
 import com.quial.app.images.QuialImage
 import com.quial.app.screens.onboarding.OnboardingUiStateHolder
 import com.quial.app.utils.WormIndicator
+import dev.gitlive.firebase.analytics.FirebaseAnalytics
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -35,7 +36,8 @@ fun OnboardingScreen(
     modifier: Modifier = Modifier,
     uiStateHolder: OnboardingUiStateHolder,
     dataHolder: DataStoreStateHolder,
-    onNavigateMain: () -> Unit
+    onNavigateMain: () -> Unit,
+    analytics: FirebaseAnalytics,
 ) {
     Scaffold(modifier = modifier
         .fillMaxSize(),
@@ -83,11 +85,19 @@ fun OnboardingScreen(
                         if (uiStateHolder.questionObjectCheck(map[index])) {
                             val question = map[index] as Question
                             QuestionComposable(modifier, question, uiStateHolder)
-                            // Firebase event trigger here.
+
+                            analytics.logEvent(" question paywall view screen: ", mapOf(
+                                Pair("Question", question.getOnboardingQuestion()),
+                                Pair("Options", question.getOnboardingOptions().toString())
+                            ))
                         } else {
                             val statement = map[index] as Statement
                             StatementComposable(modifier, statement)
-                            // Firebase event trigger here.
+
+                            analytics.logEvent("statement paywall view screen", mapOf(
+                                Pair("Header", statement.getOnboardingHeader()),
+                                Pair("Text", statement.getOnboardingText())
+                            ))
                         }
                     } else {
                         //

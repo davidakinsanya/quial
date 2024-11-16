@@ -6,6 +6,8 @@ android-targetSdk = "34"
 androidx-activityCompose = "1.9.2"
 androidx-lifecycle = "2.8.0"
 compose-plugin = "1.6.11"
+firebaseAnalytics = "2.1.0"
+firebasePerf = "2.1.0"
 googleServicesVersion = "4.4.2"
 gradle = "4.0.2"
 kotlin = "2.0.20"
@@ -85,7 +87,8 @@ firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.r
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
-
+gitlive-firebase-analytics = { module = "dev.gitlive:firebase-analytics", version.ref = "firebaseAnalytics" }
+gitlive-firebase-perf = { module = "dev.gitlive:firebase-perf", version.ref = "firebasePerf" }
 
 # Push Notification
 kmpNotifier = { group = "io.github.mirzemehdi", name = "kmpnotifier", version.ref = "kmpNotifier" }

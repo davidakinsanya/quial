@@ -21,8 +21,15 @@ services:
      - onboarding-quial:/usr/src/app
    ports:
      - "8082:8082"
+ paywall:
+  build: ./paywall-quial
+  volumes: 
+    - paywall-quial:/usr/src/app
+  ports: 
+    - "8083:8083"
 
 volumes:
   shared-volume:
   onboarding-quial:
+  paywall-quial:
   

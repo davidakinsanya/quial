@@ -17,7 +17,6 @@ import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
 import quial_app.composeapp.generated.resources.Res
 
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnboardingNavigationButtons(state: PagerState,

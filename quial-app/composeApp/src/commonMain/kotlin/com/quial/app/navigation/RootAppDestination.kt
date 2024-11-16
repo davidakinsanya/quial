@@ -9,6 +9,7 @@ import com.mmk.kmprevenuecat.purchases.data.CustomerInfo
 import com.mmk.kmprevenuecat.purchases.ui.PaywallListener
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.http.requests.TokenClient
+import com.quial.app.paywall.PaywallConfigStateHolder
 import com.quial.app.paywall.SubscriptionPaywall
 import com.quial.app.screens.auth.AuthUiHelperButtonsAndFirebaseAuth
 import com.quial.app.screens.feed.FeedUiStateHolder
@@ -17,6 +18,8 @@ import com.quial.app.screens.feed.quiz.QuizStateHolder
 import com.quial.app.screens.onboarding.comps.OnboardingScreen
 import com.quial.app.screens.onboarding.OnboardingUiStateHolder
 import com.quial.app.utils.getUiStateHolder
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.analytics.analytics
 import org.koin.compose.koinInject
 
 interface RootAppDestination {
@@ -37,12 +40,17 @@ interface RootAppDestination {
         @Composable
         override fun Content() {
             val navigator = LocalNavigator.current
+            val analytics = Firebase.analytics
 
             OnboardingScreen(
                 modifier = Modifier,
                 uiStateHolder = getUiStateHolder<OnboardingUiStateHolder>(),
                 dataHolder = getDataHolder(),
-                onNavigateMain = { navigator?.push(Paywall) }
+                onNavigateMain = {
+                    analytics.logEvent("Onboarding Complete!")
+                    navigator?.push(Paywall)
+                },
+                analytics = analytics
             )
         }
     }
@@ -70,8 +78,12 @@ interface RootAppDestination {
         @Composable
         override fun Content() {
             val navigator = LocalNavigator.current
+            val analytics = Firebase.analytics
 
             SubscriptionPaywall(
+                analytics = analytics,
+                navigator = navigator,
+                paywallHolder = koinInject<PaywallConfigStateHolder>(),
                 onDismiss = {
                     if (navigator?.items?.contains(Auth) == true)
                         navigator.pop() else navigator?.push(Auth)

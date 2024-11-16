@@ -1,7 +1,5 @@
 package com.quial.app.data.onboarding
 
-import com.quial.app.data.onboarding.OnboardingEnums
-import com.quial.app.data.onboarding.OnboardingSequence
 import kotlinx.serialization.Serializable
 
 @Serializable

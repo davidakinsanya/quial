@@ -1,6 +1,8 @@
 package com.quial.app.screens.feed.comps
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -167,6 +170,8 @@ fun FeedComposable(modifier: Modifier,
                             text = "'" + uiHolder.splitText(idiomExample)[index] + "'",
                             modifier = modifier
                                 .fillMaxWidth()
+                                .scrollable(state = rememberScrollState(),
+                                    orientation = Orientation.Vertical)
                                 .blur(radius = if (blurRadius3) 8.dp else 0.dp)
                                 .padding(bottom = 5.dp)
                                 .clickable {
@@ -175,6 +180,7 @@ fun FeedComposable(modifier: Modifier,
                                     }
                                 },
                             textAlign = TextAlign.End,
+                            fontSize = textSize,
                             fontFamily = font
                         )
                     }
@@ -186,8 +192,15 @@ fun FeedComposable(modifier: Modifier,
                         text = "'" + strings[edgeCaseIndex] + "'",
                         modifier = modifier
                             .fillMaxWidth()
+                            .scrollable(state = rememberScrollState(),
+                                        orientation = Orientation.Vertical)
                             .blur(radius = if (blurRadius3) 8.dp else 0.dp)
-                            .padding(bottom = 5.dp),
+                            .padding(bottom = 5.dp)
+                            .clickable {
+                                if (bool) {
+                                    navigator?.push(RootAppDestination.Paywall)
+                                }
+                            },
                         textAlign = TextAlign.End,
                         fontSize = textSize,
                         fontFamily = font

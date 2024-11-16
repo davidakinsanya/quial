@@ -1,15 +1,8 @@
 package com.quial.app.screens.onboarding
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import com.quial.app.data.onboarding.OnboardingMap
 import com.quial.app.repository.OnboardingRepository
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-
-@OptIn(
-    ExperimentalFoundationApi::class,
-    ExperimentalResourceApi::class
-)
 data class OnboardingScreenUiState(
     val repository: OnboardingRepository
 ) {

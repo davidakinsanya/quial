@@ -24,6 +24,7 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
         |object BuildConfig {
         |  const val ONBOARDING_URL = "${secretProperties.getPropertyValue("ONBOARDING_URL")}"
         |  const val IDIOM_URL = "${secretProperties.getPropertyValue("IDIOM_URL")}"
+        |  const val PAYWALL_URL = "${secretProperties.getPropertyValue("PAYWALL_URL")}"
         |  const val REVENUECAT_API_KEY_ANDROID = "${secretProperties.getPropertyValue("REVENUECAT_API_KEY_ANDROID")}"
         |  const val REVENUECAT_API_KEY_IOS = "${secretProperties.getPropertyValue("REVENUECAT_API_KEY_IOS")}"
         |  const val GOOGLE_AUTH = "${secretProperties.getPropertyValue("GOOGLE_AUTH")}"
@@ -165,6 +166,8 @@ kotlin {
                     api(libs.datastore)
 
                     implementation(libs.kotlinx.datetime)
+                    implementation(libs.gitlive.firebase.analytics)
+                    implementation(libs.gitlive.firebase.perf)
 
                 }
             }
