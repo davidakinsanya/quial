@@ -109,7 +109,7 @@ fun FeedScreen(
 
                 val stampCheck = sameDateCheck(string)
 
-                if (index > 5 && !stampCheck && !dataHolder.isPremium()) {
+                if (index > 3 && !stampCheck && !dataHolder.isPremium()) {
                     dataHolder.updateTimeStamp()
                 }
 

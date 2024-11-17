@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -169,9 +170,8 @@ fun FeedComposable(modifier: Modifier,
                         Text(
                             text = "'" + uiHolder.splitText(idiomExample)[index] + "'",
                             modifier = modifier
+                                .verticalScroll(rememberScrollState())
                                 .fillMaxWidth()
-                                .scrollable(state = rememberScrollState(),
-                                    orientation = Orientation.Vertical)
                                 .blur(radius = if (blurRadius3) 8.dp else 0.dp)
                                 .padding(bottom = 5.dp)
                                 .clickable {
@@ -191,9 +191,8 @@ fun FeedComposable(modifier: Modifier,
                     Text(
                         text = "'" + strings[edgeCaseIndex] + "'",
                         modifier = modifier
+                            .verticalScroll(rememberScrollState())
                             .fillMaxWidth()
-                            .scrollable(state = rememberScrollState(),
-                                        orientation = Orientation.Vertical)
                             .blur(radius = if (blurRadius3) 8.dp else 0.dp)
                             .padding(bottom = 5.dp)
                             .clickable {

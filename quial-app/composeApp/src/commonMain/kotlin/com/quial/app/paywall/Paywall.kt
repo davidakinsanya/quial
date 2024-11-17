@@ -32,9 +32,11 @@ fun SubscriptionPaywall(onDismiss: () -> Unit,
     val paywallConfigMap by paywallHolder.paywallMap.collectAsState()
 
     if (previousScreenFeed == true) {
-        softPaywallBoolean.value = paywallConfigMap["feed"] == "true"
+        softPaywallBoolean.value = paywallConfigMap["feed"]
+            ?.contains("true") ?: false
     } else {
-        softPaywallBoolean.value = paywallConfigMap["onboarding"] == "true"
+        softPaywallBoolean.value = paywallConfigMap["onboarding"]
+            ?.contains("true") ?: false
     }
 
     if (isAndroid()) {
