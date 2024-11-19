@@ -8,7 +8,7 @@ import io.ktor.http.CacheControl
 fun createHttpClient(engine: HttpClientEngine): HttpClient {
     return HttpClient(engine) {
         install(HttpCache) {
-            val cacheControl = CacheControl.MaxAge(maxAgeSeconds = 7200, proxyMaxAgeSeconds = 7200)
+            val cacheControl = CacheControl.MaxAge(maxAgeSeconds = 43200, proxyMaxAgeSeconds = 7200)
         }
     }
 }
