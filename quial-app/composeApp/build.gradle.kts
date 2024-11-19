@@ -202,7 +202,7 @@ kotlin {
             applicationId = "com.quial.app"
             minSdk = libs.versions.android.minSdk.get().toInt()
             targetSdk = libs.versions.android.targetSdk.get().toInt()
-            versionCode = 26
+            versionCode = 27
             versionName = "1.0"
         }
         packaging {

@@ -17,6 +17,6 @@ class RetrieveIdiomsClient(
             ignoreUnknownKeys = true
             isLenient = false
         }
-        return serializer.decodeFromString(response)
+        return serializer.decodeFromString<List<Idiom>?>(response)?.shuffled()
     }
 }
