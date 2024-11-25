@@ -8,8 +8,10 @@ Pod::Spec.new do |spec|
     spec.summary                  = 'Some description for the Shared Module'
     spec.vendored_frameworks      = 'build/cocoapods/framework/ComposeApp.framework'
     spec.libraries                = 'c++'
-    spec.ios.deployment_target    = '15.3'
-                
+    spec.ios.deployment_target    = '15.4'
+    spec.dependency 'FirebaseCore', '11.4.2'
+    spec.dependency 'GoogleSignIn', '8.0'
+    spec.dependency 'StoreKit', '1.0'
                 
     if !Dir.exist?('build/cocoapods/framework/ComposeApp.framework') || Dir.empty?('build/cocoapods/framework/ComposeApp.framework')
         raise "
@@ -50,5 +52,5 @@ Pod::Spec.new do |spec|
             SCRIPT
         }
     ]
-    spec.resources = ['build\compose\cocoapods\compose-resources']
+    spec.resources = ['build/compose/cocoapods/compose-resources']
 end

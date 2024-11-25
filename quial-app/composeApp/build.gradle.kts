@@ -68,32 +68,33 @@ kotlin {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
         version = "1.0"
-        ios.deploymentTarget = "15.3"
+        ios.deploymentTarget = "15.4"
         podfile = project.file("../iosApp/Podfile")
         framework {
             baseName = "ComposeApp"
             isStatic = true
         }
 
-        /*
         pod("StoreKit") {
             version = libs.versions.pods.storekit.get()
+            linkOnly = true
             extraOpts += listOf("-compiler-option", "-fmodules")
         }
 
 
         pod("FirebaseCore") {
             moduleName = "FirebaseCore"
+            linkOnly = true
             version = libs.versions.pods.firebase.get()
             extraOpts += listOf("-compiler-option", "-fmodules")
         }
 
         pod("GoogleSignIn") {
             moduleName = "GoogleSignIn"
+            linkOnly = true
             version = libs.versions.pods.signin.get()
             extraOpts += listOf("-compiler-option", "-fmodules")
         }
-        */
     }
 
     tasks.withType<org.jetbrains.kotlin.gradle.targets.native.tasks.PodGenTask>().configureEach {

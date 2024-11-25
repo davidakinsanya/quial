@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "204736367614",
+    "project_id": "quial-8dba2",
+    "storage_bucket": "quial-8dba2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204736367614:android:5d97aef43ffe30372e4eaf",
+        "android_client_info": {
+          "package_name": "com.quial.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSTk9CKc_lc8RF7-fEKTm-YD4moSkwv3w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

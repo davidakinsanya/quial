@@ -1,11 +1,11 @@
 # Uncomment the next line to define a global platform for your project
 ENV['SWIFT_VERSION'] = '5'  # or the desired Swift version
-platform :ios, '15.3'
+platform :ios, '15.4'
 
 target 'iosApp' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
- pod 'composeApp', :path => '../composeApp'
+    pod 'composeApp', :path => '../composeApp'
     pod 'StoreKit', '~>1.0'
     pod 'FirebaseCore', '11.4.2'
     pod 'GoogleSignIn', '8.0'
