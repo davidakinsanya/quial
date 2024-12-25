@@ -33,6 +33,7 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
         |  const val TOKEN_URL = "${secretProperties.getPropertyValue("TOKEN_URL")}"
         |  const val FEEDBACK_URL = "${secretProperties.getPropertyValue("FEEDBACK_URL")}"
         |  const val APP_STORE_RATING_ANDROID = "${secretProperties.getPropertyValue("APP_STORE_RATING_ANDROID")}"
+        |  const val LINKTREE_URL = "${secretProperties.getPropertyValue("LINKTREE_URL")}"
         |}
         |
       """.trimMargin()
@@ -170,6 +171,8 @@ kotlin {
                     implementation(libs.gitlive.firebase.analytics)
                     implementation(libs.gitlive.firebase.perf)
 
+                    implementation(libs.konnectivity)
+
                 }
             }
 
@@ -203,7 +206,7 @@ kotlin {
             applicationId = "com.quial.app"
             minSdk = libs.versions.android.minSdk.get().toInt()
             targetSdk = libs.versions.android.targetSdk.get().toInt()
-            versionCode = 28
+            versionCode = 31
             versionName = "1.0"
         }
         packaging {

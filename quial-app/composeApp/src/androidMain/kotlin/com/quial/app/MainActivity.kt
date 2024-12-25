@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             onApplicationStartPlatformSpecific()
-            App(dataHolder = remember {
+            App(dataHolder = remember(applicationContext) {
                 DataStoreStateHolder(createDataStore(applicationContext))
             })
         }

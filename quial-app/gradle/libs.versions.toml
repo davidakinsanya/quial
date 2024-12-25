@@ -10,6 +10,7 @@ firebaseAnalytics = "2.1.0"
 firebasePerf = "2.1.0"
 googleServicesVersion = "4.4.2"
 gradle = "4.0.2"
+konnectivity = "0.1-alpha01"
 kotlin = "2.0.20"
 kotlinxDatetime = "0.6.1"
 kotlinxSerializationJson = "1.7.2"
@@ -110,6 +111,9 @@ datastore = { module = "androidx.datastore:datastore", version.ref = "datastore"
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
 review-ktx = { group = "com.google.android.play", name = "review-ktx", version.ref = "reviewKtx" }
+
+# Internet Connection
+konnectivity = { module = "com.plusmobileapps:konnectivity", version.ref = "konnectivity" }
 
 [plugins]
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesVersion"}

@@ -36,38 +36,48 @@ fun OptionsMenu(premiumBool: Boolean,
                 modifier = modifier
             ) {
 
-            if (premiumBool) {
+                if (premiumBool) {
+                    DropdownMenuItem(onClick = {
+                        showMenu.value = !showMenu.value
+                        navigator?.push(RootAppDestination.Paywall)
+                    }) {
+                        Text(
+                            text = "Upgrade",
+                            fontFamily = FontFamily(Font(Res.font.DMSans_Bold)),
+                            color = Color.Red
+                        )
+                    }
+                }
+
                 DropdownMenuItem(onClick = {
                     showMenu.value = !showMenu.value
-                    navigator?.push(RootAppDestination.Paywall)
+                    uriHandler.openUri(BuildConfig.FEEDBACK_URL)
                 }) {
                     Text(
-                        text = "Upgrade",
-                        fontFamily = FontFamily(Font(Res.font.DMSans_Bold)),
-                        color = Color.Red
+                        text = "Feedback",
+                        fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                    )
+                }
+
+                DropdownMenuItem(onClick = {
+                    showMenu.value = !showMenu.value
+                    uriHandler.openUri(BuildConfig.APP_STORE_RATING_ANDROID)
+                }) {
+                    Text(
+                        text = "Rating",
+                        fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                    )
+                }
+
+                DropdownMenuItem(onClick = {
+                    showMenu.value = !showMenu.value
+                    uriHandler.openUri(BuildConfig.LINKTREE_URL)
+                }) {
+                    Text(
+                        text = "Follow",
+                        fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
                     )
                 }
             }
-
-            DropdownMenuItem(onClick = {
-                showMenu.value = !showMenu.value
-                uriHandler.openUri(BuildConfig.FEEDBACK_URL)
-            }) {
-                Text(
-                    text = "Feedback",
-                    fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
-                )
-            }
-
-            DropdownMenuItem(onClick = {
-                showMenu.value = !showMenu.value
-                uriHandler.openUri(BuildConfig.APP_STORE_RATING_ANDROID)
-            }) {
-                Text(
-                    text = "Rating",
-                    fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
-                )
-            }
-        }
     }
 }
