@@ -12,12 +12,12 @@ PODS:
   - composeApp (1.0):
     - FirebaseCore (= 11.4.2)
     - GoogleSignIn (= 8.0)
-    - StoreKit (= 1.0)
+    - StoreKit (= 1.1)
   - FirebaseCore (11.4.2):
     - FirebaseCoreInternal (< 12.0, >= 11.4.2)
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/Logger (~> 8.0)
-  - FirebaseCoreInternal (11.4.2):
+  - FirebaseCoreInternal (11.6.0):
     - "GoogleUtilities/NSData+zlib (~> 8.0)"
   - GoogleSignIn (8.0.0):
     - AppAuth (< 2.0, >= 1.7.3)
@@ -40,13 +40,13 @@ PODS:
     - GTMSessionFetcher/Core (< 4.0, >= 3.3)
   - GTMSessionFetcher/Core (3.5.0)
   - PromisesObjC (2.4.0)
-  - StoreKit (1.0)
+  - StoreKit (1.1)
 
 DEPENDENCIES:
   - composeApp (from `../composeApp`)
   - FirebaseCore (= 11.4.2)
   - GoogleSignIn (= 8.0)
-  - StoreKit (~> 1.0)
+  - StoreKit (= 1.1)
 
 SPEC REPOS:
   trunk:
@@ -68,16 +68,16 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
-  composeApp: 4a6ac1b8b779cecc3ee11d3c61c2c6b1052b1cbc
+  composeApp: a64b696203570ebcbd271df0c7410ac1580328f2
   FirebaseCore: 6b32c57269bd999aab34354c3923d92a6e5f3f84
-  FirebaseCoreInternal: 35731192cab10797b88411be84940d2beb33a238
+  FirebaseCoreInternal: d98ab91e2d80a56d7b246856a8885443b302c0c2
   GoogleSignIn: ce8c89bb9b37fb624b92e7514cc67335d1e277e4
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
   GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  StoreKit: 4566064af97953631399a1845831b8e8f7f2e357
+  StoreKit: a97b6e948f906a9410ac3837ceb9665d34564b02
 
-PODFILE CHECKSUM: 0624853dc40317e7922c4d79822dd86ca51cfe47
+PODFILE CHECKSUM: 6a0ea98fcba8cc2e0b7690750fe1f3bb0cc80184
 
 COCOAPODS: 1.16.2

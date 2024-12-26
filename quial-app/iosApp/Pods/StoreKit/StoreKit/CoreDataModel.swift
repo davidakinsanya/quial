@@ -80,7 +80,7 @@ public struct CoreDataModel: CustomStringConvertible {
     public let name: String
 
     /// The bundle in which the model is located.
-    public let bundle: NSBundle
+    public let bundle: Bundle
     
     /// The type of the Core Data persistent store for the model.
     public let storeType: StoreType
@@ -91,17 +91,18 @@ public struct CoreDataModel: CustomStringConvertible {
     */
     public var storeURL: NSURL? {
         get {
-            return storeType.storeDirectory()?.URLByAppendingPathComponent(databaseFileName)
+            return storeType.storeDirectory()
+            // ?.URLByAppendingPathComponent(databaseFileName)
         }
     }
 
     /// The file URL specifying the model file in the bundle specified by `bundle`.
     public var modelURL: NSURL {
         get {
-            guard let url = bundle.URLForResource(name, withExtension: "momd") else {
+            guard let url = bundle.url(forResource: name, withExtension: "momd") else {
                 fatalError("*** Error loading model URL for model named \(name) in bundle: \(bundle)")
             }
-            return url
+            return url as NSURL
         }
     }
 
@@ -118,7 +119,7 @@ public struct CoreDataModel: CustomStringConvertible {
     /// The managed object model for the model specified by `name`.
     public var managedObjectModel: NSManagedObjectModel {
         get {
-            guard let model = NSManagedObjectModel(contentsOfURL: modelURL) else {
+            guard let model = NSManagedObjectModel(contentsOf: modelURL as URL) else {
                 fatalError("*** Error loading managed object model at url: \(modelURL)")
             }
             return model
@@ -136,11 +137,11 @@ public struct CoreDataModel: CustomStringConvertible {
             guard let storeURL = storeURL else { return false }
 
             do {
-                let sourceMetaData = try NSPersistentStoreCoordinator.metadataForPersistentStoreOfType(
-                    storeType.description,
-                    URL: storeURL,
+                let sourceMetaData = try NSPersistentStoreCoordinator.metadataForPersistentStore(
+                    ofType: storeType.description,
+                    at: storeURL as URL,
                     options: nil)
-                return !managedObjectModel.isConfiguration(nil, compatibleWithStoreMetadata: sourceMetaData)
+                return !managedObjectModel.isConfiguration(withName: nil, compatibleWithStoreMetadata: sourceMetaData)
             }
             catch {
                 debugPrint("*** Error checking persistent store coordinator meta data: \(error)")
@@ -160,7 +161,7 @@ public struct CoreDataModel: CustomStringConvertible {
 
     - returns: A new `CoreDataModel` instance.
     */
-    public init(name: String, bundle: NSBundle = .mainBundle(), storeType: StoreType = .SQLite(DocumentsDirectoryURL())) {
+    public init(name: String, bundle: Bundle = Bundle(), storeType: StoreType = .SQLite(DocumentsDirectoryURL())) {
         self.name = name
         self.bundle = bundle
         self.storeType = storeType
@@ -174,9 +175,9 @@ public struct CoreDataModel: CustomStringConvertible {
     - throws: If removing the store fails or errors, then this function throws an `NSError`.
     */
     public func removeExistingModelStore() throws {
-        let fileManager = NSFileManager.defaultManager()
-        if let storePath = storeURL?.path where fileManager.fileExistsAtPath(storePath) {
-            try fileManager.removeItemAtPath(storePath)
+        let fileManager = FileManager.default
+        if let storePath = storeURL?.path, fileManager.fileExists(atPath: storePath) {
+            try fileManager.removeItem(atPath: storePath)
         }
     }
 
@@ -185,7 +186,7 @@ public struct CoreDataModel: CustomStringConvertible {
     /// :nodoc:
     public var description: String {
         get {
-            return "<\(CoreDataModel.self): name=\(name), storeType=\(storeType) needsMigration=\(needsMigration), modelURL=\(modelURL), storeURL=\(storeURL)>"
+            return "<\(CoreDataModel.self): name=\(name), storeType=\(storeType) needsMigration=\(needsMigration), modelURL=\(modelURL), storeURL=\(String(describing: storeURL))>"
         }
     }
 
@@ -193,9 +194,9 @@ public struct CoreDataModel: CustomStringConvertible {
 
 // MARK: Private
 
-private func DocumentsDirectoryURL() -> NSURL {
+public func DocumentsDirectoryURL() -> NSURL {
     do {
-        return try NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true) as NSURL
     }
     catch {
         fatalError("*** Error finding documents directory: \(error)")

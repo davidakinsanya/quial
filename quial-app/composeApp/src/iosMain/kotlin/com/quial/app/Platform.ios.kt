@@ -10,15 +10,12 @@ import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
+import com.quial.app.data.datastore.DATA_STORE_FILE_NAME
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.darwin.Darwin
 import io.ktor.client.engine.darwin.DarwinClientEngineConfig
 import platform.UIKit.UIDevice
-import StoreKit
-import org.koin.core.module.Module
-import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.module
 
 class IOSPlatform: Platform {
     override val name: String = UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
@@ -43,7 +40,7 @@ actual fun getHttpConfig(): HttpClientConfig<*> {
     return HttpClientConfig<DarwinClientEngineConfig>()
 }
 
-fun createDataStore(): DataStore<Preferences> {
+fun createDataStore(function: () -> String): DataStore<Preferences> {
     return createDataStore {
         val directory = NSFileManager.defaultManager.URLForDirectory(
             directory = NSDocumentDirectory,
@@ -56,6 +53,4 @@ fun createDataStore(): DataStore<Preferences> {
     }
 }
 
-actual fun inAppRating() {
-    SKStoreReviewController.requestReview()
-}
+actual fun inAppRating() {}

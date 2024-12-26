@@ -41,7 +41,7 @@ public func saveContext(context: NSManagedObjectContext, wait: Bool = true, comp
         }
     }
 
-    wait ? context.performBlockAndWait(block) : context.performBlock(block)
+    wait ? context.performAndWait(block) : context.perform(block)
 }
 
 /**
@@ -54,8 +54,8 @@ the specified managed object context’s persistent store coordinator.
 - returns: The entity with the specified name from the managed object 
 model associated with context’s persistent store coordinator.
 */
-public func entity(name name: String, context: NSManagedObjectContext) -> NSEntityDescription {
-    return NSEntityDescription.entityForName(name, inManagedObjectContext: context)!
+public func entity(name: String, context: NSManagedObjectContext) -> NSEntityDescription {
+    return NSEntityDescription.entity(forEntityName: name, in: context)!
 }
 
 /**
@@ -63,7 +63,7 @@ An instance of `FetchRequest <T: NSManagedObject>` describes search criteria use
 This is a subclass of `NSFetchRequest` that adds a type parameter specifying the type of managed objects for the fetch request.
 The type parameter acts as a phantom type.
 */
-public class FetchRequest <T: NSManagedObject>: NSFetchRequest {
+public class FetchRequest <T: NSManagedObject>: NSFetchRequest<NSFetchRequestResult> {
 
     /**
     Constructs a new `FetchRequest` instance.
@@ -71,22 +71,15 @@ public class FetchRequest <T: NSManagedObject>: NSFetchRequest {
     - parameter context: The context to use that creates an entity description object from the type of NSManagedObject.
     - returns: A new `FetchRequest` instance.
     */
-    public convenience init(context: NSManagedObjectContext) {
+    public init(context: NSManagedObjectContext) {
         let entityName = T.entityName
-        let entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)!
-        self.init(entity: entity)
-    }
-    
-    /**
-    Constructs a new `FetchRequest` instance.
-
-    - parameter entity: The entity description for the entities that this request fetches.
-
-    - returns: A new `FetchRequest` instance.
-    */
-    public init(entity: NSEntityDescription) {
+        let entity = NSEntityDescription.entity(forEntityName: entityName, in: context)!
         super.init()
         self.entity = entity
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -101,13 +94,13 @@ This function is performed synchronously in a block on the context's queue.
 
 - returns: An array of objects that meet the criteria specified by the fetch request. This array may be empty.
 */
-public func fetch <T: NSManagedObject>(request request: FetchRequest<T>, inContext context: NSManagedObjectContext) throws -> [T] {
+public func fetch <T: NSManagedObject>(request: FetchRequest<T>, inContext context: NSManagedObjectContext) throws -> [T] {
     var results = [AnyObject]()
     var caughtError: NSError?
 
-    context.performBlockAndWait { () -> Void in
+    context.performAndWait { () -> Void in
         do {
-            results = try context.executeFetchRequest(request)
+            results = try context.fetch(request)
         }
         catch {
             caughtError = error as NSError
@@ -132,9 +125,9 @@ This function is performed synchronously in a block on the context's queue.
 public func deleteObjects <T: NSManagedObject>(objects: [T], inContext context: NSManagedObjectContext) {
     guard objects.count != 0 else { return }
     
-    context.performBlockAndWait { () -> Void in
+    context.performAndWait { () -> Void in
         for each in objects {
-            context.deleteObject(each)
+            context.delete(each)
         }
     }
 }
