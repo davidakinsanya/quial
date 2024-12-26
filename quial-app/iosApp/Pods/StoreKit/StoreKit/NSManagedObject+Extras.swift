@@ -15,9 +15,9 @@ public extension NSManagedObject {
     Convenience static function to grab name of an entity to make life easier when creating an NSEntityDescription instance especially on
     NSManagedObject subclass's during initialization.
     */
-    public static var entityName: String {
-        let fullClassName = NSStringFromClass(object_getClass(self))
-        let nameComponents = fullClassName.characters.split { $0 == "." }
+    static var entityName: String {
+        let fullClassName = NSStringFromClass(object_getClass(self)!)
+        let nameComponents = fullClassName.split { $0 == "." }
                                                      .map { String($0) }
         
         return nameComponents.last!
@@ -29,9 +29,9 @@ public extension NSManagedObject {
     
         :param: context The NSManagedObjectContext to init the subclassed NSManagedObject with.
     */
-    public convenience init(context: NSManagedObjectContext) {
-        let entityName = self.dynamicType.entityName
-        let entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)!
-        self.init(entity: entity, insertIntoManagedObjectContext: context)
+    convenience init(context: NSManagedObjectContext) {
+        let entityName = Self.entityName
+        let entity = NSEntityDescription.entity(forEntityName: entityName, in: context)!
+        self.init(entity: entity, insertInto: context)
     }
 }
