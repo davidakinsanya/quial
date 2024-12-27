@@ -44,7 +44,7 @@ fun OfflineComposable(modifier: Modifier
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(top = 100.dp, bottom = 70.dp, start = 25.dp, end = 25.dp),
+                .padding(top = 100.dp, bottom = 10.dp, start = 25.dp, end = 25.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
