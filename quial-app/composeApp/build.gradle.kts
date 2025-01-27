@@ -33,6 +33,7 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
         |  const val TOKEN_URL = "${secretProperties.getPropertyValue("TOKEN_URL")}"
         |  const val FEEDBACK_URL = "${secretProperties.getPropertyValue("FEEDBACK_URL")}"
         |  const val APP_STORE_RATING_ANDROID = "${secretProperties.getPropertyValue("APP_STORE_RATING_ANDROID")}"
+        |  const val APP_STORE_RATING_IOS = "${secretProperties.getPropertyValue("APP_STORE_RATING_IOS")}"
         |  const val LINKTREE_URL = "${secretProperties.getPropertyValue("LINKTREE_URL")}"
         |}
         |
@@ -172,6 +173,8 @@ kotlin {
                     implementation(libs.gitlive.firebase.perf)
 
                     implementation(libs.konnectivity)
+                    implementation(libs.app.rating)
+                    implementation(libs.permissions.compose)
 
                 }
             }
@@ -236,6 +239,7 @@ kotlin {
 dependencies {
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.review.ktx)
+    implementation(libs.androidx.material3.android)
 }
 
 

@@ -24,11 +24,24 @@ import com.quial.app.screens.feed.quiz.QuizStateHolder
 import com.quial.app.screens.onboarding.comps.OnboardingScreen
 import com.quial.app.screens.onboarding.OnboardingUiStateHolder
 import com.quial.app.utils.getUiStateHolder
+import com.quial.app.utils.uiStateHolderScope
+import com.stevdza_san.demo.domain.Interval
+import com.stevdza_san.demo.presentation.component.AppRatingDialog
 import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.FirebaseApp
 import dev.gitlive.firebase.analytics.analytics
+import dev.gitlive.firebase.app
+import dev.icerock.moko.permissions.DeniedAlwaysException
+import dev.icerock.moko.permissions.DeniedException
+import dev.icerock.moko.permissions.Permission
+import dev.icerock.moko.permissions.PermissionsController
+import dev.icerock.moko.permissions.RequestCanceledException
+import dev.icerock.moko.permissions.compose.BindEffect
+import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+import secrets.BuildConfig
 
 interface RootAppDestination {
 
@@ -41,6 +54,28 @@ interface RootAppDestination {
         fun getDataHolder(): DataStoreStateHolder {
             return dataHolder!!
         }
+
+        suspend fun checkPermision(
+            permission: Permission,
+            controller: PermissionsController,
+        ) {
+            val granted = controller.isPermissionGranted(permission)
+            if (!granted) {
+                try {
+                    controller.providePermission(permission)
+                    // Permission has been granted successfully.
+
+                } catch (deniedAlways: DeniedAlwaysException) {
+                    // Permission is always denied.
+
+                } catch (denied: DeniedException) {
+                    // Permission was denied.
+
+                } catch (canceled: RequestCanceledException) {
+
+                }
+            }
+        }
     }
 
     object Onboarding: Screen, RootAppDestination {
@@ -48,22 +83,38 @@ interface RootAppDestination {
         @Composable
         override fun Content() {
             val navigator = LocalNavigator.current
-            val analytics = Firebase.analytics
+            val analytics = Firebase.analytics(Firebase.app)
 
             val konnect: Konnectivity = koinInject()
             val connState = remember { konnect }
             val isConnected by connState.isConnectedState.collectAsState()
 
+            val factory = rememberPermissionsControllerFactory()
+            val controller = remember(factory) {
+                factory.createPermissionsController()
+            }
+
+            BindEffect(controller)
+
             if (isConnected) {
+                val uiStateHolder = getUiStateHolder<OnboardingUiStateHolder>()
+
+                uiStateHolder.uiStateHolderScope.launch {
+                    checkPermision(
+                        permission = Permission.REMOTE_NOTIFICATION,
+                        controller = controller
+                    )
+                }
+
                 OnboardingScreen(
                     modifier = Modifier,
-                    uiStateHolder = getUiStateHolder<OnboardingUiStateHolder>(),
+                    uiStateHolder = uiStateHolder,
                     dataHolder = getDataHolder(),
                     onNavigateMain = {
                         analytics.logEvent("Onboarding Complete!")
                         navigator?.push(Paywall)
                     },
-                    analytics = analytics
+                    analytics = analytics,
                 )
             } else {
                 OfflineComposable(modifier = Modifier)
@@ -147,7 +198,14 @@ interface RootAppDestination {
                 FeedScreen(
                     uiStateHolder = getUiStateHolder<FeedUiStateHolder>(),
                     dataHolder = getDataHolder(),
-                    quizHolder = getUiStateHolder<QuizStateHolder>()
+                    quizHolder = getUiStateHolder<QuizStateHolder>(),
+                    appRating = {
+                        AppRatingDialog(
+                            playStoreLink = BuildConfig.APP_STORE_RATING_ANDROID,
+                            appStoreLink = BuildConfig.APP_STORE_RATING_IOS,
+                            interval = Interval.Monthly,
+                        )
+                    }
                 )
             } else {
                 OfflineComposable(modifier = Modifier)

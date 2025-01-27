@@ -45,7 +45,8 @@ fun FeedScreen(
     modifier: Modifier = Modifier,
     uiStateHolder: FeedUiStateHolder,
     dataHolder: DataStoreStateHolder,
-    quizHolder: QuizStateHolder
+    quizHolder: QuizStateHolder,
+    appRating: @Composable () -> Unit
 ) {
     Scaffold(modifier = modifier
         .fillMaxSize(),

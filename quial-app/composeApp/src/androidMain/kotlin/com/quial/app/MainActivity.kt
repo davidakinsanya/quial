@@ -33,9 +33,6 @@ class MainActivity : ComponentActivity() {
             navigationBarStyle = SystemBarStyle.light(color.toArgb(), color.toArgb())
         )
 
-        val permissionUtil by permissionUtil()
-        permissionUtil.askNotificationPermission()
-
         setContent {
             onApplicationStartPlatformSpecific()
             App(dataHolder = remember(applicationContext) {

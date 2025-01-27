@@ -113,8 +113,7 @@ fun OnboardingScreen(
                 WormIndicator(pagerState = pagerState)
 
             Box(
-                modifier = modifier
-                    .fillMaxSize(),
+                modifier = modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 if (uiStateHolder.onboardingMap.collectAsState().value.isNotEmpty()) {
