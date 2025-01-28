@@ -1,5 +1,6 @@
 package com.quial.app.navigation
 
+import androidx.compose.material.ButtonColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,7 +29,6 @@ import com.quial.app.utils.uiStateHolderScope
 import com.stevdza_san.demo.domain.Interval
 import com.stevdza_san.demo.presentation.component.AppRatingDialog
 import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.FirebaseApp
 import dev.gitlive.firebase.analytics.analytics
 import dev.gitlive.firebase.app
 import dev.icerock.moko.permissions.DeniedAlwaysException
@@ -83,7 +83,7 @@ interface RootAppDestination {
         @Composable
         override fun Content() {
             val navigator = LocalNavigator.current
-            val analytics = Firebase.analytics(Firebase.app)
+            val analytics = Firebase.analytics
 
             val konnect: Konnectivity = koinInject()
             val connState = remember { konnect }
@@ -111,7 +111,7 @@ interface RootAppDestination {
                     uiStateHolder = uiStateHolder,
                     dataHolder = getDataHolder(),
                     onNavigateMain = {
-                        analytics.logEvent("Onboarding Complete!")
+                        analytics.logEvent("onboarding_complete")
                         navigator?.push(Paywall)
                     },
                     analytics = analytics,
@@ -204,6 +204,7 @@ interface RootAppDestination {
                             playStoreLink = BuildConfig.APP_STORE_RATING_ANDROID,
                             appStoreLink = BuildConfig.APP_STORE_RATING_IOS,
                             interval = Interval.Monthly,
+                            initialDelayInDays = 1
                         )
                     }
                 )

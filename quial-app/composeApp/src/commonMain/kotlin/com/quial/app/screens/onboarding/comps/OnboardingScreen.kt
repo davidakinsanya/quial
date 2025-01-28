@@ -22,13 +22,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import dev.gitlive.firebase.analytics.FirebaseAnalytics
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.data.onboarding.Question
 import com.quial.app.data.onboarding.Statement
 import com.quial.app.images.QuialImage
 import com.quial.app.screens.onboarding.OnboardingUiStateHolder
 import com.quial.app.utils.WormIndicator
-import dev.gitlive.firebase.analytics.FirebaseAnalytics
+import dev.gitlive.firebase.analytics.logEvent
+import io.ktor.http.parameters
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -86,18 +88,23 @@ fun OnboardingScreen(
                             val question = map[index] as Question
                             QuestionComposable(modifier, question, uiStateHolder)
 
-                            analytics.logEvent(" question paywall view screen: ", mapOf(
-                                Pair("Question", question.getOnboardingQuestion()),
-                                Pair("Options", question.getOnboardingOptions().toString())
-                            ))
+                            analytics.logEvent("question_onboarding_view") {
+                                parameters {
+                                    param("question", question.getOnboardingQuestion())
+                                    param("options", question.getOnboardingOptions().toString())
+                                }
+                            }
+
                         } else {
                             val statement = map[index] as Statement
                             StatementComposable(modifier, statement)
 
-                            analytics.logEvent("statement paywall view screen", mapOf(
-                                Pair("Header", statement.getOnboardingHeader()),
-                                Pair("Text", statement.getOnboardingText())
-                            ))
+                            analytics.logEvent("statement_onboarding_view") {
+                                parameters {
+                                    param("header", statement.getOnboardingHeader())
+                                    param("text", statement.getOnboardingText())
+                                }
+                            }
                         }
                     } else {
                         //

@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.mmk.kmpnotifier.permission.permissionUtil
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.main.App
 
@@ -27,6 +27,8 @@ class MainActivity : ComponentActivity() {
         val color =  Color(125, 184, 107)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         installSplashScreen()
+
+        val analytics = FirebaseAnalytics.getInstance(this)
 
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.light(color.toArgb(), color.toArgb()),

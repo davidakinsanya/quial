@@ -25,8 +25,6 @@ fun SubscriptionPaywall(onDismiss: () -> Unit,
                         paywallHolder: PaywallConfigStateHolder) {
     //In ios no need for fullscreen dialog,in android we add extra full screen dialog
 
-    analytics.logEvent("Paywall View")
-
     val previousScreenFeed = navigator?.items?.contains(RootAppDestination.Feed)
     val softPaywallBoolean = remember { mutableStateOf(false) }
     val paywallConfigMap by paywallHolder.paywallMap.collectAsState()
@@ -63,4 +61,5 @@ fun SubscriptionPaywall(onDismiss: () -> Unit,
             )
         }
     }
+    analytics.logEvent("paywall_view")
 }
