@@ -112,7 +112,7 @@ interface RootAppDestination {
                     dataHolder = getDataHolder(),
                     onNavigateMain = {
                         analytics.logEvent("onboarding_complete")
-                        navigator?.push(Paywall)
+                        navigator?.push(Auth)
                     },
                     analytics = analytics,
                 )
@@ -203,8 +203,7 @@ interface RootAppDestination {
                         AppRatingDialog(
                             playStoreLink = BuildConfig.APP_STORE_RATING_ANDROID,
                             appStoreLink = BuildConfig.APP_STORE_RATING_IOS,
-                            interval = Interval.Monthly,
-                            initialDelayInDays = 1
+                            interval = Interval.Monthly
                         )
                     }
                 )

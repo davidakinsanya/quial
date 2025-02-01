@@ -39,4 +39,6 @@ dependencies {
     testImplementation(libs.kotlin.test.junit)
 
     implementation("com.github.doyaaaaaken:kotlin-csv-jvm:1.9.3")
+    implementation("io.ktor:ktor-serialization-gson-jvm")
+    implementation("io.ktor:ktor-serialization-kotlinx-json")
 }

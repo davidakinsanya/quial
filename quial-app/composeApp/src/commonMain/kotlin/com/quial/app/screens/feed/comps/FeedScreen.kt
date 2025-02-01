@@ -57,6 +57,7 @@ fun FeedScreen(
         val pagerState = rememberPagerState(pageCount = { pageCount })
         val correctAnswer = quizHolder.getAnswerState()
         val showMenu = remember { mutableStateOf(false) }
+        appRating.invoke()
 
         val borderStroke: BorderStroke = when (correctAnswer) {
             null -> {
