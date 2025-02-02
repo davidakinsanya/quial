@@ -38,7 +38,7 @@ fun FeedComposable(modifier: Modifier,
                    stampCheck: Boolean) {
 
 
-    val bool = true //!dataHolder.isPremium() && stampCheck
+    val bool = false //!dataHolder.isPremium() && stampCheck
 
     val randomInt = uiHolder.randomInt()
     val booleanList = uiHolder.getListOfBools(bool = bool, randomInt = randomInt)
@@ -61,6 +61,7 @@ fun FeedComposable(modifier: Modifier,
                 text = uiHolder.splitText(idiomText)[0].substring(0, 2),
                 fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
             )
+
             if (bool) {
                 Text(
                     text = "Upgrade",
@@ -73,7 +74,6 @@ fun FeedComposable(modifier: Modifier,
                     color = Color.Red
                 )
             }
-
         }
 
         Text(

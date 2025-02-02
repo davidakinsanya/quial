@@ -175,9 +175,6 @@ kotlin {
                     implementation(libs.konnectivity)
                     implementation(libs.app.rating)
                     implementation(libs.permissions.compose)
-
-                    implementation(libs.play.services.ads)
-
                 }
             }
 
@@ -211,7 +208,7 @@ kotlin {
             applicationId = "com.quial.app"
             minSdk = libs.versions.android.minSdk.get().toInt()
             targetSdk = libs.versions.android.targetSdk.get().toInt()
-            versionCode = 37
+            versionCode = 39
             versionName = "1.0"
         }
         packaging {
