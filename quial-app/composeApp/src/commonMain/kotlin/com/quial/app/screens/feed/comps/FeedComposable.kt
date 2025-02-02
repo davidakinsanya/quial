@@ -38,7 +38,7 @@ fun FeedComposable(modifier: Modifier,
                    stampCheck: Boolean) {
 
 
-    val bool = !dataHolder.isPremium() && stampCheck
+    val bool = true //!dataHolder.isPremium() && stampCheck
 
     val randomInt = uiHolder.randomInt()
     val booleanList = uiHolder.getListOfBools(bool = bool, randomInt = randomInt)

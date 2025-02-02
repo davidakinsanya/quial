@@ -17,6 +17,7 @@ kotlin = "2.0.20"
 kotlinxDatetime = "0.6.1"
 kotlinxSerializationJson = "1.7.2"
 permissionsCompose = "0.18.1"
+playServicesAds = "23.6.0"
 voyager = "1.0.0"
 koin = "3.5.6"
 koinComposeMultiplatform = "1.2.0-Beta4"
@@ -126,6 +127,9 @@ androidx-material3-android = { group = "androidx.compose.material3", name = "mat
 
 # Moko Permissions
 permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "permissionsCompose" }
+
+# Google Ads
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
 
 [plugins]
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesVersion"}

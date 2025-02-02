@@ -88,7 +88,7 @@ fun FeedScreen(
             .fillMaxWidth(),
             horizontalAlignment = Alignment.End) {
             OptionsMenu(
-                premiumBool = !dataHolder.isPremium(),
+                premiumBool = true, // !dataHolder.isPremium()
                 showMenu = showMenu,
                 modifier = modifier
             )
@@ -145,7 +145,7 @@ fun FeedScreen(
 
                         } else {
 
-                            if (dataHolder.isPremium()) {
+                            if (true) { // dataHolder.isPremium()
                                 quizHolder.answerReset()
                                 quizHolder.addToQuiz(idiomView)
                             }

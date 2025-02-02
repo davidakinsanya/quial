@@ -16,6 +16,9 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.main.App
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -29,6 +32,11 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
 
         val analytics = FirebaseAnalytics.getInstance(this)
+        val backgroundScope = CoroutineScope(Dispatchers.IO)
+        backgroundScope.launch {
+            // Initialize the Google Mobile Ads SDK on a background thread.
+            MobileAds.initialize(this@MainActivity) {}
+        }
 
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.light(color.toArgb(), color.toArgb()),
