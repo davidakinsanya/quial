@@ -8,6 +8,7 @@ import string
 import re
 import csv
 import os, os.path
+from cleantext import clean
 
 alphabet = list(string.ascii_lowercase)
 url = "https://www.theidioms.com/"
@@ -34,34 +35,27 @@ def main_driver():
 
 
 def get_additional_meaning(idiom, link):
-    meanings_arr = []
-    sentance_arr = []
-    meaning_count = 0
     driver.get(link)
-    list_elems = driver.find_elements(By.CSS_SELECTOR, 'li') # gets every list element on the page
+
+    ul_elems = driver.find_elements(By.CSS_SELECTOR, 'ul')
+    ol_elems = driver.find_elements(By.CSS_SELECTOR, 'ol')
+
     
-    for i in range(0, len(list_elems)):
-      if list_elems[i].text.lower() == idiom:
-          for j in range(i+1, len(list_elems)): # loop to hone in the elements we want
-              if idiom not in list_elems[j].text and meaning_count == 1: # loop exit
-                  break
-              elif idiom in list_elems[j].text: # example sentances
-                  meaning_count = 1
-                  sentance_arr.append(list_elems[j].text)
-              elif idiom not in list_elems[j].text and meaning_count == 0 and j < i+5: # meanings
-                  meanings_arr.append(list_elems[j].text)
-                   
-    return [meanings_arr, sentance_arr]
+    ul_elems_comp = [elem.text for elem in ul_elems]
+    ol_elems_comp = [elem.text for elem in ol_elems]
+    
+              
+    return [ul_elems_comp[1].split('\n'), ol_elems_comp[1].split('\n')]
 
 
 def get_meaning(idiom):
-    arr = []
     idiom_arr = idiom.split('\n')
     idiom_arr[1] = re.sub(r"\(.*?\)","()" ,idiom_arr[1]) # removes everything inside ()
-    idiom_arr[1] = idiom_arr[1].replace("()", "").strip() # removes () themselves
-    idiom_arr[2] = idiom_arr[2].replace(" Read more ➺", "")
-    arr.append(idiom_arr)
-    return arr
+    idiom_arr[1] = idiom_arr[1].replace("()", "").strip().replace(" Read more ➺", "") # removes () themselves
+    if (len(idiom_arr) == 3):
+        idiom_arr[2] = idiom_arr[2].replace(" Read more ➺", "")
+        
+    return idiom_arr
     
 
 def scrape(letter, page):
@@ -78,15 +72,41 @@ def scrape(letter, page):
 
     idioms = driver.find_elements(By.CSS_SELECTOR, "div.idiom")
     idioms_links = driver.find_elements(By.CSS_SELECTOR, "a.rm")
+    alt_links = driver.find_elements(By.CSS_SELECTOR, "p.idt")
+    
+    alt_links_list = [link.find_elements(By.CSS_SELECTOR, "a") for link in alt_links]
+    alt_links_list2 = []
+    
+    
+    for i in range(0, len(alt_links_list)):
+        alt_links_list2.append(alt_links_list[i][0].get_attribute('href'))
+    
 
     idioms_list = [text.text for text in idioms]
     links_list = [link.get_attribute('href') for link in idioms_links]
     
     for i in range(0, len(idioms_list)):
-        idiom_dict[letter][0] += get_meaning(idioms_list[i])
-        meanings_list = get_additional_meaning(idioms_list[i].split('\n')[0], links_list[i])
-        idiom_dict[letter][1] += [meanings_list[0]]
-        idiom_dict[letter][2] += [meanings_list[1]]
+        if (i < len(links_list) - 1):
+            basic_info = get_meaning(idioms_list[i])
+            meanings_list = get_additional_meaning(idioms_list[i].split('\n')[0], links_list[i])
+            
+            
+            if (len(basic_info) == 2):
+                meanings_list = get_additional_meaning(idioms_list[i].split('\n')[0], alt_links_list2[i])
+                
+                if "Meaning: " not in basic_info[1]:
+                     replacement_meaning = "Meaning: " + meanings_list[0][0]
+                     basic_info.insert(1, replacement_meaning)
+                elif "Example: " not in basic_info[1]:
+                    replacement_example = "Example: " + meanings_list[1][0]
+                    basic_info.insert(2, replacement_example)
+
+           
+            idiom_dict[letter][0] += [basic_info]
+            idiom_dict[letter][1] += [meanings_list[0]]
+            idiom_dict[letter][2] += [meanings_list[1]]
+        else:
+            break
     
     if curr_page != max_page:
         # add a return here for testing.
@@ -147,35 +167,36 @@ with open("/usr/src/app/quial.csv", mode="w") as csvfile:
 ### Production Script
 
 field_names = ["basic-info", "meanings", "example-sentences"]
+try:
+    with open("/usr/src/app/quial2.csv", mode="w") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=field_names)
+        writer.writeheader()
 
-with open("/usr/src/app/quial2.csv", mode="w") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=field_names)
-    writer.writeheader()
+      
+        for letter in alphabet:
+            print(letter)
+            scrape(letter, 1)
+            for i in range(0, len(idiom_dict[letter][0])):
+                writer.writerow({
+                field_names[0]: clean(idiom_dict[letter][0][i], no_emoji=True),
+                field_names[1]: clean(idiom_dict[letter][1][i], no_emoji=True),
+                field_names[2]: clean(idiom_dict[letter][2][i], no_emoji=True)
+                })
+            
 
-  
-    for letter in alphabet:
-        print(letter)
-        scrape(letter, 1)
-        for i in range(0, len(idiom_dict[letter][0])):
-            writer.writerow({
-            field_names[0]: idiom_dict[letter][0][i],
-            field_names[1]: idiom_dict[letter][1][i],
-            field_names[2]: idiom_dict[letter][2][i]
-            })
+    if os.path.exists("/usr/src/app/quial.csv"):
+        os.remove("/usr/src/app/quial.csv")
         
-
-if os.path.exists("/usr/src/app/quial.csv"):
-    os.remove("/usr/src/app/quial.csv")
+    if os.path.exists("/usr/src/app/user-quial.csv"):
+        merge("/usr/src/app/quial2.csv", "/usr/src/app/user-quial.csv")
+        os.remove("/usr/src/app/quial2.csv")
+    else:
+        os.rename("/usr/src/app/quial2.csv", "/usr/src/app/quial.csv")
+except:
+    pass
     
-if os.path.exists("/usr/src/app/user-quial.csv"):
-    merge("/usr/src/app/quial2.csv", "/usr/src/app/user-quial.csv")
-    os.remove("/usr/src/app/quial2.csv")
-else:
-    os.rename("/usr/src/app/quial2.csv", "/usr/src/app/quial.csv")
-
 
 '''
-
 ### Idiom Count
 count = 0
 
