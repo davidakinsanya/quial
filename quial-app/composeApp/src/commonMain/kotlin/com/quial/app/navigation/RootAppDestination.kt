@@ -137,8 +137,12 @@ interface RootAppDestination {
                 AuthUiHelperButtonsAndFirebaseAuth(
                     modifier = Modifier,
                     onGoogleSignInResult = { googleUser ->
-                        if (googleUser?.idToken?.let { tokenClient.verifyToken(it) } == true)
+                        googleUser?.idToken
+                        if (googleUser?.idToken?.let { tokenClient.verifyToken(it) } == true) {
+                            val email = tokenClient.getResponseEmail(googleUser.idToken)
+                            if (getDataHolder().getEmail().isEmpty()) getDataHolder().setUserEmail(email)
                             navigator?.push(Feed)
+                        }
                     },
                     onFirebaseResult = {}
                 )

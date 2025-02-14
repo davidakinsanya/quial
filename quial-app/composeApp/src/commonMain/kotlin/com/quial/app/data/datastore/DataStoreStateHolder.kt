@@ -39,6 +39,35 @@ class DataStoreStateHolder(
         return bool
     }
 
+    fun setUserEmail(email: String): Boolean {
+        var bool = false
+
+        runBlocking {
+            preferences.edit {
+                val response = stringPreferencesKey("user_email")
+                bool = it[response]?.isNotEmpty() == true
+                if (!bool) {
+                    it[response] = email
+                }
+            }
+        }
+
+        return bool
+    }
+
+    fun getEmail(): String {
+        var email = ""
+
+        runBlocking {
+            preferences.edit {
+                val response = stringPreferencesKey("user_email")
+                email = if (it[response].isNullOrEmpty()) "" else it[response]!!
+            }
+        }
+
+        return email
+    }
+
     fun saveOnboardingResponse(onboardingResponse: List<OnboardingResponse>) = uiStateHolderScope.launch {
       preferences.edit {
           val json = Json {
