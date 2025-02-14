@@ -40,6 +40,7 @@ actual fun getHttpConfig(): HttpClientConfig<*> {
     return HttpClientConfig<DarwinClientEngineConfig>()
 }
 
+@OptIn(ExperimentalForeignApi::class)
 fun createDataStore(function: () -> String): DataStore<Preferences> {
     return createDataStore {
         val directory = NSFileManager.defaultManager.URLForDirectory(

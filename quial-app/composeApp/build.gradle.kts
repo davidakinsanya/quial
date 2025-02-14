@@ -11,6 +11,8 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.cocoapods)
+
+    id("org.jetbrains.gradle.apple.applePlugin") version "212.4638.14-0.13.1"
 }
 
 val buildConfigGenerator by tasks.registering(Sync::class) {
@@ -33,7 +35,6 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
         |  const val TOKEN_URL = "${secretProperties.getPropertyValue("TOKEN_URL")}"
         |  const val FEEDBACK_URL = "${secretProperties.getPropertyValue("FEEDBACK_URL")}"
         |  const val APP_STORE_RATING_ANDROID = "${secretProperties.getPropertyValue("APP_STORE_RATING_ANDROID")}"
-        |  const val APP_STORE_RATING_IOS = "${secretProperties.getPropertyValue("APP_STORE_RATING_IOS")}"
         |  const val LINKTREE_URL = "${secretProperties.getPropertyValue("LINKTREE_URL")}"
         |}
         |
@@ -130,115 +131,115 @@ kotlin {
             kotlin.srcDir(
                 // convert the task to a file-provider
                 buildConfigGenerator.map { it.destinationDir }
-                )
+            )
 
-                dependencies {
-                    implementation(compose.runtime)
-                    implementation(compose.foundation)
-                    implementation(compose.material)
-                    implementation(compose.ui)
-                    implementation(compose.components.resources)
-                    implementation(compose.components.uiToolingPreview)
-                    implementation(libs.androidx.lifecycle.viewmodel)
-                    implementation(libs.androidx.lifecycle.runtime.compose)
+            dependencies {
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
+                implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(libs.androidx.lifecycle.runtime.compose)
 
-                    implementation(libs.kotlin.coroutines)
+                implementation(libs.kotlin.coroutines)
 
-                    implementation(libs.voyager.navigator.v110beta02)
-                    implementation(libs.voyager.screenmodel.v110beta02)
-                    implementation(libs.voyager.bottom.sheet.navigator)
-                    implementation(libs.voyager.tab.navigator)
-                    implementation(libs.voyager.transitions.v110beta02)
+                implementation(libs.voyager.navigator.v110beta02)
+                implementation(libs.voyager.screenmodel.v110beta02)
+                implementation(libs.voyager.bottom.sheet.navigator)
+                implementation(libs.voyager.tab.navigator)
+                implementation(libs.voyager.transitions.v110beta02)
 
-                    implementation(libs.kmprevenuecat.purchases)
-                    implementation(libs.kmprevenuecat.purchases.ui)
+                implementation(libs.kmprevenuecat.purchases)
+                implementation(libs.kmprevenuecat.purchases.ui)
 
-                    api(libs.koin.core)
-                    api(libs.koin.compose)
-                    api(libs.koin.compose.viewmodel)
+                api(libs.koin.core)
+                api(libs.koin.compose)
+                api(libs.koin.compose.viewmodel)
 
-                    implementation(libs.bundles.ktor)
-                    implementation(libs.kotlinx.serialization.json)
+                implementation(libs.bundles.ktor)
+                implementation(libs.kotlinx.serialization.json)
 
-                    api(libs.kmpNotifier)
-                    implementation(libs.kmpAuth.firebase)
-                    implementation(libs.kmpAuth.uihelper)
-                    implementation(libs.kmpAuth.google)
+                api(libs.kmpNotifier)
+                implementation(libs.kmpAuth.firebase)
+                implementation(libs.kmpAuth.uihelper)
+                implementation(libs.kmpAuth.google)
 
-                    api(libs.datastore.preferences)
-                    api(libs.datastore)
+                api(libs.datastore.preferences)
+                api(libs.datastore)
 
-                    implementation(libs.kotlinx.datetime)
-                    implementation(libs.gitlive.firebase.analytics)
-                    implementation(libs.gitlive.firebase.perf)
+                implementation(libs.kotlinx.datetime)
+                implementation(libs.gitlive.firebase.analytics)
+                implementation(libs.gitlive.firebase.perf)
 
-                    implementation(libs.konnectivity)
-                    implementation(libs.app.rating)
-                    implementation(libs.permissions.compose)
-                }
+                implementation(libs.konnectivity)
+
+
+
             }
+        }
 
-            commonTest.dependencies {
-                implementation(libs.kotlin.test)
-                implementation(kotlin("test-annotations-common"))
-                implementation(libs.assertk)
-            }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(kotlin("test-annotations-common"))
+            implementation(libs.assertk)
+        }
 
-            commonTest.dependencies {
-                @OptIn(ExperimentalComposeLibrary::class)
-                implementation(compose.uiTest)
-                // implementation(libs.koin.test.junit4)
-            }
+        commonTest.dependencies {
+            @OptIn(ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
+            // implementation(libs.koin.test.junit4)
+        }
 
-            nativeMain.dependencies {
-                implementation(libs.ktor.client.darwin)
-            }
+        nativeMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
     }
+}
 
-    android {
-        namespace = "com.quial.app"
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
+android {
+    namespace = "com.quial.app"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
-        sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-        sourceSets["main"].res.srcDirs("src/androidMain/res")
-        sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].res.srcDirs("src/androidMain/res")
+    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
-        defaultConfig {
-            applicationId = "com.quial.app"
-            minSdk = libs.versions.android.minSdk.get().toInt()
-            targetSdk = libs.versions.android.targetSdk.get().toInt()
-            versionCode = 39
-            versionName = "1.0"
-        }
-        packaging {
-            resources {
-                excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            }
-        }
-        buildTypes {
-            getByName("release") {
-                isMinifyEnabled = false
-            }
-        }
-        compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_11
-            targetCompatibility = JavaVersion.VERSION_11
-            isCoreLibraryDesugaringEnabled = false
-        }
-
-        buildFeatures {
-            compose = true
-        }
-        dependencies {
-            debugImplementation(compose.uiTooling)
+    defaultConfig {
+        applicationId = "com.quial.app"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        versionCode = 39
+        versionName = "1.0"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = false
+    }
+
+    buildFeatures {
+        compose = true
+    }
+    dependencies {
+        debugImplementation(compose.uiTooling)
+    }
+}
 
 dependencies {
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.review.ktx)
-    implementation(libs.androidx.material3.android)
 }
 
 

@@ -56,16 +56,16 @@ public final class CoreDataStack: CustomStringConvertible {
     - returns: A new `CoreDataStack` instance.
     */
     public init(model: CoreDataModel,
-        options: [String : Bool]? = [NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption : true],
-                concurrencyType: NSManagedObjectContextConcurrencyType = .mainQueueConcurrencyType) {
+        options: [NSObject : AnyObject]? = [NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption : true],
+        concurrencyType: NSManagedObjectContextConcurrencyType = .MainQueueConcurrencyType) {
 
             self.model = model
             storeCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model.managedObjectModel)
 
             do {
-                try storeCoordinator.addPersistentStore(ofType: model.storeType.description,
-                                                        configurationName: nil,
-                                                        at: model.storeURL as URL?,
+                try storeCoordinator.addPersistentStoreWithType(model.storeType.description,
+                    configuration: nil,
+                    URL: model.storeURL,
                     options: options)
             }
             catch {
@@ -86,12 +86,12 @@ public final class CoreDataStack: CustomStringConvertible {
 
     - returns: A new child managed object context with the given concurrency and merge policy types.
     */
-    public func childManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType = .mainQueueConcurrencyType,
-                                          mergePolicyType: NSMergePolicyType = .mergeByPropertyObjectTrumpMergePolicyType) -> ChildManagedObjectContext {
+    public func childManagedObjectContext(concurrencyType concurrencyType: NSManagedObjectContextConcurrencyType = .MainQueueConcurrencyType,
+        mergePolicyType: NSMergePolicyType = .MergeByPropertyObjectTrumpMergePolicyType) -> ChildManagedObjectContext {
 
             let childContext = NSManagedObjectContext(concurrencyType: concurrencyType)
-        childContext.parent = context
-        childContext.mergePolicy = NSMergePolicy(merge: mergePolicyType)
+            childContext.parentContext = context
+            childContext.mergePolicy = NSMergePolicy(mergeType: mergePolicyType)
             return childContext
     }
 

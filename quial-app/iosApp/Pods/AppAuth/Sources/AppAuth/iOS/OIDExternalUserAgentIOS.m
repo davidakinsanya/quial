@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
   __weak SFSafariViewController *_safariVC;
-    ASWebAuthenticationSession *_authenticationVC;
+  SFAuthenticationSession *_authenticationVC;
   ASWebAuthenticationSession *_webAuthenticationVC;
 #pragma clang diagnostic pop
 }
@@ -138,7 +138,28 @@ NS_ASSUME_NONNULL_BEGIN
   if (@available(iOS 11.0, *)) {
     // SFAuthenticationSession doesn't work with guided access (rdar://40809553)
     if (!openedUserAgent && !UIAccessibilityIsGuidedAccessEnabled()) {
-      ASWebAuthenticationSession *authenticationVC;
+      __weak OIDExternalUserAgentIOS *weakSelf = self;
+      NSString *redirectScheme = request.redirectScheme;
+      SFAuthenticationSession *authenticationVC =
+          [[SFAuthenticationSession alloc] initWithURL:requestURL
+                                     callbackURLScheme:redirectScheme
+                                     completionHandler:^(NSURL * _Nullable callbackURL,
+                                                         NSError * _Nullable error) {
+        __strong OIDExternalUserAgentIOS *strongSelf = weakSelf;
+        if (!strongSelf) {
+            return;
+        }
+        strongSelf->_authenticationVC = nil;
+        if (callbackURL) {
+          [strongSelf->_session resumeExternalUserAgentFlowWithURL:callbackURL];
+        } else {
+          NSError *safariError =
+              [OIDErrorUtilities errorWithCode:OIDErrorCodeUserCanceledAuthorizationFlow
+                               underlyingError:error
+                                   description:@"User cancelled."];
+          [strongSelf->_session failExternalUserAgentFlowWithError:safariError];
+        }
+      }];
       _authenticationVC = authenticationVC;
       openedUserAgent = [authenticationVC start];
     }
@@ -156,7 +177,7 @@ NS_ASSUME_NONNULL_BEGIN
   }
   // iOS 8 and earlier, use mobile Safari
   if (!openedUserAgent){
-      // 
+    openedUserAgent = [[UIApplication sharedApplication] openURL:requestURL];
   }
 
   if (!openedUserAgent) {
@@ -179,7 +200,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
   SFSafariViewController *safariVC = _safariVC;
-    ASWebAuthenticationSession *authenticationVC = _authenticationVC;
+  SFAuthenticationSession *authenticationVC = _authenticationVC;
   ASWebAuthenticationSession *webAuthenticationVC = _webAuthenticationVC;
 #pragma clang diagnostic pop
   
