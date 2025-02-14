@@ -16,46 +16,46 @@
         limitations under the License.
  */
 
-#import "OIDAuthState.h"
-#import "OIDAuthStateChangeDelegate.h"
-#import "OIDAuthStateErrorDelegate.h"
-#import "OIDAuthorizationRequest.h"
-#import "OIDAuthorizationResponse.h"
-#import "OIDAuthorizationService.h"
-#import "OIDError.h"
-#import "OIDErrorUtilities.h"
-#import "OIDExternalUserAgent.h"
-#import "OIDExternalUserAgentRequest.h"
-#import "OIDExternalUserAgentSession.h"
-#import "OIDGrantTypes.h"
-#import "OIDIDToken.h"
-#import "OIDRegistrationRequest.h"
-#import "OIDRegistrationResponse.h"
-#import "OIDResponseTypes.h"
-#import "OIDScopes.h"
-#import "OIDScopeUtilities.h"
-#import "OIDServiceConfiguration.h"
-#import "OIDServiceDiscovery.h"
-#import "OIDTokenRequest.h"
-#import "OIDTokenResponse.h"
-#import "OIDTokenUtilities.h"
-#import "OIDURLSessionProvider.h"
-#import "OIDEndSessionRequest.h"
-#import "OIDEndSessionResponse.h"
+#import <AppAuth/OIDAuthState.h>
+#import <AppAuth/OIDAuthStateChangeDelegate.h>
+#import <AppAuth/OIDAuthStateErrorDelegate.h>
+#import <AppAuth/OIDAuthorizationRequest.h>
+#import <AppAuth/OIDAuthorizationResponse.h>
+#import <AppAuth/OIDAuthorizationService.h>
+#import <AppAuth/OIDError.h>
+#import <AppAuth/OIDErrorUtilities.h>
+#import <AppAuth/OIDExternalUserAgent.h>
+#import <AppAuth/OIDExternalUserAgentRequest.h>
+#import <AppAuth/OIDExternalUserAgentSession.h>
+#import <AppAuth/OIDGrantTypes.h>
+#import <AppAuth/OIDIDToken.h>
+#import <AppAuth/OIDRegistrationRequest.h>
+#import <AppAuth/OIDRegistrationResponse.h>
+#import <AppAuth/OIDResponseTypes.h>
+#import <AppAuth/OIDScopes.h>
+#import <AppAuth/OIDScopeUtilities.h>
+#import <AppAuth/OIDServiceConfiguration.h>
+#import <AppAuth/OIDServiceDiscovery.h>
+#import <AppAuth/OIDTokenRequest.h>
+#import <AppAuth/OIDTokenResponse.h>
+#import <AppAuth/OIDTokenUtilities.h>
+#import <AppAuth/OIDURLSessionProvider.h>
+#import <AppAuth/OIDEndSessionRequest.h>
+#import <AppAuth/OIDEndSessionResponse.h>
 
 #if TARGET_OS_TV
 #elif TARGET_OS_WATCH
 #elif TARGET_OS_IOS || TARGET_OS_MACCATALYST
-#import "OIDAuthState+IOS.h"
-#import "OIDAuthorizationService+IOS.h"
-#import "OIDExternalUserAgentIOS.h"
-#import "OIDExternalUserAgentIOSCustomBrowser.h"
-#import "OIDExternalUserAgentCatalyst.h"
+#import <AppAuth/OIDAuthState+IOS.h>
+#import <AppAuth/OIDAuthorizationService+IOS.h>
+#import <AppAuth/OIDExternalUserAgentIOS.h>
+#import <AppAuth/OIDExternalUserAgentIOSCustomBrowser.h>
+#import <AppAuth/OIDExternalUserAgentCatalyst.h>
 #elif TARGET_OS_OSX
-#import "OIDAuthState+Mac.h"
-#import "OIDAuthorizationService+Mac.h"
-#import "OIDExternalUserAgentMac.h"
-#import "OIDRedirectHTTPHandler.h"
+#import OIDAuthState+Mac.h>
+#import <AppAuth/OIDAuthorizationService+Mac.h>
+#import <AppAuth/OIDExternalUserAgentMac.h>
+#import <AppAuth/OIDRedirectHTTPHandler.h>
 #else
 #error "Platform Undefined"
 #endif

@@ -22,7 +22,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "OIDExternalUserAgent.h"
+#import <AppAuth/OIDExternalUserAgent.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
