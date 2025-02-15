@@ -10,5 +10,10 @@ fun Application.configureRouting() {
         get("/key") {
             call.respond(RetrieveKey().retrieve())
         }
+
+        post ("/push") {
+            val key: String? = call.parameters["key"]
+            call.respond(RetrieveKey().pushKey(key!!))
+        }
     }
 }
