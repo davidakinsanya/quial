@@ -36,6 +36,7 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
         |  const val FEEDBACK_URL = "${secretProperties.getPropertyValue("FEEDBACK_URL")}"
         |  const val APP_STORE_RATING_ANDROID = "${secretProperties.getPropertyValue("APP_STORE_RATING_ANDROID")}"
         |  const val LINKTREE_URL = "${secretProperties.getPropertyValue("LINKTREE_URL")}"
+        |  const val STRIPE_URL =  "${secretProperties.getPropertyValue("STRIPE_URL")}" 
         |}
         |
       """.trimMargin()
@@ -175,6 +176,9 @@ kotlin {
 
                 implementation(libs.konnectivity)
 
+                implementation(libs.app.rating)
+                implementation(libs.permissions.compose)
+
 
 
             }
@@ -240,6 +244,7 @@ android {
 dependencies {
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.review.ktx)
+    implementation(libs.androidx.material3.android)
 }
 
 

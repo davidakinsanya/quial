@@ -203,13 +203,7 @@ interface RootAppDestination {
                     uiStateHolder = getUiStateHolder<FeedUiStateHolder>(),
                     dataHolder = getDataHolder(),
                     quizHolder = getUiStateHolder<QuizStateHolder>(),
-                    appRating = {
-                        AppRatingDialog(
-                            playStoreLink = BuildConfig.APP_STORE_RATING_ANDROID,
-                            appStoreLink = BuildConfig.APP_STORE_RATING_IOS,
-                            interval = Interval.Monthly
-                        )
-                    }
+                    appRating = {}
                 )
             } else {
                 OfflineComposable(modifier = Modifier)
