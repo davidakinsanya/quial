@@ -3,8 +3,12 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+<<<<<<< HEAD
 !**/src/main/secrets/**
 !**/src/main/secrets/api-key.txt
+=======
+!**/src/main/secrets/
+>>>>>>> 94f392bca834319178d04fab7d061cf0622de27e
 
 ### STS ###
 .apt_generated

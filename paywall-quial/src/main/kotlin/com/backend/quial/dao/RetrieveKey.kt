@@ -8,7 +8,7 @@ class RetrieveKey {
 
     fun retrieve(): String {
         val file = File(Paths.get(System.getProperty("user.dir"),
-            "/src/main/secrets/.txt")
+            "/src/main/secrets/api-key.txt")
             .toAbsolutePath()
             .toString())
 
