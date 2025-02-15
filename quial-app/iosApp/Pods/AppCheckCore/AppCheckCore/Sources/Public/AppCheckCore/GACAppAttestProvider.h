@@ -16,9 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "GACAppCheckProvider.h"
+#import <AppCheckCore/GACAppCheckProvider.h>
 
-#import "GACAppCheckAvailability.h"
+#import <AppCheckCore/GACAppCheckAvailability.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

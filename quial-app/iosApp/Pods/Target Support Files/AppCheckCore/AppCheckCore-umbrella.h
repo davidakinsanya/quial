@@ -10,19 +10,19 @@
 #endif
 #endif
 
-#import "AppCheckCore.h"
-#import "GACAppAttestProvider.h"
-#import "GACAppCheck.h"
-#import "GACAppCheckAvailability.h"
-#import "GACAppCheckDebugProvider.h"
-#import "GACAppCheckErrors.h"
-#import "GACAppCheckLogger.h"
-#import "GACAppCheckProvider.h"
-#import "GACAppCheckSettings.h"
-#import "GACAppCheckToken.h"
-#import "GACAppCheckTokenDelegate.h"
-#import "GACAppCheckTokenResult.h"
-#import "GACDeviceCheckProvider.h"
+#import <AppCheckCore/AppCheckCore.h>
+#import <AppCheckCore/GACAppAttestProvider.h>
+#import <AppCheckCore/GACAppCheck.h>
+#import <AppCheckCore/GACAppCheckAvailability.h>
+#import <AppCheckCore/GACAppCheckDebugProvider.h>
+#import <AppCheckCore/GACAppCheckErrors.h>
+#import <AppCheckCore/GACAppCheckLogger.h>
+#import <AppCheckCore/GACAppCheckProvider.h>
+#import <AppCheckCore/GACAppCheckSettings.h>
+#import <AppCheckCore/GACAppCheckToken.h>
+#import <AppCheckCore/GACAppCheckTokenDelegate.h>
+#import <AppCheckCore/GACAppCheckTokenResult.h>
+#import <AppCheckCore/GACDeviceCheckProvider.h>
 
 FOUNDATION_EXPORT double AppCheckCoreVersionNumber;
 FOUNDATION_EXPORT const unsigned char AppCheckCoreVersionString[];

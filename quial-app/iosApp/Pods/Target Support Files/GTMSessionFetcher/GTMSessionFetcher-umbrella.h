@@ -10,10 +10,10 @@
 #endif
 #endif
 
-#import "GTMSessionFetcher.h"
-#import "GTMSessionFetcherLogging.h"
-#import "GTMSessionFetcherService.h"
-#import "GTMSessionUploadFetcher.h"
+#import <GTMSessionFetcher/GTMSessionFetcher.h>
+#import <GTMSessionFetcher/GTMSessionFetcherLogging.h>
+#import <GTMSessionFetcher/GTMSessionFetcherService.h>
+#import <GTMSessionFetcher/GTMSessionUploadFetcher.h>
 
 FOUNDATION_EXPORT double GTMSessionFetcherVersionNumber;
 FOUNDATION_EXPORT const unsigned char GTMSessionFetcherVersionString[];
