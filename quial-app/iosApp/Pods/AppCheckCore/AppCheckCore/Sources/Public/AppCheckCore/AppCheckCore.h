@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-#import "GACAppCheck.h"
-#import "GACAppCheckErrors.h"
-#import "GACAppCheckLogger.h"
-#import "GACAppCheckProvider.h"
-#import "GACAppCheckSettings.h"
-#import "GACAppCheckToken.h"
-#import "GACAppCheckTokenDelegate.h"
-#import "GACAppCheckTokenResult.h"
+#import <AppCheckCore/GACAppCheck.h>
+#import <AppCheckCore/GACAppCheckErrors.h>
+#import <AppCheckCore/GACAppCheckLogger.h>
+#import <AppCheckCore/GACAppCheckProvider.h>
+#import <AppCheckCore/GACAppCheckSettings.h>
+#import <AppCheckCore/GACAppCheckToken.h>
+#import <AppCheckCore/GACAppCheckTokenDelegate.h>
+#import <AppCheckCore/GACAppCheckTokenResult.h>
 
 // Debug provider
-#import "GACAppCheckDebugProvider.h"
+#import <AppCheckCore/GACAppCheckDebugProvider.h>
 
 // DeviceCheck provider
-#import "GACDeviceCheckProvider.h"
+#import <AppCheckCore/GACDeviceCheckProvider.h>
 
 // App Attest provider.
-#import "GACAppAttestProvider.h"
+#import <AppCheckCore/GACAppAttestProvider.h>

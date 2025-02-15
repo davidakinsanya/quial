@@ -16,8 +16,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "GACAppCheckAvailability.h"
-#import "GACAppCheckProvider.h"
+#import <AppCheckCore/GACAppCheckAvailability.h>
+#import <AppCheckCore/GACAppCheckProvider.h>
 
 @protocol GACDeviceCheckAPIServiceProtocol;
 @protocol GACDeviceCheckTokenGenerator;

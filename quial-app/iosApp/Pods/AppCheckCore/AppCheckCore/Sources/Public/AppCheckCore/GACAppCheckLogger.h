@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#import "GACAppCheckErrors.h"
+#import <AppCheckCore/GACAppCheckErrors.h>
 
 /// Constants that specify the level of logging to perform in App Check Core.
 typedef NS_ENUM(NSInteger, GACAppCheckLogLevel) {

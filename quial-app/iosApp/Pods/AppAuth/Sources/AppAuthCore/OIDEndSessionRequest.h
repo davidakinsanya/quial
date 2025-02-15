@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "OIDExternalUserAgentRequest.h"
+#import <AppAuth/OIDExternalUserAgentRequest.h>
 
 @class OIDServiceConfiguration;
 
