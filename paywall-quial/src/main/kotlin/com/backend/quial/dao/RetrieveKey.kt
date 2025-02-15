@@ -25,7 +25,7 @@ class RetrieveKey {
         val file = if (!fileCheck) {
             File(
                 Paths.get(System.getProperty("user.dir"),
-                    "../usr/src/app/../usr/src/app/api-key.txt")
+                    "../usr/src/app/api-key.txt")
                     .createFile()
                     .toAbsolutePath()
                     .toString())
@@ -33,7 +33,7 @@ class RetrieveKey {
         } else {
             File(
                 Paths.get(System.getProperty("user.dir"),
-                    "../usr/src/app/../usr/src/app/api-key.txt")
+                    "../usr/src/app/api-key.txt")
                     .toAbsolutePath()
                     .toString())
         }
