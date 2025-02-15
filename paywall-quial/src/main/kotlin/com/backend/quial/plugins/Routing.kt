@@ -8,12 +8,14 @@ import io.ktor.server.routing.*
 fun Application.configureRouting() {
     routing {
         get("/key") {
-            call.respond(RetrieveKey().retrieve())
+            val retrieveKey = RetrieveKey()
+            call.respond(retrieveKey.retrieve())
         }
 
         post ("/push") {
             val key: String? = call.parameters["key"]
-            call.respond(RetrieveKey().pushKey(key!!))
+            val retrieveKey = RetrieveKey()
+            call.respond(retrieveKey.pushKey(key!!))
         }
     }
 }
