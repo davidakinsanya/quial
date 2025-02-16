@@ -18,7 +18,7 @@ class StripeClient(
     suspend fun getCustomer(email: String): String {
         val customerCall = "customers?email=$email"
         var response = StripeCustomerResponse()
-        var key = ""
+        var key: String
 
         runBlocking {
             key = paywallClient.retrieveKey()
@@ -32,7 +32,7 @@ class StripeClient(
 
     suspend fun getSubscription(id: String): Boolean {
         val subscriptionCall = "subscriptions?customer=$id"
-        var key = ""
+        var key: String
         var response = StripeSubscriptionResponse()
 
         runBlocking {
