@@ -7,7 +7,7 @@ import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.json.Json
 import secrets.BuildConfig
 
-class PaywallConfigClient(
+class PaywallClient(
     private val httpClient: HttpClient
 ) {
     suspend fun readConfig(): PaywallConfig {
@@ -18,5 +18,9 @@ class PaywallConfigClient(
         }
 
         return serializer.decodeFromString(response)
+    }
+
+    suspend fun retrieveKey(): String {
+        return httpClient.get(urlString = BuildConfig.PAYWALL_URL + "/key").bodyAsText()
     }
 }

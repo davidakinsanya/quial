@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class StripeCustomerResponse(
-    var obj: String,
+    var obj: String = "",
     var data: List<Customer> = listOf()
 )
 
@@ -17,8 +17,8 @@ data class Customer(
 
 @Serializable
 data class StripeSubscriptionResponse(
-    var obj: String,
-    var data: List<Subscription>
+    var obj: String = "",
+    var data: List<Subscription> = listOf()
 )
 
 @Serializable
