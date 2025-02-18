@@ -4,9 +4,6 @@ import com.backend.quial.dao.intrface.Topics
 import com.backend.quial.dto.Idiom
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.PrintWriter
 import java.nio.file.Paths
 import kotlin.io.path.createFile
 
@@ -37,7 +34,7 @@ class TopicsImpl: Topics {
     override fun getTopics(): List<String> {
         val list = mutableListOf<String>()
         val file = File(Paths.get(System.getProperty("user.dir"),
-            "../usr/src/app/topics/topics.txt").toAbsolutePath().toString()).bufferedReader()
+            "../usr/src/app/topics.txt").toAbsolutePath().toString()).bufferedReader()
 
         file.forEachLine { list.add(it) }
 
@@ -47,7 +44,7 @@ class TopicsImpl: Topics {
     override fun getIdiomsByTopic(topic: String): List<Idiom> {
         val listOfIdioms = mutableListOf<Idiom>()
         val file = File(Paths.get(System.getProperty("user.dir"),
-            "../usr/src/app/topics/${topic}-quial.csv").toAbsolutePath().toString())
+            "../usr/src/app/${topic}-quial.csv").toAbsolutePath().toString())
 
         val regex = """\[(.*?)]""".toRegex()
 
