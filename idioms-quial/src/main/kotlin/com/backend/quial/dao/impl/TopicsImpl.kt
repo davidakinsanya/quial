@@ -30,7 +30,7 @@ class TopicsImpl: Topics {
                 .toString())
         }
 
-        file.writeText(topic + "\n")
+        file.appendText(topic + "\n")
         return true
     }
 
@@ -49,7 +49,6 @@ class TopicsImpl: Topics {
         val file = File(Paths.get(System.getProperty("user.dir"),
             "../usr/src/app/topics/${topic}-quial.csv").toAbsolutePath().toString())
 
-        val fileInputStream = FileInputStream(file)
         val regex = """\[(.*?)]""".toRegex()
 
         val csvReader = csvReader {
