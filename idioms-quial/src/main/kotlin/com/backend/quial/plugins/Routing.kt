@@ -6,6 +6,8 @@ import com.backend.quial.dao.impl.TopicsImpl
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import java.nio.file.Paths
+import kotlin.io.path.exists
 
 fun Application.configureRouting() {
     routing {
@@ -29,8 +31,10 @@ fun Application.configureRouting() {
         post("/add-topic") {
             val topic: String? = call.parameters["topic"]
             val topicImpl = TopicsImpl()
-            val bool = topicImpl.pushTopic(topic!!)
-            call.respond(bool)
+            //val bool = topicImpl.pushTopic(topic!!)
+            call.respond(
+                Paths.get(System.getProperty("user.dir"),
+                "../usr/src/app/topics").toAbsolutePath().exists())
 
         }
 
