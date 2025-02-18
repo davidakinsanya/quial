@@ -12,23 +12,25 @@ import kotlin.io.path.createFile
 
 class TopicsImpl: Topics {
     override fun pushTopic(topic: String): Boolean {
-        var file = File(Paths.get(System.getProperty("user.dir"),
-            "../usr/src/app/topics/topics.txt").toAbsolutePath().toString())
-        if (file.exists()) {
-            file.printWriter().use { out -> out.println(topic) }
+        val fileCheck = File(Paths.get(System.getProperty("user.dir"),
+            "../usr/src/app/topics/topics.txt").toAbsolutePath().toString()).exists()
 
+        println(Paths.get(System.getProperty("user.dir")).toString())
+
+        val file = if (fileCheck) {
+            File(Paths.get(System.getProperty("user.dir"),
+                "../usr/src/app/topics/topics.txt")
+                .toAbsolutePath()
+                .toString())
         } else {
-            file = File(Paths.get(System.getProperty("user.dir"),
+            File(Paths.get(System.getProperty("user.dir"),
                 "../usr/src/app/topics/topics.txt")
                 .createFile()
                 .toAbsolutePath()
                 .toString())
-
-            val writer = PrintWriter(FileOutputStream(file, true))
-            writer.println(topic)
-            writer.close()
         }
 
+        file.writeText(topic + "\n")
         return true
     }
 
