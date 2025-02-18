@@ -16,7 +16,11 @@ class TopicsImpl: Topics {
             file.appendText("\n$topic")
         } else {
             file = File(Paths.get(System.getProperty("user.dir"),
-                "../usr/src/app/topics/topics.txt").toAbsolutePath().createFile().toString())
+                "../usr/src/app/topics/topics.txt")
+                .createFile()
+                .toAbsolutePath()
+                .toString())
+
             file.appendText(topic)
         }
 

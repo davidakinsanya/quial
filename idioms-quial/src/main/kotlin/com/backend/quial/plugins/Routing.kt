@@ -31,11 +31,8 @@ fun Application.configureRouting() {
         post("/add-topic") {
             val topic: String? = call.parameters["topic"]
             val topicImpl = TopicsImpl()
-            //val bool = topicImpl.pushTopic(topic!!)
-            call.respond(
-                Paths.get(System.getProperty("user.dir"),
-                "../usr/src/app/topics").toAbsolutePath().exists())
-
+            val bool = topicImpl.pushTopic(topic!!)
+            call.respond(bool)
         }
 
         get("/get-topics-list") {
