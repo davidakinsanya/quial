@@ -29,21 +29,23 @@ fun Application.configureRouting() {
         post("/add-topic") {
             val topic: String? = call.parameters["topic"]
             val topicImpl = TopicsImpl()
-            call.respond(topicImpl.pushTopic(topic!!))
+            val bool = topicImpl.pushTopic(topic!!)
+            call.respond(bool)
 
         }
 
         get("/get-topics-list") {
             val topicImpl = TopicsImpl()
-            call.respond(topicImpl.getTopics())
+            val topics = topicImpl.getTopics()
+            call.respond(topics)
         }
 
         get ("/get-idioms-by-topic") {
-            val topic: String? = call.parameters["topic"]
+            val topic: String? = call.parameters["topic"]!!
             val topicsImpl = TopicsImpl()
-            call.respond(topicsImpl.getIdiomsByTopic(topic!!))
+            val idioms = topicsImpl.getIdiomsByTopic(topic!!)
+            call.respond(idioms)
         }
-
 
     }
 }

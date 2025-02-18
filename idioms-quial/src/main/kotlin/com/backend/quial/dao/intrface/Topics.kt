@@ -4,7 +4,7 @@ import com.backend.quial.dto.Idiom
 
 interface Topics {
 
-    fun pushTopic(topic: String)
+    fun pushTopic(topic: String): Boolean
 
     fun getTopics(): List<String>
 

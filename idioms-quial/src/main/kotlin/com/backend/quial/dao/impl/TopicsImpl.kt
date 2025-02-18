@@ -9,7 +9,7 @@ import java.nio.file.Paths
 import kotlin.io.path.createFile
 
 class TopicsImpl: Topics {
-    override fun pushTopic(topic: String) {
+    override fun pushTopic(topic: String): Boolean {
         var file = File(Paths.get(System.getProperty("user.dir"),
             "../usr/src/app/topics/topics.txt").toAbsolutePath().toString())
         if (file.exists()) {
@@ -19,6 +19,8 @@ class TopicsImpl: Topics {
                 "../usr/src/app/topics/topics.txt").toAbsolutePath().createFile().toString())
             file.appendText(topic)
         }
+
+        return true
     }
 
     override fun getTopics(): List<String> {
