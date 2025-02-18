@@ -13,18 +13,18 @@ import kotlin.io.path.createFile
 class TopicsImpl: Topics {
     override fun pushTopic(topic: String): Boolean {
         val fileCheck = File(Paths.get(System.getProperty("user.dir"),
-            "../usr/src/app/topics/topics.txt").toAbsolutePath().toString()).exists()
+            "../usr/src/app/topics.txt").toAbsolutePath().toString()).exists()
 
         println(Paths.get(System.getProperty("user.dir")).toString())
 
         val file = if (fileCheck) {
             File(Paths.get(System.getProperty("user.dir"),
-                "../usr/src/app/topics/topics.txt")
+                "../usr/src/app/topics.txt")
                 .toAbsolutePath()
                 .toString())
         } else {
             File(Paths.get(System.getProperty("user.dir"),
-                "../usr/src/app/topics/topics.txt")
+                "../usr/src/app/topics.txt")
                 .createFile()
                 .toAbsolutePath()
                 .toString())
