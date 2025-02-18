@@ -192,6 +192,7 @@ try:
         os.remove("/usr/src/app/quial2.csv")
     else:
         os.rename("/usr/src/app/quial2.csv", "/usr/src/app/quial.csv")
+        os.remove("/usr/src/app/quial2.csv")
 except Exception as e:
     print(e)
     
