@@ -5,6 +5,8 @@ import com.backend.quial.dto.Idiom
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.PrintWriter
 import java.nio.file.Paths
 import kotlin.io.path.createFile
 
@@ -13,7 +15,8 @@ class TopicsImpl: Topics {
         var file = File(Paths.get(System.getProperty("user.dir"),
             "../usr/src/app/topics/topics.txt").toAbsolutePath().toString())
         if (file.exists()) {
-            file.appendText("\n$topic")
+            file.printWriter().use { out -> out.println(topic) }
+
         } else {
             file = File(Paths.get(System.getProperty("user.dir"),
                 "../usr/src/app/topics/topics.txt")
@@ -21,7 +24,9 @@ class TopicsImpl: Topics {
                 .toAbsolutePath()
                 .toString())
 
-            file.appendText(topic)
+            val writer = PrintWriter(FileOutputStream(file, true))
+            writer.println(topic)
+            writer.close()
         }
 
         return true
