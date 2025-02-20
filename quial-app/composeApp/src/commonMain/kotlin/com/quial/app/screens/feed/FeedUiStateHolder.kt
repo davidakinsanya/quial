@@ -1,6 +1,12 @@
 package com.quial.app.screens.feed
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import com.quial.app.data.idiom.Idiom
+import com.quial.app.data.idiom.Topic
+import com.quial.app.data.idiom.TopicSelected
 import com.quial.app.utils.UiStateHolder
 import com.quial.app.utils.uiStateHolderScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -8,6 +14,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class FeedUiStateHolder(
     feedUiState: FeedUiState
@@ -25,6 +32,49 @@ class FeedUiStateHolder(
 
     private fun loadData() = uiStateHolderScope.launch {
         _idiomsList.value = _uiState.value.retrieveIdioms()!!
+    }
+
+     @Composable
+     fun getTopics(): TopicSelected {
+        val list = mutableListOf<Topic>()
+         val selectionState = this.listOfStates(list.size)
+
+        runBlocking {
+            _uiState.value.retrieveTopics().forEach { topic ->
+                val topicObj = Topic(
+                    topic = topic
+                )
+
+                list.add(topicObj)
+
+                topicObj.onClick = {
+                    runBlocking {
+                        uiCheckBoxState(selectionState, list.indexOf(topicObj))
+                        _idiomsList.value = _uiState.value.getIdiomsByTopic(topicObj.topic)!!
+                    }
+                }
+            }
+        }
+
+        return TopicSelected(list, selectionState)
+    }
+
+    @Composable
+    fun listOfStates(index: Int): MutableList<MutableState<Boolean>> {
+        val listOfStates = mutableListOf<MutableState<Boolean>>()
+        for (i in 0..index) {
+            listOfStates.add(remember {  mutableStateOf(false) })
+
+        }
+        return listOfStates
+    }
+
+    fun uiCheckBoxState(optionState: MutableList<MutableState<Boolean>>,
+                        indexChecked: Int
+    ) {
+        for (i in 0..< optionState.size) {
+            optionState[i].value = i == indexChecked
+        }
     }
 
     fun splitText(text: String): List<String> {
