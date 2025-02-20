@@ -17,4 +17,23 @@ class FeedRepository(
 
         return idiomList
     }
+
+    suspend fun retrieveTopics(): List<String> {
+        var topics = listOf<String>()
+
+        runBlocking {
+            topics = idiomsClient.retrieveTopics()
+        }
+        return topics
+    }
+
+    suspend fun getIdiomsByTopic(topic: String): List<Idiom>? {
+        var idioms: List<Idiom>? = null
+
+        runBlocking {
+            idioms = idiomsClient.getTopicsByIdiom(topic)
+        }
+
+        return idioms
+    }
 }

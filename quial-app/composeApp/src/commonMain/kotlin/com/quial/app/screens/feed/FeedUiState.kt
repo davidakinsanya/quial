@@ -9,4 +9,12 @@ data class FeedUiState(
     suspend fun retrieveIdioms(): List<Idiom>? {
         return feedRepository.retrieveIdioms()
     }
+
+    suspend fun retrieveTopics(): List<String> {
+        return feedRepository.retrieveTopics()
+    }
+
+    suspend fun getIdiomsByTopic(topic: String): List<Idiom>? {
+        return feedRepository.getIdiomsByTopic(topic)
+    }
 }
