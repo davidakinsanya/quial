@@ -4,7 +4,6 @@ import com.backend.quial.dao.intrface.RetrieveIdioms
 import com.backend.quial.dto.Idiom
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import java.io.File
-import java.io.FileInputStream
 import java.nio.file.Paths
 
 class RetrieveIdiomsImpl: RetrieveIdioms {
@@ -18,7 +17,6 @@ class RetrieveIdiomsImpl: RetrieveIdioms {
     val listOfIdioms = mutableListOf<Idiom>()
 
     val file = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/quial.csv").toAbsolutePath().toString())
-    val fileInputStream = FileInputStream(file)
     val regex = """\[(.*?)]""".toRegex()
 
     val csvReader = csvReader {

@@ -21,17 +21,25 @@ class AddUserIdiomImpl : AddUserIdiom {
      */
     override fun add(idiom: String): Int {
 
-        var userFile = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/user-quial.csv").toAbsolutePath().toString())
+        var userFile = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/user-quial.csv")
+            .toAbsolutePath()
+            .toString())
 
         if (!userFile.exists()) {
-            userFile = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/user-quial.csv").toAbsolutePath().createFile().toString())
+            userFile = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/user-quial.csv")
+                .toAbsolutePath()
+                .createFile()
+                .toString())
         }
 
         userFile.printWriter().use { out ->
             out.println(idiom)
         }
 
-        val mainQuialFile = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/quial.csv").toAbsolutePath().toString())
+        val mainQuialFile = File(Paths.get(System.getProperty("user.dir"), "../usr/src/app/quial.csv")
+            .toAbsolutePath()
+            .toString())
+
         mainQuialFile.printWriter().use {
                 out -> out.println(idiom)
         }
