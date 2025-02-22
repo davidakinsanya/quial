@@ -1,6 +1,5 @@
 package com.quial.app.screens.onboarding.comps
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,7 +16,6 @@ import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
 import quial_app.composeapp.generated.resources.Res
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnboardingNavigationButtons(state: PagerState,
                                 navigate: () -> Unit,

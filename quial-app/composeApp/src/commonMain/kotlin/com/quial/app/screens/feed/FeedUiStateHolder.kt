@@ -91,17 +91,17 @@ class FeedUiStateHolder(
     }
 
     fun splitText(text: String): List<String> {
-        val regex = Regex(pattern = "'[^']*'", options = setOf(RegexOption.IGNORE_CASE))
-        val doubleQuote = "\""
-
-        return regex.findAll(text).map {
-            it.groupValues[0]
-                .substring(1, it.groupValues[0].length - 1)
-                .replace(doubleQuote, "")
+        val extractedText =  text.split("', ")[0] + "'"
+        val alteredText = listOf(
+            extractedText
+                .substring(1, extractedText.length - 1)
+                .replace("\"", "")
                 .replace("Meaning:", "")
                 .replace("Example:", "")
                 .capitalizeFirstLetter()
-        }.toList()
+        )
+
+        return alteredText
     }
 
     private fun String.capitalizeFirstLetter(): String {
