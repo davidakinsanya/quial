@@ -76,10 +76,17 @@ fun FeedScreen(
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(horizontalArrangement = Arrangement.SpaceAround,
+            Row(horizontalArrangement = Arrangement.SpaceAround, //SpaceEvenly
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = modifier.fillMaxWidth()) {
-                QuialImage(modifier.size(130.dp).padding(end = 35.dp))
+                modifier = modifier.fillMaxWidth()) { // .8f
+                QuialImage(modifier.size(130.dp).padding(1.dp))
+                    /*
+                    .fillMaxHeight(0.15f)
+                    .fillMaxWidth(0.25f)
+                    .padding(0.dp)
+                    )
+                     */
+                // TopicsComposable(uiStateHolder)
                 ThreeDots(modifier.size(50.dp), { showMenu.value = !showMenu.value })
             }
         }

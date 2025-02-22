@@ -1,9 +1,9 @@
 package com.quial.app.paywall
 
-import com.quial.app.http.requests.PaywallConfigClient
+import com.quial.app.http.requests.PaywallClient
 
 class PaywallConfigState(
-    private val client: PaywallConfigClient
+    private val client: PaywallClient
 ) {
 
     suspend fun readConfig(): PaywallConfig {

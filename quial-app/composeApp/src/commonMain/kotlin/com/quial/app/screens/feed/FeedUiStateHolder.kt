@@ -36,8 +36,21 @@ class FeedUiStateHolder(
 
      @Composable
      fun getTopics(): TopicSelected {
-        val list = mutableListOf<Topic>()
-         val selectionState = this.listOfStates(list.size)
+         val list = mutableListOf<Topic>()
+         var selectionStateSize = 0
+
+         runBlocking {
+             selectionStateSize = _uiState.value.retrieveTopics().size + 1
+         }
+
+         val selectionState = this.listOfStates(selectionStateSize)
+
+         val forYouTopic = Topic(topic = "for you")
+         list.add(forYouTopic)
+         forYouTopic.onClick = {
+             uiCheckBoxState(selectionState, list.indexOf(forYouTopic))
+             // loadData()
+         }
 
         runBlocking {
             _uiState.value.retrieveTopics().forEach { topic ->
@@ -50,7 +63,7 @@ class FeedUiStateHolder(
                 topicObj.onClick = {
                     runBlocking {
                         uiCheckBoxState(selectionState, list.indexOf(topicObj))
-                        _idiomsList.value = _uiState.value.getIdiomsByTopic(topicObj.topic)!!
+                        // _idiomsList.value = _uiState.value.getIdiomsByTopic(topicObj.topic)!!
                     }
                 }
             }
