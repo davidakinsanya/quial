@@ -14,9 +14,10 @@ import com.mmk.kmprevenuecat.purchases.data.CustomerInfo
 import com.mmk.kmprevenuecat.purchases.ui.PaywallListener
 import com.plusmobileapps.konnectivity.Konnectivity
 import com.quial.app.data.datastore.DataStoreStateHolder
+import com.quial.app.http.requests.StripeClient
 import com.quial.app.http.requests.TokenClient
 import com.quial.app.paywall.PaywallConfigStateHolder
-import com.quial.app.paywall.SubscriptionPaywall
+import com.quial.app.paywall.StripeCheckout
 import com.quial.app.screens.auth.AuthUiHelperButtonsAndFirebaseAuth
 import com.quial.app.screens.connection.OfflineComposable
 import com.quial.app.screens.feed.FeedUiStateHolder
@@ -156,38 +157,8 @@ interface RootAppDestination {
 
         @Composable
         override fun Content() {
-            val navigator = LocalNavigator.current
             val analytics = Firebase.analytics
-
-            SubscriptionPaywall(
-                analytics = analytics,
-                navigator = navigator,
-                paywallHolder = koinInject<PaywallConfigStateHolder>(),
-                onDismiss = {
-                    if (navigator?.items?.contains(Auth) == true)
-                        navigator.pop() else navigator?.push(Auth)
-                },
-                listener = object: PaywallListener {
-                    override fun onPurchaseCompleted(customerInfo: CustomerInfo?) {
-                        super.onPurchaseCompleted(customerInfo)
-                        navigator?.push(Auth)
-                    }
-
-                    override fun onPurchaseError(error: String?) {
-                        super.onPurchaseError(error)
-                    }
-
-
-                    override fun onRestoreCompleted(customerInfo: CustomerInfo?) {
-                        super.onRestoreCompleted(customerInfo)
-                        navigator?.push(Auth)
-                    }
-
-                    override fun onRestoreError(error: String?) {
-                        super.onRestoreError(error)
-                    }
-                }
-            )
+            StripeCheckout(analytics, getDataHolder())
         }
     }
 
@@ -203,6 +174,7 @@ interface RootAppDestination {
                     uiStateHolder = getUiStateHolder<FeedUiStateHolder>(),
                     dataHolder = getDataHolder(),
                     quizHolder = getUiStateHolder<QuizStateHolder>(),
+                    stripeClient = koinInject<StripeClient>(),
                     appRating = {}
                 )
             } else {

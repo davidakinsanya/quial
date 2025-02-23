@@ -52,7 +52,7 @@ class FeedUiStateHolder(
              // loadData()
          }
 
-        runBlocking {
+         runBlocking {
             _uiState.value.retrieveTopics().forEach { topic ->
                 val topicObj = Topic(
                     topic = topic
@@ -67,10 +67,10 @@ class FeedUiStateHolder(
                     }
                 }
             }
-        }
+         }
 
         return TopicSelected(list, selectionState)
-    }
+     }
 
     @Composable
     fun listOfStates(index: Int): MutableList<MutableState<Boolean>> {

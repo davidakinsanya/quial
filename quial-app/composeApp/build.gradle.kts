@@ -37,6 +37,10 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
         |  const val APP_STORE_RATING_ANDROID = "${secretProperties.getPropertyValue("APP_STORE_RATING_ANDROID")}"
         |  const val LINKTREE_URL = "${secretProperties.getPropertyValue("LINKTREE_URL")}"
         |  const val STRIPE_URL =  "${secretProperties.getPropertyValue("STRIPE_URL")}" 
+        |  const val STRIPE_TEST_CHECKOUT = "${secretProperties.getPropertyValue("STRIPE_TEST_CHECKOUT")}" 
+        |  const val STRIPE_CHECKOUT = "${secretProperties.getPropertyValue("STRIPE_CHECKOUT")}" 
+        |  const val STRIPE_CUSTOMER_PORTAL = "${secretProperties.getPropertyValue("STRIPE_CUSTOMER_PORTAL")}" 
+        |  const val STRIPE_TEST_CUSTOMER_PORTAL = "${secretProperties.getPropertyValue("STRIPE_TEST_CUSTOMER_PORTAL")}"
         |}
         |
       """.trimMargin()
@@ -210,6 +214,10 @@ android {
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
+    lint {
+        disable.add("Instantiatable")
+    }
+
     defaultConfig {
         applicationId = "com.quial.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -245,6 +253,7 @@ dependencies {
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.review.ktx)
     implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.activity.ktx)
 }
 
 

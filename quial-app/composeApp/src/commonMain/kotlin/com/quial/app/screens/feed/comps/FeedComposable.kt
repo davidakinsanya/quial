@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.data.idiom.Idiom
+import com.quial.app.http.requests.StripeClient
 import com.quial.app.navigation.RootAppDestination
 import com.quial.app.screens.feed.FeedUiStateHolder
 import org.jetbrains.compose.resources.Font
@@ -35,10 +36,11 @@ fun FeedComposable(modifier: Modifier,
                    idiom: Idiom,
                    uiHolder: FeedUiStateHolder,
                    dataHolder: DataStoreStateHolder,
+                   stripeClient: StripeClient,
                    stampCheck: Boolean) {
 
 
-    val bool = false //!dataHolder.isPremium() && stampCheck
+    val bool = false //!dataHolder.isPremium(stripeClient) && stampCheck
 
     val randomInt = uiHolder.randomInt()
     val booleanList = uiHolder.getListOfBools(bool = bool, randomInt = randomInt)

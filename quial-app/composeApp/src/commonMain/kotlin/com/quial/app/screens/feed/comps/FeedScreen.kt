@@ -3,6 +3,7 @@ package com.quial.app.screens.feed.comps
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
+import androidx.compose.foundation.content.MediaType.Companion.Text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -29,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.quial.app.data.datastore.DataStoreStateHolder
+import com.quial.app.http.requests.StripeClient
 import com.quial.app.images.QuialImage
 import com.quial.app.images.ThreeDots
 import com.quial.app.screens.feed.FeedUiStateHolder
@@ -38,6 +41,7 @@ import com.quial.app.screens.feed.quiz.QuizStateHolder
 import com.quial.app.screens.loading.FeedLoadingScreen
 import com.quial.app.utils.sameDateCheck
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -46,6 +50,7 @@ fun FeedScreen(
     uiStateHolder: FeedUiStateHolder,
     dataHolder: DataStoreStateHolder,
     quizHolder: QuizStateHolder,
+    stripeClient: StripeClient,
     appRating: @Composable () -> Unit
 ) {
     Scaffold(modifier = modifier
@@ -76,17 +81,15 @@ fun FeedScreen(
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(horizontalArrangement = Arrangement.SpaceAround, //SpaceEvenly
+            Row(horizontalArrangement = Arrangement.SpaceEvenly, // SpaceAround
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = modifier.fillMaxWidth()) { // .8f
-                QuialImage(modifier.size(130.dp).padding(1.dp))
-                    /*
+                modifier = modifier.fillMaxWidth(.8f)) {
+                QuialImage(modifier
                     .fillMaxHeight(0.15f)
                     .fillMaxWidth(0.25f)
-                    .padding(0.dp)
-                    )
-                     */
-                // TopicsComposable(uiStateHolder)
+                    .padding(0.dp) //  .size(130.dp)
+                )
+                TopicsComposable(uiStateHolder)
                 ThreeDots(modifier.size(50.dp), { showMenu.value = !showMenu.value })
             }
         }
@@ -118,7 +121,7 @@ fun FeedScreen(
 
                 val stampCheck = sameDateCheck(string)
 
-                if (index > 3 && !stampCheck && !dataHolder.isPremium()) {
+                if (index > 3 && !stampCheck && !dataHolder.isPremium(stripeClient)) {
                     // dataHolder.updateTimeStamp()
                 }
 
@@ -161,6 +164,7 @@ fun FeedScreen(
                                 modifier = modifier,
                                 uiHolder = uiStateHolder,
                                 dataHolder = dataHolder,
+                                stripeClient = stripeClient,
                                 stampCheck = stampCheck
                             )
                         }

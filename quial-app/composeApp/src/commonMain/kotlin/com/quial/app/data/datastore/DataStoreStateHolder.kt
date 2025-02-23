@@ -1,14 +1,11 @@
 package com.quial.app.data.datastore
 
-
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.mmk.kmprevenuecat.purchases.Purchases
+import com.quial.app.http.requests.StripeClient
 import com.quial.app.screens.onboarding.comps.OnboardingResponse
 import com.quial.app.utils.UiStateHolder
 import com.quial.app.utils.getCurrentDate
@@ -19,7 +16,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 
 class DataStoreStateHolder(
-    private val preferences: DataStore<Preferences>
+    private val preferences: DataStore<Preferences>,
 ): UiStateHolder() {
 
     fun getPref(): DataStore<Preferences> {
@@ -82,19 +79,17 @@ class DataStoreStateHolder(
     }
 
     @Composable
-    private fun getPurchasesData(): Boolean {
-        val purchase = remember {  mutableStateOf(false) }
-        Purchases.getCustomerInfo { customerInfo ->
-            customerInfo.getOrNull()?.entitlements?.all?.values?.iterator()?.forEach {
-                if (!purchase.value && it.isActive) purchase.value = true
-            }
-        }
-        return purchase.value
-    }
+    fun isPremium(stripeClient: StripeClient): Boolean {
+        var id: String
+        var isActive = false
 
-    @Composable
-    fun isPremium(): Boolean {
-        return getPurchasesData()
+        runBlocking {
+            id = stripeClient.getCustomer(getEmail())
+            isActive = stripeClient.getSubscription(id)
+
+        }
+
+        return isActive
     }
 
     fun updateTimeStamp() = uiStateHolderScope.launch {
