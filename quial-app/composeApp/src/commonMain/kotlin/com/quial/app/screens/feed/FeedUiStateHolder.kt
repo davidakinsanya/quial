@@ -55,6 +55,7 @@ class FeedUiStateHolder(
          list.add(forYouTopic)
          forYouTopic.onClick = {
              uiCheckBoxState(selectionState, list.indexOf(forYouTopic))
+             // _loadingState.value = UiState.Loading
              // loadData()
          }
 
