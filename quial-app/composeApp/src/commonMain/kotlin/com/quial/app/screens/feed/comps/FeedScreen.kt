@@ -15,12 +15,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.quial.app.data.datastore.DataStoreStateHolder
+import com.quial.app.data.idiom.Idiom
 import com.quial.app.http.requests.StripeClient
 import com.quial.app.images.QuialImage
 import com.quial.app.images.ThreeDots
@@ -65,18 +68,21 @@ fun FeedScreen(
         val correctAnswer = quizHolder.getAnswerState()
         val showMenu = remember { mutableStateOf(false) }
 
+        val loadingState by uiStateHolder.loadingState.collectAsState()
+
         val borderStroke: BorderStroke = when (correctAnswer) {
             null -> {
                 BorderStroke(3.dp, Color.Black)
             }
+
             false -> {
                 BorderStroke(3.dp, Color.Red)
             }
+
             else -> {
                 BorderStroke(6.dp, Color.Green)
             }
         }
-
         Column(
             modifier = modifier
                 .fillMaxWidth(),
@@ -105,72 +111,98 @@ fun FeedScreen(
             )
         }
 
-
         Column(
             modifier = modifier
                 .fillMaxSize()
                 .padding(top = 100.dp, bottom = 10.dp, start = 25.dp, end = 25.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            VerticalPager(state = pagerState,
-                          pageSpacing = 10.dp) { index ->
 
-                val string by dataHolder.getPref().data.map {
-                    val stamp = stringPreferencesKey("timeStamp")
-                    it[stamp]?: ""
-                }.collectAsState("")
-
-                val stampCheck = sameDateCheck(string)
-
-                if (index > 3 && !stampCheck && !isPremium) {
-                    // dataHolder.updateTimeStamp()
+            when (loadingState) {
+                is UiState.Loading -> FeedLoadingScreen()
+                is UiState.Success -> {
+                    Pager(
+                        pagerState = pagerState,
+                        dataHolder = dataHolder,
+                        quizHolder = quizHolder,
+                        uiStateHolder = uiStateHolder,
+                        isPremium = isPremium,
+                        modifier = modifier,
+                        borderStroke = borderStroke,
+                        idioms = idioms
+                    )
                 }
 
-                Box(
-                    modifier = modifier
-                        .border(
-                            border = borderStroke,
-                            shape = RoundedCornerShape(15.dp)
-                        )
-                        .padding(
-                            top = 30.dp,
-                            bottom = 0.dp,
-                            start = 20.dp,
-                            end = 20.dp
-                        )
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.9f),
-                    contentAlignment = Alignment.TopCenter
-                ) {
+                is UiState.Error -> TODO()
+            }
+        }
+    }
+}
 
-                    if (idioms.isNotEmpty()) {
-                        val idiomView = idioms[index % idioms.size]
+@Composable
+fun Pager(pagerState: PagerState,
+          dataHolder: DataStoreStateHolder,
+          quizHolder: QuizStateHolder,
+          uiStateHolder: FeedUiStateHolder,
+          isPremium: Boolean,
+          modifier: Modifier,
+          borderStroke: BorderStroke,
+          idioms: List<Idiom>) {
+    VerticalPager(state = pagerState,
+        pageSpacing = 10.dp) { index ->
 
-                        if (pagerState.currentPage % 7 == 0
-                            && pagerState.currentPage >= 7) {
+        val string by dataHolder.getPref().data.map {
+            val stamp = stringPreferencesKey("timeStamp")
+            it[stamp]?: ""
+        }.collectAsState("")
 
-                            quizHolder.setIdiomGuess()
-                            val options = remember { mutableStateOf(quizHolder.quizOptions()) }
-                            QuizLayout(quizHolder = quizHolder, options = options)
+        val stampCheck = sameDateCheck(string)
 
-                        } else {
+        if (index > 3 && !stampCheck && !isPremium) {
+            // dataHolder.updateTimeStamp()
+        }
 
-                            if (isPremium) {
-                                quizHolder.answerReset()
-                                quizHolder.addToQuiz(idiomView)
-                            }
+        Box(
+            modifier = modifier
+                .border(
+                    border = borderStroke,
+                    shape = RoundedCornerShape(15.dp)
+                )
+                .padding(
+                    top = 30.dp,
+                    bottom = 0.dp,
+                    start = 20.dp,
+                    end = 20.dp
+                )
+                .fillMaxWidth()
+                .fillMaxHeight(0.9f),
+            contentAlignment = Alignment.TopCenter
+        ) {
 
-                            FeedComposable(
-                                idiom = idiomView,
-                                modifier = modifier,
-                                uiHolder = uiStateHolder,
-                                isPremium = isPremium,
-                                stampCheck = stampCheck
-                            )
-                        }
-                    } else {
-                        FeedLoadingScreen()
+            if (idioms.isNotEmpty()) {
+                val idiomView = idioms[index % idioms.size]
+
+                if (pagerState.currentPage % 7 == 0
+                    && pagerState.currentPage >= 7) {
+
+                    quizHolder.setIdiomGuess()
+                    val options = remember { mutableStateOf(quizHolder.quizOptions()) }
+                    QuizLayout(quizHolder = quizHolder, options = options)
+
+                } else {
+
+                    if (isPremium) {
+                        quizHolder.answerReset()
+                        quizHolder.addToQuiz(idiomView)
                     }
+
+                    FeedComposable(
+                        idiom = idiomView,
+                        modifier = modifier,
+                        uiHolder = uiStateHolder,
+                        isPremium = isPremium,
+                        stampCheck = stampCheck
+                    )
                 }
             }
         }

@@ -7,10 +7,12 @@ import androidx.compose.runtime.remember
 import com.quial.app.data.idiom.Idiom
 import com.quial.app.data.idiom.Topic
 import com.quial.app.data.idiom.TopicSelected
+import com.quial.app.screens.feed.comps.UiState
 import com.quial.app.utils.UiStateHolder
 import com.quial.app.utils.uiStateHolderScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -20,6 +22,9 @@ class FeedUiStateHolder(
     feedUiState: FeedUiState
 ): UiStateHolder() {
     private val _uiState = MutableStateFlow(feedUiState)
+
+    private val _loadingState = MutableStateFlow<UiState>(UiState.Loading)
+    val loadingState: StateFlow<UiState> = _loadingState
 
     private val _idiomsList: MutableStateFlow<List<Idiom>> = MutableStateFlow(listOf())
     val idiomsList = _idiomsList
@@ -32,6 +37,7 @@ class FeedUiStateHolder(
 
     private fun loadData() = uiStateHolderScope.launch {
         _idiomsList.value = _uiState.value.retrieveIdioms()!!
+        _loadingState.value = UiState.Success(_idiomsList.value)
     }
 
      @Composable
@@ -63,7 +69,9 @@ class FeedUiStateHolder(
                 topicObj.onClick = {
                     runBlocking {
                         uiCheckBoxState(selectionState, list.indexOf(topicObj))
+                        // _loadingState.value = UiState.Loading
                         // _idiomsList.value = _uiState.value.getIdiomsByTopic(topicObj.topic)!!
+                        // _loadingState.value = UiState.Success(_idiomsList.value)
                     }
                 }
             }
