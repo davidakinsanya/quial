@@ -1,6 +1,5 @@
 package com.quial.app.data.datastore
 
-import androidx.compose.runtime.Composable
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -78,15 +77,15 @@ class DataStoreStateHolder(
       }
     }
 
-    @Composable
-    fun isPremium(stripeClient: StripeClient): Boolean {
+
+     fun isPremium(stripeClient: StripeClient): Boolean {
+
         var id: String
         var isActive = false
 
         runBlocking {
             id = stripeClient.getCustomer(getEmail())
             isActive = stripeClient.getSubscription(id)
-
         }
 
         return isActive

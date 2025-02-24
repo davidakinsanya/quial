@@ -13,8 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.navigator.LocalNavigator
-import com.quial.app.navigation.RootAppDestination
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
 import quial_app.composeapp.generated.resources.Res
@@ -24,7 +22,7 @@ import secrets.BuildConfig
 fun OptionsMenu(premiumBool: Boolean,
                 showMenu: MutableState<Boolean>,
                 modifier: Modifier) {
-    val navigator = LocalNavigator.current
+
     val uriHandler = LocalUriHandler.current
 
     Box(contentAlignment = Alignment.TopEnd,
@@ -39,12 +37,12 @@ fun OptionsMenu(premiumBool: Boolean,
                 if (premiumBool) {
                     DropdownMenuItem(onClick = {
                         showMenu.value = !showMenu.value
-                        navigator?.push(RootAppDestination.Paywall)
+                        uriHandler.openUri(BuildConfig.STRIPE_CUSTOMER_PORTAL)
                     }) {
                         Text(
-                            text = "Upgrade",
+                            text = "Manage",
                             fontFamily = FontFamily(Font(Res.font.DMSans_Bold)),
-                            color = Color.Red
+                            color = Color(125, 184, 107)
                         )
                     }
                 }
@@ -79,5 +77,5 @@ fun OptionsMenu(premiumBool: Boolean,
                     )
                 }
             }
+        }
     }
-}

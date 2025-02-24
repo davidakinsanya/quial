@@ -25,6 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,7 +41,9 @@ import com.quial.app.screens.feed.quiz.QuizLayout
 import com.quial.app.screens.feed.quiz.QuizStateHolder
 import com.quial.app.screens.loading.FeedLoadingScreen
 import com.quial.app.utils.sameDateCheck
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -50,8 +53,7 @@ fun FeedScreen(
     uiStateHolder: FeedUiStateHolder,
     dataHolder: DataStoreStateHolder,
     quizHolder: QuizStateHolder,
-    stripeClient: StripeClient,
-    appRating: @Composable () -> Unit
+    isPremium: Boolean
 ) {
     Scaffold(modifier = modifier
         .fillMaxSize(),
@@ -62,7 +64,6 @@ fun FeedScreen(
         val pagerState = rememberPagerState(pageCount = { pageCount })
         val correctAnswer = quizHolder.getAnswerState()
         val showMenu = remember { mutableStateOf(false) }
-        appRating.invoke()
 
         val borderStroke: BorderStroke = when (correctAnswer) {
             null -> {
@@ -81,13 +82,13 @@ fun FeedScreen(
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(horizontalArrangement = Arrangement.SpaceEvenly, // SpaceAround
+            Row(horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = modifier.fillMaxWidth(.8f)) {
                 QuialImage(modifier
                     .fillMaxHeight(0.15f)
                     .fillMaxWidth(0.25f)
-                    .padding(0.dp) //  .size(130.dp)
+                    .padding(0.dp)
                 )
                 TopicsComposable(uiStateHolder)
                 ThreeDots(modifier.size(50.dp), { showMenu.value = !showMenu.value })
@@ -98,7 +99,7 @@ fun FeedScreen(
             .fillMaxWidth(),
             horizontalAlignment = Alignment.End) {
             OptionsMenu(
-                premiumBool = false, // !dataHolder.isPremium()
+                premiumBool = isPremium,
                 showMenu = showMenu,
                 modifier = modifier
             )
@@ -121,7 +122,7 @@ fun FeedScreen(
 
                 val stampCheck = sameDateCheck(string)
 
-                if (index > 3 && !stampCheck && !dataHolder.isPremium(stripeClient)) {
+                if (index > 3 && !stampCheck && !isPremium) {
                     // dataHolder.updateTimeStamp()
                 }
 
@@ -154,7 +155,7 @@ fun FeedScreen(
 
                         } else {
 
-                            if (true) { // dataHolder.isPremium()
+                            if (isPremium) {
                                 quizHolder.answerReset()
                                 quizHolder.addToQuiz(idiomView)
                             }
@@ -163,8 +164,7 @@ fun FeedScreen(
                                 idiom = idiomView,
                                 modifier = modifier,
                                 uiHolder = uiStateHolder,
-                                dataHolder = dataHolder,
-                                stripeClient = stripeClient,
+                                isPremium = isPremium,
                                 stampCheck = stampCheck
                             )
                         }

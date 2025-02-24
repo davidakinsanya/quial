@@ -17,7 +17,6 @@ import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.http.requests.StripeClient
 import com.quial.app.http.requests.TokenClient
 import com.quial.app.paywall.PaywallConfigStateHolder
-import com.quial.app.paywall.StripeCheckout
 import com.quial.app.screens.auth.AuthUiHelperButtonsAndFirebaseAuth
 import com.quial.app.screens.connection.OfflineComposable
 import com.quial.app.screens.feed.FeedUiStateHolder
@@ -141,6 +140,7 @@ interface RootAppDestination {
                         googleUser?.idToken
                         if (googleUser?.idToken?.let { tokenClient.verifyToken(it) } == true) {
                             val email = tokenClient.getResponseEmail(googleUser.idToken)
+
                             if (getDataHolder().getEmail().isEmpty()) getDataHolder().setUserEmail(email)
                             navigator?.push(Feed)
                         }
@@ -154,12 +154,8 @@ interface RootAppDestination {
     }
 
     object Paywall: Screen, RootAppDestination {
-
         @Composable
-        override fun Content() {
-            val analytics = Firebase.analytics
-            StripeCheckout(analytics, getDataHolder())
-        }
+        override fun Content() {}
     }
 
     object Feed : Screen, RootAppDestination {
@@ -174,8 +170,7 @@ interface RootAppDestination {
                     uiStateHolder = getUiStateHolder<FeedUiStateHolder>(),
                     dataHolder = getDataHolder(),
                     quizHolder = getUiStateHolder<QuizStateHolder>(),
-                    stripeClient = koinInject<StripeClient>(),
-                    appRating = {}
+                    isPremium = getDataHolder().isPremium(koinInject<StripeClient>()),
                 )
             } else {
                 OfflineComposable(modifier = Modifier)

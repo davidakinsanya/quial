@@ -37,10 +37,9 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
         |  const val APP_STORE_RATING_ANDROID = "${secretProperties.getPropertyValue("APP_STORE_RATING_ANDROID")}"
         |  const val LINKTREE_URL = "${secretProperties.getPropertyValue("LINKTREE_URL")}"
         |  const val STRIPE_URL =  "${secretProperties.getPropertyValue("STRIPE_URL")}" 
-        |  const val STRIPE_TEST_CHECKOUT = "${secretProperties.getPropertyValue("STRIPE_TEST_CHECKOUT")}" 
-        |  const val STRIPE_CHECKOUT = "${secretProperties.getPropertyValue("STRIPE_CHECKOUT")}" 
         |  const val STRIPE_CUSTOMER_PORTAL = "${secretProperties.getPropertyValue("STRIPE_CUSTOMER_PORTAL")}" 
         |  const val STRIPE_TEST_CUSTOMER_PORTAL = "${secretProperties.getPropertyValue("STRIPE_TEST_CUSTOMER_PORTAL")}"
+        |  const val WEBSITE_URL = "${secretProperties.getPropertyValue("WEBSITE_URL")}"
         |}
         |
       """.trimMargin()

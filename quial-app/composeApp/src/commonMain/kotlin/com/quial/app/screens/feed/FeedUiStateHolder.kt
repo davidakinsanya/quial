@@ -82,7 +82,7 @@ class FeedUiStateHolder(
         return listOfStates
     }
 
-    fun uiCheckBoxState(optionState: MutableList<MutableState<Boolean>>,
+    private fun uiCheckBoxState(optionState: MutableList<MutableState<Boolean>>,
                         indexChecked: Int
     ) {
         for (i in 0..< optionState.size) {
@@ -91,7 +91,7 @@ class FeedUiStateHolder(
     }
 
     fun splitText(text: String): List<String> {
-        val extractedText =  text.split("', ")[0] + "'"
+        val extractedText =  text.split("', ", "\", ")[0] + "'"
         val alteredText = listOf(
             extractedText
                 .substring(1, extractedText.length - 1)

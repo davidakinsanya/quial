@@ -15,16 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.data.idiom.Idiom
-import com.quial.app.http.requests.StripeClient
 import com.quial.app.navigation.RootAppDestination
 import com.quial.app.screens.feed.FeedUiStateHolder
 import org.jetbrains.compose.resources.Font
@@ -35,12 +32,11 @@ import quial_app.composeapp.generated.resources.Res
 fun FeedComposable(modifier: Modifier,
                    idiom: Idiom,
                    uiHolder: FeedUiStateHolder,
-                   dataHolder: DataStoreStateHolder,
-                   stripeClient: StripeClient,
+                   isPremium: Boolean,
                    stampCheck: Boolean) {
 
 
-    val bool = false //!dataHolder.isPremium(stripeClient) && stampCheck
+    val bool = !isPremium && stampCheck
 
     val randomInt = uiHolder.randomInt()
     val booleanList = uiHolder.getListOfBools(bool = bool, randomInt = randomInt)
@@ -65,16 +61,7 @@ fun FeedComposable(modifier: Modifier,
             )
 
             if (bool) {
-                Text(
-                    text = "Upgrade",
-                    modifier = modifier.padding(top = 15.dp).clickable {
-                        navigator?.push(RootAppDestination.Paywall)
-                    },
-                    fontFamily = FontFamily(Font(Res.font.DMSans_Bold)),
-                    textAlign = TextAlign.Center,
-                    textDecoration = TextDecoration.Underline,
-                    color = Color.Red
-                )
+                WebsiteButton()
             }
         }
 

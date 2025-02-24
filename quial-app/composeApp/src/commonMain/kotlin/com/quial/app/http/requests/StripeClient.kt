@@ -1,7 +1,5 @@
 package com.quial.app.http.requests
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalUriHandler
 import com.quial.app.data.stripe.StripeCustomerResponse
 import com.quial.app.data.stripe.StripeSubscriptionResponse
 import io.ktor.client.HttpClient
@@ -47,11 +45,5 @@ class StripeClient(
             }.body<StripeSubscriptionResponse>()
         }
         return response.data[0].status == "active"
-    }
-
-    @Composable
-    fun manageSubscription() {
-        val uriHandler = LocalUriHandler.current
-        uriHandler.openUri(BuildConfig.STRIPE_TEST_CUSTOMER_PORTAL)
     }
 }
