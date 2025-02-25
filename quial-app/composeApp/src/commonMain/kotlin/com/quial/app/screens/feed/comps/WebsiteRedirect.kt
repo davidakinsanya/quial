@@ -31,7 +31,7 @@ fun WebsiteButton() {
             .shadow(15.dp, shape = RoundedCornerShape(20.dp)),
         border = BorderStroke(1.dp, Color.Black)
     ) {
-        Text(text = "Daily Limit Reached\nWant More?",
+        Text(text = "Daily Limit Reached\nExplore Options?",
             color = Color.Black,
             textAlign = TextAlign.Center,
             fontFamily = FontFamily(Font(Res.font.DMSans_Regular))
