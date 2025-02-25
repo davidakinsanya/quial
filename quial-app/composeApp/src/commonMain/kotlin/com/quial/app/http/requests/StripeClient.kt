@@ -33,6 +33,7 @@ class StripeClient(
     }
 
     suspend fun getSubscription(id: String): Boolean {
+        var bool = false
         val subscriptionCall = "subscriptions?customer=$id"
         var key: String
         var response = StripeSubscriptionResponse()
@@ -44,6 +45,9 @@ class StripeClient(
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
             }.body<StripeSubscriptionResponse>()
         }
-        return response.data[0].status == "active"
+
+        response.data.forEach {  bool = it.status == "active" }
+        return if (response.data.isEmpty()) false
+        else bool
     }
 }

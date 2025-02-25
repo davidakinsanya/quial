@@ -159,7 +159,7 @@ fun Pager(pagerState: PagerState,
         val stampCheck = sameDateCheck(string)
 
         if (index > 3 && !stampCheck && !isPremium) {
-            // dataHolder.updateTimeStamp()
+            dataHolder.updateTimeStamp()
         }
 
         Box(
@@ -183,7 +183,8 @@ fun Pager(pagerState: PagerState,
                 val idiomView = idioms[index % idioms.size]
 
                 if (pagerState.currentPage % 7 == 0
-                    && pagerState.currentPage >= 7) {
+                    && pagerState.currentPage >= 7
+                    && isPremium) {
 
                     quizHolder.setIdiomGuess()
                     val options = remember { mutableStateOf(quizHolder.quizOptions()) }

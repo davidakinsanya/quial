@@ -107,6 +107,8 @@ class QuizStateHolder: UiStateHolder() {
     }
 
     private fun String.capitalizeFirstLetter(): String {
-        return substring(0, 1).uppercase() + substring(1)
+        return if (isNotEmpty())
+            first().uppercase() + substring(1)
+        else this
     }
 }

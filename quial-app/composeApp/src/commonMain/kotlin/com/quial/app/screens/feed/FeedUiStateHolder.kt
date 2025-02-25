@@ -100,7 +100,7 @@ class FeedUiStateHolder(
     }
 
     fun splitText(text: String): List<String> {
-        val extractedText =  text.split("', ", "\", ")[0] + "'"
+        val extractedText =  text.split("', ")[0] + "'"
         val alteredText = listOf(
             extractedText
                 .substring(1, extractedText.length - 1)
@@ -114,7 +114,9 @@ class FeedUiStateHolder(
     }
 
     private fun String.capitalizeFirstLetter(): String {
-        return substring(0, 1).uppercase() + substring(1)
+        return if (isNotEmpty())
+            first().uppercase() + substring(1)
+        else this
     }
 
     fun randomInt(): Int {
