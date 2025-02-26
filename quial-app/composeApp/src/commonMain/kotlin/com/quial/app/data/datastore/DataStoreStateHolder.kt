@@ -25,23 +25,22 @@ class DataStoreStateHolder(
         return preferences
     }
 
-    fun isOnboardingShown(): Boolean  {
-        var bool = false
-        uiStateHolderScope.launch {
+     fun isOnboardingShown(): Boolean  {
+         var bool = false
+         runBlocking {
             preferences.edit {
                 val response = stringPreferencesKey("onboardingResponse")
                 // it[response] = ""
                 bool = it[response]?.isNotEmpty() == true
             }
-        }
-
+         }
         return bool
     }
 
-    fun setUserEmail(email: String): Boolean {
+    suspend fun setUserEmail(email: String): Boolean {
         var bool = false
 
-        uiStateHolderScope.launch {
+        withContext(Dispatchers.IO) {
             preferences.edit {
                 val response = stringPreferencesKey("user_email")
                 bool = it[response]?.isNotEmpty() == true
@@ -54,10 +53,10 @@ class DataStoreStateHolder(
         return bool
     }
 
-    fun getEmail(): String {
+    suspend fun getEmail(): String {
         var email = ""
 
-        uiStateHolderScope.launch {
+        withContext(Dispatchers.IO) {
             preferences.edit {
                 val response = stringPreferencesKey("user_email")
                 email = if (it[response].isNullOrEmpty()) "" else it[response]!!

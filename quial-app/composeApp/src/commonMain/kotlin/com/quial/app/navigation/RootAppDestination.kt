@@ -134,6 +134,12 @@ interface RootAppDestination {
             val connState = remember { konnect }
             val isConnected by connState.isConnectedState.collectAsState()
 
+            val emailBool = mutableStateOf(false)
+
+            getDataHolder().uiStateHolderScope.launch {
+                emailBool.value = getDataHolder().getEmail().isEmpty()
+            }
+
             if (isConnected) {
                 AuthUiHelperButtonsAndFirebaseAuth(
                     modifier = Modifier,
@@ -141,8 +147,12 @@ interface RootAppDestination {
                         googleUser?.idToken
                         if (googleUser?.idToken?.let { tokenClient.verifyToken(it) } == true) {
                             val email = tokenClient.getResponseEmail(googleUser.idToken)
+                            if (emailBool.value) {
+                                getDataHolder().uiStateHolderScope.launch {
+                                    getDataHolder().setUserEmail(email)
+                                }
 
-                            if (getDataHolder().getEmail().isEmpty()) getDataHolder().setUserEmail(email)
+                            }
                             navigator?.push(Feed)
                         }
                     },

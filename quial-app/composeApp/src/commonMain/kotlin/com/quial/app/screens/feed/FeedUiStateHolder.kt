@@ -10,6 +10,8 @@ import com.quial.app.data.idiom.TopicSelected
 import com.quial.app.screens.feed.comps.UiState
 import com.quial.app.utils.UiStateHolder
 import com.quial.app.utils.uiStateHolderScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -34,8 +36,14 @@ class FeedUiStateHolder(
         listOf()
     )
 
-    private fun loadData() = uiStateHolderScope.launch {
+    private suspend fun loadData() = uiStateHolderScope.launch(Dispatchers.IO) {
         _idiomsList.value = _uiState.value.retrieveIdioms()!!
+        _loadingState.value = UiState.Success(_idiomsList.value)
+    }
+
+    private suspend fun addTopic(topic: Topic) = uiStateHolderScope.launch(Dispatchers.IO) {
+        _loadingState.value = UiState.Loading
+        _idiomsList.value = _uiState.value.getIdiomsByTopic(topic.topic)!!
         _loadingState.value = UiState.Success(_idiomsList.value)
     }
 
@@ -53,9 +61,11 @@ class FeedUiStateHolder(
          val forYouTopic = Topic(topic = "for you")
          list.add(forYouTopic)
          forYouTopic.onClick = {
-             uiCheckBoxState(selectionState, list.indexOf(forYouTopic))
-             // _loadingState.value = UiState.Loading
-             // loadData()
+             uiStateHolderScope.launch {
+                 uiCheckBoxState(selectionState, list.indexOf(forYouTopic))
+                 _loadingState.value = UiState.Loading
+                 loadData()
+             }
          }
 
          uiStateHolderScope.launch {
@@ -67,12 +77,10 @@ class FeedUiStateHolder(
                 list.add(topicObj)
 
                 topicObj.onClick = {
-                    uiStateHolderScope.launch {
                         uiCheckBoxState(selectionState, list.indexOf(topicObj))
-                        // _loadingState.value = UiState.Loading
+                         _loadingState.value = UiState.Loading
                         // _idiomsList.value = _uiState.value.getIdiomsByTopic(topicObj.topic)!!
                         // _loadingState.value = UiState.Success(_idiomsList.value)
-                    }
                 }
             }
          }
