@@ -4,6 +4,7 @@ import androidx.compose.material.ButtonColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -162,15 +163,22 @@ interface RootAppDestination {
         @Composable
         override fun Content() {
             val konnect: Konnectivity = koinInject()
+            val stripe = koinInject<StripeClient>()
             val connState = remember { konnect }
             val isConnected by connState.isConnectedState.collectAsState()
+
+            var isPremium = remember { mutableStateOf(false) }
+
+            getDataHolder().uiStateHolderScope.launch {
+                isPremium.value =  getDataHolder().isPremium(stripe)
+            }
 
             if (isConnected) {
                 FeedScreen(
                     uiStateHolder = getUiStateHolder<FeedUiStateHolder>(),
                     dataHolder = getDataHolder(),
                     quizHolder = getUiStateHolder<QuizStateHolder>(),
-                    isPremium = getDataHolder().isPremium(koinInject<StripeClient>()),
+                    isPremium = isPremium.value,
                 )
             } else {
                 OfflineComposable(modifier = Modifier)

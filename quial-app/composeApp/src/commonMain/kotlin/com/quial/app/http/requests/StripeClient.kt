@@ -8,7 +8,6 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
-import kotlinx.coroutines.runBlocking
 import secrets.BuildConfig
 
 class StripeClient(
@@ -18,16 +17,13 @@ class StripeClient(
 
     suspend fun getCustomer(email: String): String {
         val customerCall = "customers?email=$email"
-        var response = StripeCustomerResponse()
-        var key: String
+        val key = paywallClient.retrieveKey().trim()
 
-        runBlocking {
-            key = paywallClient.retrieveKey().trim()
-            response = httpClient.get(BuildConfig.STRIPE_URL + customerCall) {
-                header(HttpHeaders.Authorization, "Bearer $key")
-                header(HttpHeaders.ContentType, ContentType.Application.Json)
-            }.body<StripeCustomerResponse>()
-        }
+        val response = httpClient.get(BuildConfig.STRIPE_URL + customerCall) {
+            header(HttpHeaders.Authorization, "Bearer $key")
+            header(HttpHeaders.ContentType, ContentType.Application.Json)
+        }.body<StripeCustomerResponse>()
+
         return if (response.data.isEmpty()) ""
         else response.data[0].id
     }
@@ -35,16 +31,13 @@ class StripeClient(
     suspend fun getSubscription(id: String): Boolean {
         var bool = false
         val subscriptionCall = "subscriptions?customer=$id"
-        var key: String
-        var response = StripeSubscriptionResponse()
 
-        runBlocking {
-            key = paywallClient.retrieveKey().trim()
-            response = httpClient.get(BuildConfig.STRIPE_URL + subscriptionCall) {
-                header(HttpHeaders.Authorization, "Bearer $key")
-                header(HttpHeaders.ContentType, ContentType.Application.Json)
-            }.body<StripeSubscriptionResponse>()
-        }
+        val key = paywallClient.retrieveKey().trim()
+        val response = httpClient.get(BuildConfig.STRIPE_URL + subscriptionCall) {
+            header(HttpHeaders.Authorization, "Bearer $key")
+            header(HttpHeaders.ContentType, ContentType.Application.Json)
+        }.body<StripeSubscriptionResponse>()
+
 
         response.data.forEach {  bool = it.status == "active" }
         return if (response.data.isEmpty()) false

@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class FeedUiStateHolder(
     feedUiState: FeedUiState
@@ -45,7 +44,7 @@ class FeedUiStateHolder(
          val list = mutableListOf<Topic>()
          var selectionStateSize = 0
 
-         runBlocking {
+         uiStateHolderScope.launch {
              selectionStateSize = _uiState.value.retrieveTopics().size + 1
          }
 
@@ -59,7 +58,7 @@ class FeedUiStateHolder(
              // loadData()
          }
 
-         runBlocking {
+         uiStateHolderScope.launch {
             _uiState.value.retrieveTopics().forEach { topic ->
                 val topicObj = Topic(
                     topic = topic
@@ -68,7 +67,7 @@ class FeedUiStateHolder(
                 list.add(topicObj)
 
                 topicObj.onClick = {
-                    runBlocking {
+                    uiStateHolderScope.launch {
                         uiCheckBoxState(selectionState, list.indexOf(topicObj))
                         // _loadingState.value = UiState.Loading
                         // _idiomsList.value = _uiState.value.getIdiomsByTopic(topicObj.topic)!!

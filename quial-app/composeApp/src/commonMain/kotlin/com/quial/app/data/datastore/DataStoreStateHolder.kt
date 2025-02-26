@@ -9,8 +9,11 @@ import com.quial.app.screens.onboarding.comps.OnboardingResponse
 import com.quial.app.utils.UiStateHolder
 import com.quial.app.utils.getCurrentDate
 import com.quial.app.utils.uiStateHolderScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 
@@ -24,7 +27,7 @@ class DataStoreStateHolder(
 
     fun isOnboardingShown(): Boolean  {
         var bool = false
-        runBlocking {
+        uiStateHolderScope.launch {
             preferences.edit {
                 val response = stringPreferencesKey("onboardingResponse")
                 // it[response] = ""
@@ -38,7 +41,7 @@ class DataStoreStateHolder(
     fun setUserEmail(email: String): Boolean {
         var bool = false
 
-        runBlocking {
+        uiStateHolderScope.launch {
             preferences.edit {
                 val response = stringPreferencesKey("user_email")
                 bool = it[response]?.isNotEmpty() == true
@@ -54,7 +57,7 @@ class DataStoreStateHolder(
     fun getEmail(): String {
         var email = ""
 
-        runBlocking {
+        uiStateHolderScope.launch {
             preferences.edit {
                 val response = stringPreferencesKey("user_email")
                 email = if (it[response].isNullOrEmpty()) "" else it[response]!!
@@ -78,17 +81,9 @@ class DataStoreStateHolder(
     }
 
 
-     fun isPremium(stripeClient: StripeClient): Boolean {
-
-        var id: String
-        var isActive = false
-
-        runBlocking {
-            id = stripeClient.getCustomer(getEmail())
-            isActive = stripeClient.getSubscription(id)
-        }
-
-        return isActive
+     suspend fun isPremium(stripeClient: StripeClient): Boolean {
+        val id = stripeClient.getCustomer(getEmail())
+        return stripeClient.getSubscription(id)
     }
 
     fun updateTimeStamp() = uiStateHolderScope.launch {
