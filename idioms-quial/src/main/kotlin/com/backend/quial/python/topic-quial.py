@@ -160,58 +160,19 @@ def merge(csv1, csv2):
 driver = main_driver()
 
 
-'''      
-
-### Testing Script
-
-scrape('a', 1)
-
-print(len(idiom_dict['a'][0]))
-
-for i in range(0, len(idiom_dict['a'][0])):
-    print(idiom_dict['a'][0][i])
-    print(idiom_dict['a'][1][i])
-    print(idiom_dict['a'][2][i], "\n")
-
-'''
-
-
-'''
-
-### Testing Script 2
-
-field_names = ["basic-info", "meanings", "example-sentences"]
-
-with open("/usr/src/app/quial.csv", mode="w") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=field_names)
-    writer.writeheader()   
-    
-    scrape("a", 1)
-    for i in range(0, len(idiom_dict["a"][0])):
-        writer.writerow({
-        field_names[0]: idiom_dict["a"][0][i],
-        field_names[1]: idiom_dict["a"][1][i],
-        field_names[2]: idiom_dict["a"][2][i]
-        })
-        break
-        
-
-'''
-
-
 ### Production Script
 
 field_names = ["topic", "basic-info", "meanings", "example-sentences"]
 
 topic_list = []
-filename = "/usr/src/app/topics.txt"
+filename = "topic-quial.py/usr/src/app/topics.txt"
 with open(filename) as file:
     topics_list = [line.rstrip() for line in file]
     
 for i in range(0, len(topic_list)):
     file_name = topic_list[i]
-    file_string2 = "/usr/src/app/" + file_name + "-quial2.csv"
-    file_string = "/usr/src/app/" + file_name + "-quial.csv"
+    file_string2 = "../usr/src/app/" + file_name + "-quial2.csv"
+    file_string = "../usr/src/app/" + file_name + "-quial.csv"
     try:
         with open(file_string, mode="w") as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=field_names)
@@ -236,13 +197,5 @@ for i in range(0, len(topic_list)):
     except Exception as e:
         print(e)
 
-
-'''
-
-topic_list = scrape_topic()
-
-for i in range(0, len(topic_list)):
-    main_scrape(topic_list[i][0], topic_list[i][1], 1)
-'''
 
 driver.close()
