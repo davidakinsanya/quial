@@ -243,5 +243,6 @@ topic_list = scrape_topic()
 
 for i in range(0, len(topic_list)):
     main_scrape(topic_list[i][0], topic_list[i][1], 1)
+'''
 
 driver.close()
