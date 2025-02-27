@@ -162,10 +162,11 @@ driver = main_driver()
 
 ### Production Script
 
-field_names = ["topic", "basic-info", "meanings", "example-sentences"]
+field_names = ["basic-info", "meanings", "example-sentences"]
 
 topic_list = []
 filename = "../usr/src/app/topics.txt"
+print(os.path.exists(filename))
 with open(filename) as file:
     topics_list = [line.rstrip() for line in file]
     
@@ -183,10 +184,9 @@ for i in range(0, len(topic_list)):
                 
             for i in range(0, len(idiom_dict[file_name][0])):
                     writer.writerow({
-                    field_names[0]: "",
-                    field_names[1]: idiom_dict[file_name][0][i],
-                    field_names[2]: idiom_dict[file_name][1][i],
-                    field_names[3]: idiom_dict[file_name][2][i]
+                    field_names[0]: clean(idiom_dict[idiom_dict[file_name][0][i], no_emoji=True),
+                    field_names[1]: clean(idiom_dict[idiom_dict[file_name][1][i], no_emoji=True),
+                    field_names[2]: clean(idiom_dict[idiom_dict[file_name][2][i], no_emoji=True)
                     })
                     
             if os.path.exists(file_string):
