@@ -5,11 +5,11 @@ import pandas as pd
 import chromedriver_autoinstaller as cd
 
 import string
-import random
 import re
 import csv
 import os, os.path
 from cleantext import clean
+import random
 
 url = "https://www.theidioms.com/"
 
@@ -107,22 +107,21 @@ def get_data(topic, idioms, links, alt):
     
 
 def main_scrape(topic, url, page):
+    curr_page = 1
+    max_page = 1
+    
     if page == 1:
         idiom_dict[topic] = [[], [], []]
         
-    idiom_for_letter = []
+    driver.get(url + topic + "/page/" + str(page))
 
-    curr_page = page_info[0].text.split()[1]
-    max_page = page_info[0].text.split()[-1]
-    random_page = random.randint(curr_page, max_page - 1)
-
-    driver.get(url + topic + "/page/" + str(random_page))
-    
     page_info = driver.find_elements(By.CSS_SELECTOR, 'p.pno')
     
     if len(page_info) != 0:
         curr_page = page_info[0].text.split()[1]
         max_page = page_info[0].text.split()[-1]
+        random_page = random.randint(int(curr_page), int(max_page)-1)
+        driver.get(url + topic + "/page/" + str(random_page))
 
     idioms = driver.find_elements(By.CSS_SELECTOR, "div.idiom")
 
@@ -137,15 +136,17 @@ def main_scrape(topic, url, page):
             
             if alt_link not in alt_links_list2:
                 alt_links_list2.append(alt_link)
+
+    
     
 
     idioms_list = [text.text for text in idioms]
     links_list = get_links(idioms)
     get_data(topic, idioms, links_list, alt_links_list2)
     
-    if page != 3:
+    if page_info != 0 and page != 3:
         # add a return here for testing.
-        new_page = int(page) + 1
+        new_page = int(curr_page) + 1
         return main_scrape(topic, url, new_page)
     else:
         return
@@ -164,38 +165,37 @@ driver = main_driver()
 
 field_names = ["basic-info", "meanings", "example-sentences"]
 
-topic_list = []
+topics_list = []
+
+
 filename = "../usr/src/app/topics.txt"
-print(os.path.exists(filename))
 with open(filename) as file:
     topics_list = [line.rstrip() for line in file]
-    
-for i in range(0, len(topic_list)):
-    file_name = topic_list[i]
+
+for i in range(0, len(topics_list)):
+    file_name = topics_list[i]
     file_string2 = "../usr/src/app/" + file_name + "-quial2.csv"
     file_string = "../usr/src/app/" + file_name + "-quial.csv"
-    try:
-        with open(file_string, mode="w") as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=field_names)
-            writer.writeheader()
+    
+    with open(file_string2, mode="w") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=field_names)
+        writer.writeheader()
 
+        
+        main_scrape(topics_list[i], url, 1)
             
-            main_scrape(topic_list[i][0], topic_list[i][1], 1)
-                
-            for i in range(0, len(idiom_dict[file_name][0])):
-                    writer.writerow({
+        for i in range(0, len(idiom_dict[file_name][0])):
+                writer.writerow({
                     field_names[0]: clean(idiom_dict[file_name][0][i], no_emoji=True),
                     field_names[1]: clean(idiom_dict[file_name][1][i], no_emoji=True),
                     field_names[2]: clean(idiom_dict[file_name][2][i], no_emoji=True)
-                    })
-                    
-            if os.path.exists(file_string):
-                os.remove(file_string)
-            else:
-              os.rename(file_string2, file_string)
-              os.remove(file_string2)
-    except Exception as e:
-        print(e)
+                })
+                
+    if os.path.exists(file_string):
+        os.remove(file_string)
+    os.rename(file_string2, file_string)
+
 
 
 driver.close()
+
