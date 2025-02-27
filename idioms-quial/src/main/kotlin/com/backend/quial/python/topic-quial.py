@@ -184,9 +184,9 @@ for i in range(0, len(topic_list)):
                 
             for i in range(0, len(idiom_dict[file_name][0])):
                     writer.writerow({
-                    field_names[0]: clean(idiom_dict[idiom_dict[file_name][0][i], no_emoji=True),
-                    field_names[1]: clean(idiom_dict[idiom_dict[file_name][1][i], no_emoji=True),
-                    field_names[2]: clean(idiom_dict[idiom_dict[file_name][2][i], no_emoji=True)
+                    field_names[0]: clean(idiom_dict[file_name][0][i], no_emoji=True),
+                    field_names[1]: clean(idiom_dict[file_name][1][i], no_emoji=True),
+                    field_names[2]: clean(idiom_dict[file_name][2][i], no_emoji=True)
                     })
                     
             if os.path.exists(file_string):
