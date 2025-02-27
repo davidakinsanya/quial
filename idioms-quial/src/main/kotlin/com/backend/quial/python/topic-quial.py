@@ -165,7 +165,7 @@ driver = main_driver()
 field_names = ["topic", "basic-info", "meanings", "example-sentences"]
 
 topic_list = []
-filename = "topic-quial.py/usr/src/app/topics.txt"
+filename = "../usr/src/app/topics.txt"
 with open(filename) as file:
     topics_list = [line.rstrip() for line in file]
     

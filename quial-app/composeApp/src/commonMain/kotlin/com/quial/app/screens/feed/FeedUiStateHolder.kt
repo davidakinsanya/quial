@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FeedUiStateHolder(
     feedUiState: FeedUiState
@@ -77,10 +78,13 @@ class FeedUiStateHolder(
                 list.add(topicObj)
 
                 topicObj.onClick = {
+                    uiStateHolderScope.launch(Dispatchers.IO) {
                         uiCheckBoxState(selectionState, list.indexOf(topicObj))
-                         _loadingState.value = UiState.Loading
-                        // _idiomsList.value = _uiState.value.getIdiomsByTopic(topicObj.topic)!!
-                        // _loadingState.value = UiState.Success(_idiomsList.value)
+                        _loadingState.value = UiState.Loading
+                        _idiomsList.value = _uiState.value.getIdiomsByTopic(topicObj.topic)!!
+                        if (_idiomsList.value.isNotEmpty())
+                            _loadingState.value = UiState.Success(_idiomsList.value)
+                    }
                 }
             }
          }
