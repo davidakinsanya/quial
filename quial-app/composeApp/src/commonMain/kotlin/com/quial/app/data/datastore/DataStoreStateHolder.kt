@@ -20,16 +20,6 @@ import kotlinx.serialization.json.encodeToJsonElement
 class DataStoreStateHolder(
     private val preferences: DataStore<Preferences>,
 ): UiStateHolder() {
-    /*
-        private val _isOnboardingShown = MutableStateFlow(false)
-        val isOnboardingShown = _isOnboardingShown
-            .onStart { isOnboardingShown() }
-            .stateIn(
-                uiStateHolderScope,
-                SharingStarted.WhileSubscribed(5000L),
-                false
-            )
-     */
     fun getPref(): DataStore<Preferences> {
         return preferences
     }

@@ -20,8 +20,11 @@ import quial_app.composeapp.generated.resources.DMSans_Regular
 import quial_app.composeapp.generated.resources.Res
 
 @Composable
-fun TopicsComposable(feedHolder: FeedUiStateHolder) {
-    val topics = feedHolder.getTopics()
+fun TopicsComposable(feedHolder: FeedUiStateHolder,
+                     isPremium: Boolean) {
+
+    val topics = feedHolder.getTopics(isPremium)
+
     ScrollableTabRow(selectedTabIndex = 0,
                      modifier = Modifier
                          .fillMaxWidth(0.5f)

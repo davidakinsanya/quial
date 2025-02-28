@@ -18,12 +18,19 @@ class RetrieveIdiomsClient(
             ignoreUnknownKeys = true
             isLenient = false
         }
-        return serializer.decodeFromString<List<Idiom>?>(response)?.shuffled()
+        return try {
+            serializer.decodeFromString<List<Idiom>?>(response)?.shuffled()
+        } catch(e: Exception) {
+            emptyList()
+        }
     }
 
     suspend fun retrieveTopics(): List<String> {
-        val response: List<String> = httpClient.get(urlString = BuildConfig.IDIOM_URL + "/get-topics-list").body()
-        return response
+        return try {
+            httpClient.get(urlString = BuildConfig.IDIOM_URL + "/get-topics-list").body()
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
     suspend fun getTopicsByIdiom(topic: String): List<Idiom>? {
@@ -34,6 +41,10 @@ class RetrieveIdiomsClient(
             isLenient = false
         }
 
-        return serializer.decodeFromString<List<Idiom>?>(response)?.shuffled()
+        return try {
+            serializer.decodeFromString<List<Idiom>?>(response)?.shuffled()
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 }

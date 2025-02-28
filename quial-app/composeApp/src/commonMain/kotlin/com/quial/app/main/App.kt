@@ -20,12 +20,9 @@ fun App(dataHolder: DataStoreStateHolder) {
 
 @Composable
 fun RootAppNavigation(dataHolder: DataStoreStateHolder) {
-    /*
     val startDestination = if (dataHolder.isOnboardingShown())
         RootAppDestination.Auth
     else
         RootAppDestination.Onboarding
-     */
-
-    RootAppNavigation(startDestination = RootAppDestination.Auth)
+    RootAppNavigation(startDestination = startDestination)
 }

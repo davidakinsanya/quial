@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class FeedUiStateHolder(
     feedUiState: FeedUiState
@@ -38,18 +37,15 @@ class FeedUiStateHolder(
     )
 
     private suspend fun loadData() = uiStateHolderScope.launch(Dispatchers.IO) {
-        _idiomsList.value = _uiState.value.retrieveIdioms()!!
-        _loadingState.value = UiState.Success(_idiomsList.value)
-    }
-
-    private suspend fun addTopic(topic: Topic) = uiStateHolderScope.launch(Dispatchers.IO) {
-        _loadingState.value = UiState.Loading
-        _idiomsList.value = _uiState.value.getIdiomsByTopic(topic.topic)!!
-        _loadingState.value = UiState.Success(_idiomsList.value)
+        val list = _uiState.value.retrieveIdioms()!!
+        if (list.isNotEmpty()) {
+            _idiomsList.value = list
+            _loadingState.value = UiState.Success(_idiomsList.value)
+        }
     }
 
      @Composable
-     fun getTopics(): TopicSelected {
+     fun getTopics(isPremium: Boolean): TopicSelected {
          val list = mutableListOf<Topic>()
          var selectionStateSize = 0
 
@@ -81,9 +77,13 @@ class FeedUiStateHolder(
                     uiStateHolderScope.launch(Dispatchers.IO) {
                         uiCheckBoxState(selectionState, list.indexOf(topicObj))
                         _loadingState.value = UiState.Loading
-                        _idiomsList.value = _uiState.value.getIdiomsByTopic(topicObj.topic)!!
-                        if (_idiomsList.value.isNotEmpty())
-                            _loadingState.value = UiState.Success(_idiomsList.value)
+                        if (isPremium) {
+                            val premiumIdioms = _uiState.value.getIdiomsByTopic(topicObj.topic)!!
+                            if (list.isNotEmpty()) {
+                                _idiomsList.value = premiumIdioms
+                                _loadingState.value = UiState.Success(_idiomsList.value)
+                            }
+                        }
                     }
                 }
             }

@@ -96,7 +96,7 @@ fun FeedScreen(
                     .fillMaxWidth(0.25f)
                     .padding(0.dp)
                 )
-                TopicsComposable(uiStateHolder)
+                TopicsComposable(uiStateHolder, isPremium)
                 ThreeDots(modifier.size(50.dp), { showMenu.value = !showMenu.value })
             }
         }
