@@ -125,45 +125,6 @@ def merge(csv1, csv2):
 driver = main_driver()
 
 
-'''      
-
-### Testing Script
-
-scrape('a', 1)
-
-print(len(idiom_dict['a'][0]))
-
-for i in range(0, len(idiom_dict['a'][0])):
-    print(idiom_dict['a'][0][i])
-    print(idiom_dict['a'][1][i])
-    print(idiom_dict['a'][2][i], "\n")
-
-'''
-
-
-'''
-
-### Testing Script 2
-
-field_names = ["basic-info", "meanings", "example-sentences"]
-
-with open("/usr/src/app/quial.csv", mode="w") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=field_names)
-    writer.writeheader()   
-    
-    scrape("a", 1)
-    for i in range(0, len(idiom_dict["a"][0])):
-        writer.writerow({
-        field_names[0]: idiom_dict["a"][0][i],
-        field_names[1]: idiom_dict["a"][1][i],
-        field_names[2]: idiom_dict["a"][2][i]
-        })
-        break
-        
-
-'''
-
-
 ### Production Script
 
 field_names = ["basic-info", "meanings", "example-sentences"]
@@ -189,7 +150,7 @@ try:
         
     if os.path.exists("/usr/src/app/user-quial.csv"):
         merge("/usr/src/app/quial2.csv", "/usr/src/app/user-quial.csv")
-        os.remove("/usr/src/app/quial2.csv")
+
     else:
         os.rename("/usr/src/app/quial2.csv", "/usr/src/app/quial.csv")
 except Exception as e:
