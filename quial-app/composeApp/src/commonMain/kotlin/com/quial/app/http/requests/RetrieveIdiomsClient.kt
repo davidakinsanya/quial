@@ -4,7 +4,9 @@ import com.quial.app.data.idiom.Idiom
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.request.header
 import io.ktor.client.statement.bodyAsText
+import io.ktor.http.HttpHeaders
 import kotlinx.serialization.json.Json
 import secrets.BuildConfig
 
@@ -13,7 +15,10 @@ class RetrieveIdiomsClient(
 ) {
 
     suspend fun retrieveIdioms(): List<Idiom>? {
-        val response = httpClient.get(urlString = BuildConfig.IDIOM_URL).bodyAsText()
+        val response = httpClient.get(urlString = BuildConfig.IDIOM_URL) {
+            header(HttpHeaders.ContentType, "application/json")
+        }.bodyAsText()
+
         val serializer = Json {
             ignoreUnknownKeys = true
             isLenient = false
@@ -34,7 +39,9 @@ class RetrieveIdiomsClient(
     }
 
     suspend fun getTopicsByIdiom(topic: String): List<Idiom>? {
-        val response = httpClient.get(urlString = BuildConfig.IDIOM_URL + "/get-idioms-by-topic?topic=$topic").bodyAsText()
+        val response = httpClient.get(urlString = BuildConfig.IDIOM_URL + "/get-idioms-by-topic?topic=$topic"){
+            header(HttpHeaders.ContentType, "application/json")
+        }.bodyAsText()
 
         val serializer = Json {
             ignoreUnknownKeys = true

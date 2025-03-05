@@ -34,7 +34,7 @@ class DataStoreStateHolder(
             }
          }
         return bool
-    }
+     }
 
     suspend fun setUserEmail(email: String): Boolean {
         var bool = false

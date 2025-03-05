@@ -221,7 +221,7 @@ android {
         applicationId = "com.quial.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 40
+        versionCode = 42
         versionName = "1.0.1"
     }
     packaging {
