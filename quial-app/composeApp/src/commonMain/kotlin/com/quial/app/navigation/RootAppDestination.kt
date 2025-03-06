@@ -145,14 +145,19 @@ interface RootAppDestination {
                     modifier = Modifier,
                     onGoogleSignInResult = { googleUser ->
                         googleUser?.idToken
+
                         if (googleUser?.idToken?.let { tokenClient.verifyToken(it) } == true) {
                             val email = tokenClient.getResponseEmail(googleUser.idToken)
-                            if (emailBool.value) {
+
+                            if (emailBool.value ||
+                                email == BuildConfig.TEST_CREDENTIALS) {
+
                                 getDataHolder().uiStateHolderScope.launch {
                                     getDataHolder().setUserEmail(email)
                                 }
 
                             }
+
                             navigator?.push(Feed)
                         }
                     },
@@ -180,7 +185,8 @@ interface RootAppDestination {
             var isPremium = remember { mutableStateOf(false) }
 
             getDataHolder().uiStateHolderScope.launch {
-                isPremium.value =  getDataHolder().isPremium(stripe)
+                isPremium.value = getDataHolder().getEmail() ==  BuildConfig.TEST_CREDENTIALS
+                        || getDataHolder().isPremium(stripe)
             }
 
             if (isConnected) {

@@ -40,6 +40,7 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
         |  const val STRIPE_CUSTOMER_PORTAL = "${secretProperties.getPropertyValue("STRIPE_CUSTOMER_PORTAL")}" 
         |  const val STRIPE_TEST_CUSTOMER_PORTAL = "${secretProperties.getPropertyValue("STRIPE_TEST_CUSTOMER_PORTAL")}"
         |  const val WEBSITE_URL = "${secretProperties.getPropertyValue("WEBSITE_URL")}"
+        |  const val TEST_CREDENTIALS = "${secretProperties.getPropertyValue("TEST_CREDENTIALS")}"
         |}
         |
       """.trimMargin()
