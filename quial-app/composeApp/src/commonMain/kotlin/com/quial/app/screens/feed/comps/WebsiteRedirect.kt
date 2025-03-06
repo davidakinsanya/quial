@@ -14,16 +14,20 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import dev.gitlive.firebase.analytics.FirebaseAnalytics
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Regular
 import quial_app.composeapp.generated.resources.Res
 import secrets.BuildConfig
 
 @Composable
-fun WebsiteButton() {
+fun WebsiteButton(analytics: FirebaseAnalytics) {
     val uriHandler = LocalUriHandler.current
     Button(
-        onClick = { uriHandler.openUri(BuildConfig.WEBSITE_URL) },
+        onClick = {
+                analytics.logEvent("website_redirect")
+                uriHandler.openUri(BuildConfig.WEBSITE_URL)
+                  },
         shape = RoundedCornerShape(30.dp),
         colors = ButtonDefaults.outlinedButtonColors(Color(125, 184, 107)),
         modifier = Modifier

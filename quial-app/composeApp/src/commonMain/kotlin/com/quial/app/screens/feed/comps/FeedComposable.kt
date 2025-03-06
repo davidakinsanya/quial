@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quial.app.data.idiom.Idiom
 import com.quial.app.screens.feed.FeedUiStateHolder
+import dev.gitlive.firebase.analytics.FirebaseAnalytics
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
 import quial_app.composeapp.generated.resources.Res
@@ -30,7 +31,8 @@ fun FeedComposable(modifier: Modifier,
                    idiom: Idiom,
                    uiHolder: FeedUiStateHolder,
                    isPremium: Boolean,
-                   stampCheck: Boolean) {
+                   stampCheck: Boolean,
+                   analytics: FirebaseAnalytics) {
 
 
     val bool = !isPremium && stampCheck
@@ -56,7 +58,7 @@ fun FeedComposable(modifier: Modifier,
             )
 
             if (bool) {
-                WebsiteButton()
+                WebsiteButton(analytics)
             }
         }
 

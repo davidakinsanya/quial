@@ -181,6 +181,7 @@ interface RootAppDestination {
             val stripe = koinInject<StripeClient>()
             val connState = remember { konnect }
             val isConnected by connState.isConnectedState.collectAsState()
+            val analytics = Firebase.analytics
 
             var isPremium = remember { mutableStateOf(false) }
 
@@ -195,6 +196,7 @@ interface RootAppDestination {
                     dataHolder = getDataHolder(),
                     quizHolder = getUiStateHolder<QuizStateHolder>(),
                     isPremium = isPremium.value,
+                    analytics = analytics
                 )
             } else {
                 OfflineComposable(modifier = Modifier)

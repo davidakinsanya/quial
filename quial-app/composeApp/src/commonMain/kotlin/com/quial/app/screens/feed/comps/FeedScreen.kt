@@ -44,6 +44,7 @@ import com.quial.app.screens.feed.quiz.QuizLayout
 import com.quial.app.screens.feed.quiz.QuizStateHolder
 import com.quial.app.screens.loading.FeedLoadingScreen
 import com.quial.app.utils.sameDateCheck
+import dev.gitlive.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -56,7 +57,8 @@ fun FeedScreen(
     uiStateHolder: FeedUiStateHolder,
     dataHolder: DataStoreStateHolder,
     quizHolder: QuizStateHolder,
-    isPremium: Boolean
+    isPremium: Boolean,
+    analytics: FirebaseAnalytics
 ) {
     Scaffold(modifier = modifier
         .fillMaxSize(),
@@ -129,7 +131,8 @@ fun FeedScreen(
                         isPremium = isPremium,
                         modifier = modifier,
                         borderStroke = borderStroke,
-                        idioms = idioms
+                        idioms = idioms,
+                        analytics = analytics
                     )
                 }
 
@@ -147,7 +150,8 @@ fun Pager(pagerState: PagerState,
           isPremium: Boolean,
           modifier: Modifier,
           borderStroke: BorderStroke,
-          idioms: List<Idiom>) {
+          idioms: List<Idiom>,
+          analytics: FirebaseAnalytics) {
     VerticalPager(state = pagerState,
         pageSpacing = 10.dp) { index ->
 
@@ -202,7 +206,8 @@ fun Pager(pagerState: PagerState,
                         modifier = modifier,
                         uiHolder = uiStateHolder,
                         isPremium = isPremium,
-                        stampCheck = stampCheck
+                        stampCheck = stampCheck,
+                        analytics = analytics
                     )
                 }
             }
