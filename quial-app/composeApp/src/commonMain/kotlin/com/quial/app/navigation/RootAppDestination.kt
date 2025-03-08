@@ -41,6 +41,8 @@ import dev.icerock.moko.permissions.compose.BindEffect
 import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import nl.marc_apps.tts.TextToSpeechEngine
+import nl.marc_apps.tts.rememberTextToSpeechOrNull
 import org.koin.compose.koinInject
 import secrets.BuildConfig
 
@@ -184,11 +186,14 @@ interface RootAppDestination {
             val analytics = Firebase.analytics
 
             var isPremium = remember { mutableStateOf(false) }
+            val textToSpeech = rememberTextToSpeechOrNull(TextToSpeechEngine.Google)
 
             getDataHolder().uiStateHolderScope.launch {
-                isPremium.value = getDataHolder().getEmail() ==  BuildConfig.TEST_CREDENTIALS
+                isPremium.value = getDataHolder().getEmail() == BuildConfig.TEST_CREDENTIALS
                         || getDataHolder().isPremium(stripe)
+
             }
+
 
             if (isConnected) {
                 FeedScreen(
@@ -196,7 +201,8 @@ interface RootAppDestination {
                     dataHolder = getDataHolder(),
                     quizHolder = getUiStateHolder<QuizStateHolder>(),
                     isPremium = isPremium.value,
-                    analytics = analytics
+                    analytics = analytics,
+                    tts = textToSpeech
                 )
             } else {
                 OfflineComposable(modifier = Modifier)

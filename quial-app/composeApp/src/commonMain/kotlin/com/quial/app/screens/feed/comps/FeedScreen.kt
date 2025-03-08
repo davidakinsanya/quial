@@ -44,11 +44,14 @@ import com.quial.app.screens.feed.quiz.QuizLayout
 import com.quial.app.screens.feed.quiz.QuizStateHolder
 import com.quial.app.screens.loading.FeedLoadingScreen
 import com.quial.app.utils.sameDateCheck
+import com.quial.app.utils.uiStateHolderScope
 import dev.gitlive.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import nl.marc_apps.tts.TextToSpeechInstance
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -58,7 +61,8 @@ fun FeedScreen(
     dataHolder: DataStoreStateHolder,
     quizHolder: QuizStateHolder,
     isPremium: Boolean,
-    analytics: FirebaseAnalytics
+    analytics: FirebaseAnalytics,
+    tts: TextToSpeechInstance?
 ) {
     Scaffold(modifier = modifier
         .fillMaxSize(),
@@ -132,7 +136,8 @@ fun FeedScreen(
                         modifier = modifier,
                         borderStroke = borderStroke,
                         idioms = idioms,
-                        analytics = analytics
+                        analytics = analytics,
+                        tts = tts
                     )
                 }
 
@@ -151,7 +156,9 @@ fun Pager(pagerState: PagerState,
           modifier: Modifier,
           borderStroke: BorderStroke,
           idioms: List<Idiom>,
-          analytics: FirebaseAnalytics) {
+          analytics: FirebaseAnalytics,
+          tts: TextToSpeechInstance?) {
+
     VerticalPager(state = pagerState,
         pageSpacing = 10.dp) { index ->
 
@@ -201,13 +208,20 @@ fun Pager(pagerState: PagerState,
                         quizHolder.addToQuiz(idiomView)
                     }
 
+                    val idiomText = idioms[pagerState.currentPage].info[0]
+                    val idiomMeaning = idioms[pagerState.currentPage].meaning[0]
+                    val idiomExample = idioms[pagerState.currentPage].exampleSentences[0]
+
+                    uiStateHolder.setTextToSpeech(listOf(idiomText, idiomMeaning, idiomExample))
+
                     FeedComposable(
                         idiom = idiomView,
                         modifier = modifier,
                         uiHolder = uiStateHolder,
                         isPremium = isPremium,
                         stampCheck = stampCheck,
-                        analytics = analytics
+                        analytics = analytics,
+                        tts = tts
                     )
                 }
             }

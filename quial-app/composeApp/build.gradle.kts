@@ -183,8 +183,8 @@ kotlin {
                 implementation(libs.app.rating)
                 implementation(libs.permissions.compose)
 
-
-
+                implementation(libs.tts)
+                implementation(libs.tts.compose)
             }
         }
 
@@ -222,7 +222,7 @@ android {
         applicationId = "com.quial.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 43
+        versionCode = 44
         versionName = "1.0.1"
     }
     packaging {

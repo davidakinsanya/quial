@@ -27,6 +27,8 @@ class FeedUiStateHolder(
     private val _loadingState = MutableStateFlow<UiState>(UiState.Loading)
     val loadingState: StateFlow<UiState> = _loadingState
 
+    private val _ttsState = MutableStateFlow("")
+
     private val _idiomsList: MutableStateFlow<List<Idiom>> = MutableStateFlow(listOf())
     val idiomsList = _idiomsList
         .onStart { loadData() }
@@ -41,6 +43,18 @@ class FeedUiStateHolder(
         if (list.isNotEmpty()) {
             _idiomsList.value = list
             _loadingState.value = UiState.Success(_idiomsList.value)
+        }
+    }
+
+     fun getTextToSpeech(): String {
+        return _ttsState.value
+     }
+
+    fun setTextToSpeech(stack: List<String>) = uiStateHolderScope.launch {
+        _ttsState.value = ""
+        for (item in stack) {
+            _ttsState.value += splitText(item)[0]
+            if (item != stack[2]) _ttsState.value += "\n"
         }
     }
 
@@ -120,7 +134,6 @@ class FeedUiStateHolder(
                 .replace("Example:", "")
                 .capitalizeFirstLetter()
         )
-
         return alteredText
     }
 
@@ -128,21 +141,5 @@ class FeedUiStateHolder(
         return if (isNotEmpty())
             first().uppercase() + substring(1)
         else this
-    }
-
-    fun randomInt(): Int {
-        return (1..2).random()
-    }
-
-    private fun getBoolean(bool: Boolean, randomInt: Int, number: Int): Boolean {
-        return bool && (randomInt == number)
-    }
-
-    fun getListOfBools(bool: Boolean, randomInt: Int): List<Boolean> {
-        return listOf(
-            getBoolean(bool = bool, randomInt = randomInt, number = 1) ,
-            getBoolean(bool = bool, randomInt = randomInt, number = 2),
-            getBoolean(bool = bool, randomInt = randomInt, number = 1)
-        )
     }
 }

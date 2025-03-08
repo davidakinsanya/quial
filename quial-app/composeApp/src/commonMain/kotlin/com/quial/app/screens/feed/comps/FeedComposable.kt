@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.quial.app.data.idiom.Idiom
 import com.quial.app.screens.feed.FeedUiStateHolder
 import dev.gitlive.firebase.analytics.FirebaseAnalytics
+import nl.marc_apps.tts.TextToSpeechInstance
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
 import quial_app.composeapp.generated.resources.Res
@@ -32,17 +33,11 @@ fun FeedComposable(modifier: Modifier,
                    uiHolder: FeedUiStateHolder,
                    isPremium: Boolean,
                    stampCheck: Boolean,
-                   analytics: FirebaseAnalytics) {
+                   analytics: FirebaseAnalytics,
+                   tts: TextToSpeechInstance?) {
 
 
     val bool = !isPremium && stampCheck
-
-    val randomInt = uiHolder.randomInt()
-    val booleanList = uiHolder.getListOfBools(bool = bool, randomInt = randomInt)
-    
-    // val blurRadius1 = booleanList[0]
-    // val blurRadius2 = booleanList[1]
-    // val blurRadius3 = booleanList[2]
 
     val textSize = 20.sp
     val font =  FontFamily(Font(Res.font.DMSans_Bold))
@@ -50,15 +45,12 @@ fun FeedComposable(modifier: Modifier,
     val idiomMeaning = idiom.meaning[0]
     val idiomExample = idiom.exampleSentences[0]
 
-    Row(horizontalArrangement = Arrangement.SpaceAround) {
+    Row(horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.CenterVertically) {
         Column(horizontalAlignment = Alignment.Start) {
-            Text(
-                text = uiHolder.splitText(idiomText)[0].substring(0, 2),
-                fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
-            )
-
             if (bool) {
                 WebsiteButton(analytics)
+            } else {
+                TTSButton(tts, uiHolder)
             }
         }
 
