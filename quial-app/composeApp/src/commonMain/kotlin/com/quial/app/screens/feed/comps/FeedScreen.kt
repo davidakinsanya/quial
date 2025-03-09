@@ -220,8 +220,7 @@ fun Pager(pagerState: PagerState,
                         idiom = idiomView,
                         modifier = modifier,
                         uiHolder = uiStateHolder,
-                        isPremium = isPremium,
-                        stampCheck = stampCheck,
+                        isNotPremium = !isPremium && stampCheck,
                         analytics = analytics,
                         tts = tts
                     )

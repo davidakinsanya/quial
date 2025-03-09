@@ -31,13 +31,10 @@ import quial_app.composeapp.generated.resources.Res
 fun FeedComposable(modifier: Modifier,
                    idiom: Idiom,
                    uiHolder: FeedUiStateHolder,
-                   isPremium: Boolean,
-                   stampCheck: Boolean,
+                   isNotPremium: Boolean,
                    analytics: FirebaseAnalytics,
                    tts: TextToSpeechInstance?) {
 
-
-    val bool = !isPremium && stampCheck
 
     val textSize = 20.sp
     val font =  FontFamily(Font(Res.font.DMSans_Bold))
@@ -47,7 +44,7 @@ fun FeedComposable(modifier: Modifier,
 
     Row(horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.CenterVertically) {
         Column(horizontalAlignment = Alignment.Start) {
-            if (bool) {
+            if (isNotPremium) {
                 WebsiteButton(analytics)
             } else {
                 TTSButton(tts, uiHolder)
@@ -60,7 +57,7 @@ fun FeedComposable(modifier: Modifier,
             modifier = modifier
                 .padding(start = 10.dp)
                 .fillMaxWidth(0.9f)
-                .blur(if (bool) 8.dp else 0.dp),
+                .blur(if (isNotPremium) 8.dp else 0.dp),
             textAlign = TextAlign.End,
             fontFamily = font
         )
@@ -90,7 +87,7 @@ fun FeedComposable(modifier: Modifier,
                             text = uiHolder.splitText(idiomMeaning)[index],
                             modifier = modifier
                                 .fillMaxWidth()
-                                .blur(radius = if (bool) 8.dp else 0.dp),
+                                .blur(radius = if (isNotPremium) 8.dp else 0.dp),
                             fontSize = textSize,
                             textAlign = TextAlign.End,
                             fontFamily = font
@@ -101,7 +98,7 @@ fun FeedComposable(modifier: Modifier,
                         text = uiHolder.splitText(idiomText)[1],
                         modifier = modifier
                             .fillMaxWidth()
-                            .blur(radius = if (bool) 8.dp else 0.dp),
+                            .blur(radius = if (isNotPremium) 8.dp else 0.dp),
                         fontSize = textSize,
                         textAlign = TextAlign.End,
                         fontFamily = font
@@ -133,7 +130,7 @@ fun FeedComposable(modifier: Modifier,
                             modifier = modifier
                                 .verticalScroll(rememberScrollState())
                                 .fillMaxWidth()
-                                .blur(radius = if (bool) 8.dp else 0.dp)
+                                .blur(radius = if (isNotPremium) 8.dp else 0.dp)
                                 .padding(bottom = 5.dp),
                             textAlign = TextAlign.End,
                             fontSize = textSize,
@@ -149,7 +146,7 @@ fun FeedComposable(modifier: Modifier,
                         modifier = modifier
                             .verticalScroll(rememberScrollState())
                             .fillMaxWidth()
-                            .blur(radius = if (bool) 8.dp else 0.dp)
+                            .blur(radius = if (isNotPremium) 8.dp else 0.dp)
                             .padding(bottom = 5.dp),
                         textAlign = TextAlign.End,
                         fontSize = textSize,
