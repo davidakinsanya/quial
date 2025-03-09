@@ -168,6 +168,7 @@ fun Pager(pagerState: PagerState,
         }.collectAsState("")
 
         val stampCheck = sameDateCheck(string)
+        val bool = !isPremium && stampCheck
 
         if (index > 3 && !stampCheck && !isPremium) {
             analytics.logEvent("daily_limit_exceeded")
@@ -181,7 +182,7 @@ fun Pager(pagerState: PagerState,
                     shape = RoundedCornerShape(15.dp)
                 )
                 .padding(
-                    top = 30.dp,
+                    top = if (!bool) 20.dp else 10.dp,
                     bottom = 0.dp,
                     start = 20.dp,
                     end = 20.dp

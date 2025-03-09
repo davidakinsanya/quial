@@ -36,20 +36,11 @@ class DataStoreStateHolder(
         return bool
      }
 
-    suspend fun setUserEmail(email: String): Boolean {
-        var bool = false
-
-        withContext(Dispatchers.IO) {
-            preferences.edit {
-                val response = stringPreferencesKey("user_email")
-                bool = it[response]?.isNotEmpty() == true
-                if (!bool) {
-                    it[response] = email
-                }
-            }
+    suspend fun setUserEmail(email: String) =  withContext(Dispatchers.IO) {
+        preferences.edit {
+            val response = stringPreferencesKey("user_email")
+            it[response] = email
         }
-
-        return bool
     }
 
     suspend fun getEmail(): String {
