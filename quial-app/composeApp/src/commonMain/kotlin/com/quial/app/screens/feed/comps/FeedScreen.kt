@@ -170,6 +170,7 @@ fun Pager(pagerState: PagerState,
         val stampCheck = sameDateCheck(string)
 
         if (index > 3 && !stampCheck && !isPremium) {
+            analytics.logEvent("daily_limit_exceeded")
             dataHolder.updateTimeStamp()
         }
 
