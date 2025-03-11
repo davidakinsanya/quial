@@ -44,6 +44,31 @@ def alt_meanings(idiom, idiom_list):
         for word in idiom_breakdown:
             if word in main_string:
                 alt_list.append(main_string)
+
+
+
+def get_additional_meaning(idiom, link):
+    driver.get(link)
+
+    ul_elems = driver.find_elements(By.CSS_SELECTOR, 'ul')
+    ol_elems = driver.find_elements(By.CSS_SELECTOR, 'ol')
+
+    
+    ul_elems_comp = [elem.text for elem in ul_elems]
+    ol_elems_comp = [elem.text for elem in ol_elems]
+
+
+    meanings_list1 = ol_elems_comp[1].split('\n')
+
+    final_meanings = []
+
+    if ('(64)' in meanings_list1[0]):
+        final_meanings = alt_meanings(idiom, ul_elems_comp)
+    else:
+        final_meanings = ol_elems_comp[1].split('\n')
+
+           
+    return [ul_elems_comp[1].split('\n'), final_meanings]
     
 
 
