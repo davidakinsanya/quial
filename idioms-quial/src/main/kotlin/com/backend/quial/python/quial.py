@@ -34,18 +34,17 @@ def main_driver():
                      driver_executable_path = cd.install())
 
 
-def get_additional_meaning(idiom, link):
-    driver.get(link)
 
-    ul_elems = driver.find_elements(By.CSS_SELECTOR, 'ul')
-    ol_elems = driver.find_elements(By.CSS_SELECTOR, 'ol')
+def alt_meanings(idiom, idiom_list):
+    idiom_breakdown = idiom.split()
+    alt_list = []
 
+     for i in range (0, len(idiom_list)):
+        main_string = idiom_list[i]
+        for word in idiom_breakdown:
+            if word in main_string:
+                alt_list.append(main_string)
     
-    ul_elems_comp = [elem.text for elem in ul_elems]
-    ol_elems_comp = [elem.text for elem in ol_elems]
-    
-              
-    return [ul_elems_comp[1].split('\n'), ol_elems_comp[1].split('\n')]
 
 
 def get_meaning(idiom):
@@ -57,6 +56,7 @@ def get_meaning(idiom):
         
     return idiom_arr
     
+
 
 def scrape(letter, page):
     if page == 1:
@@ -114,6 +114,7 @@ def scrape(letter, page):
         return scrape(letter, new_page)
     else:
         return
+
 
 def merge(csv1, csv2):
     master_df = pd.DataFrame()

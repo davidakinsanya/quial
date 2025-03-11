@@ -34,6 +34,21 @@ def main_driver():
                      driver_executable_path = cd.install())
 
 
+
+
+def alt_meanings(idiom, idiom_list):
+    idiom_breakdown = idiom.split()
+    alt_list = []
+
+    for i in range (0, len(idiom_list)):
+        main_string = idiom_list[i]
+        for word in idiom_breakdown:
+            if word in main_string:
+                alt_list.append(main_string.replace('.', ' '))
+                
+    return list(set(alt_list))[0].split('\n')
+    
+
 def get_additional_meaning(idiom, link):
     driver.get(link)
 
@@ -43,10 +58,22 @@ def get_additional_meaning(idiom, link):
     
     ul_elems_comp = [elem.text for elem in ul_elems]
     ol_elems_comp = [elem.text for elem in ol_elems]
-    
-    return [ul_elems_comp[1].split('\n'), ol_elems_comp[1].split('\n')]
-    
 
+
+    meanings_list1 = ol_elems_comp[1].split('\n')
+
+    final_meanings = []
+
+    if ('(64)' in meanings_list1[0]):
+        final_meanings = alt_meanings(idiom, ul_elems_comp)
+    else:
+        final_meanings = ol_elems_comp[1].split('\n')
+
+           
+    return [ul_elems_comp[1].split('\n'), final_meanings]
+
+
+    
 def get_meaning(idiom):
     idiom_arr = idiom.split('\n')
     idiom_arr[1] = re.sub(r"\(.*?\)","()" ,idiom_arr[1]) # removes everything inside ()
@@ -55,6 +82,7 @@ def get_meaning(idiom):
         idiom_arr[2] = idiom_arr[2].replace(" Read more ➺", "")
         
     return idiom_arr
+
 
 def scrape_topic():
     driver.get(url + "topics/")
@@ -71,11 +99,13 @@ def scrape_topic():
     return topics_list
 
 
+
 def get_links(idioms):
     arr = []
     for i in range(0, len(idioms)):
         arr.append(idioms[i].find_elements(By.CSS_SELECTOR, "a")[0].get_attribute('href'))
     return arr
+
 
 def get_data(topic, idioms, links, alt):
     idioms_list = [text.text for text in idioms]
