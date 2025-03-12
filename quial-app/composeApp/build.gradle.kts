@@ -222,7 +222,7 @@ android {
         applicationId = "com.quial.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 44
+        versionCode = 46
         versionName = "1.0.2"
     }
     packaging {
@@ -254,6 +254,7 @@ dependencies {
     implementation(libs.review.ktx)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.datastore.core.android)
 }
 
 

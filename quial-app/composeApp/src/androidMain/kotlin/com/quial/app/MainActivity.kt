@@ -38,16 +38,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             onApplicationStartPlatformSpecific()
             App(dataHolder = remember(applicationContext) {
-                DataStoreStateHolder(createDataStore(applicationContext))
+                UserPreferences.getInstance(applicationContext)
             })
         }
     }
-}
-
-
-
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    // App()
 }
