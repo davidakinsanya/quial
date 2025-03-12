@@ -39,13 +39,14 @@ def alt_meanings(idiom, idiom_list):
     idiom_breakdown = idiom.split()
     alt_list = []
 
-     for i in range (0, len(idiom_list)):
+    for i in range (0, len(idiom_list)):
         main_string = idiom_list[i]
         for word in idiom_breakdown:
             if word in main_string:
-                alt_list.append(main_string)
-
-
+              alt_list.append(main_string.replace('.', ' '))
+            break
+                
+     return alt_list[0].split('\n')
 
 def get_additional_meaning(idiom, link):
     driver.get(link)

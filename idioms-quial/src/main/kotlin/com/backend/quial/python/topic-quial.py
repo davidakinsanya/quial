@@ -45,6 +45,7 @@ def alt_meanings(idiom, idiom_list):
         for word in idiom_breakdown:
             if word in main_string:
                 alt_list.append(main_string.replace('.', ' '))
+            break
                 
     return list(set(alt_list))[0].split('\n')
     
