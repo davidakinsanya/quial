@@ -47,7 +47,7 @@ def alt_meanings(idiom, idiom_list):
                 alt_list.append(main_string.replace('.', ' '))
             break
                 
-    return list(set(alt_list))[0].split('\n')
+    return alt_list[0].split('\n')
     
 
 def get_additional_meaning(idiom, link):
