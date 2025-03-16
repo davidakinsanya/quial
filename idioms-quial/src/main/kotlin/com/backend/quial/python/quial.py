@@ -73,6 +73,8 @@ def get_additional_meaning(idiom, link):
         final_additional_meanings = alt_meanings(idiom, ul_elems_comp)
     else:
         final_additional_meanings = ol_elems_comp[1].split('\n')
+
+    return [final_meanings, final_additional_meanings]
     
 
 
@@ -201,9 +203,6 @@ for letter in alphabet:
         count = count + len(item)
 
 print("idiom count is: ", str(count))
-
 '''
-
-scrape("u", 1)
 
 driver.close()
