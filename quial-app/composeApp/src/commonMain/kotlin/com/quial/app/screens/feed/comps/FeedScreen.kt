@@ -42,6 +42,7 @@ import com.quial.app.screens.feed.FeedUiStateHolder
 import com.quial.app.screens.feed.dropdown.OptionsMenu
 import com.quial.app.screens.feed.quiz.QuizLayout
 import com.quial.app.screens.feed.quiz.QuizStateHolder
+import com.quial.app.screens.feed.sheet.BottomSheetExample
 import com.quial.app.screens.loading.FeedLoadingScreen
 import com.quial.app.utils.sameDateCheck
 import com.quial.app.utils.uiStateHolderScope
@@ -64,8 +65,9 @@ fun FeedScreen(
     analytics: FirebaseAnalytics,
     tts: TextToSpeechInstance?
 ) {
-    Scaffold(modifier = modifier
-        .fillMaxSize(),
+    Scaffold(
+        modifier = modifier
+            .fillMaxSize(),
         backgroundColor = Color(125, 184, 107)
     ) {
         val idioms by uiStateHolder.idiomsList.collectAsState()
@@ -94,22 +96,27 @@ fun FeedScreen(
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(horizontalArrangement = Arrangement.SpaceAround,
+            Row(
+                horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = modifier.fillMaxWidth(.8f)) {
-                QuialImage(modifier
-                    .fillMaxHeight(0.15f)
-                    .fillMaxWidth(0.25f)
-                    .padding(0.dp)
+                modifier = modifier.fillMaxWidth(.8f)
+            ) {
+                QuialImage(
+                    modifier
+                        .fillMaxHeight(0.15f)
+                        .fillMaxWidth(0.25f)
+                        .padding(0.dp)
                 )
                 TopicsComposable(uiStateHolder, isPremium)
                 ThreeDots(modifier.size(50.dp), { showMenu.value = !showMenu.value })
             }
         }
 
-        Column(modifier = modifier
-            .fillMaxWidth(),
-            horizontalAlignment = Alignment.End) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.End
+        ) {
             OptionsMenu(
                 premiumBool = isPremium,
                 showMenu = showMenu,
@@ -145,6 +152,7 @@ fun FeedScreen(
             }
         }
     }
+    BottomSheetExample()
 }
 
 @Composable

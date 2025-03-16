@@ -113,7 +113,7 @@ def scrape(letter, page):
     
     for i in range(0, len(idioms_list)):
         if (i < len(links_list) - 1):
-            if (letter == "j"):
+            if (letter == "j" or letter == "f"):
                 basic_info = get_meaning(idioms_list[i])
                 meanings_list = get_additional_meaning(idioms_list[i].split('\n')[0], alt_links_list2[i])
             else:
