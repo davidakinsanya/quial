@@ -28,12 +28,19 @@ fun BottomSheetExample() {
         }
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
-            Icon(Icons.Default.KeyboardArrowUp,
-                contentDescription = "Drag Handle",
-                tint = Color.White,
-                modifier = Modifier.clickable {
-                    showBottomSheet = true
-                })
+            Button(
+                modifier = Modifier.padding(bottom = 15.dp),
+                colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent, contentColor = Color.Transparent),
+                onClick = {
+                showBottomSheet = !showBottomSheet
+            }) {
+                Icon(Icons.Default.KeyboardArrowUp,
+                    contentDescription = "Drag Handle",
+                    tint = Color.White,
+                    modifier = Modifier.clickable {
+                        showBottomSheet = true
+                    })
+            }
         }
     }
 
