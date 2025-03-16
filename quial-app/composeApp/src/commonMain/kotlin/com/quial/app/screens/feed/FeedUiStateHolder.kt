@@ -1,5 +1,6 @@
 package com.quial.app.screens.feed
 
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +24,7 @@ class FeedUiStateHolder(
     feedUiState: FeedUiState
 ): UiStateHolder() {
     private val _uiState = MutableStateFlow(feedUiState)
+    private var pagerState: PagerState? = null
 
     private val _loadingState = MutableStateFlow<UiState>(UiState.Loading)
     val loadingState: StateFlow<UiState> = _loadingState
@@ -44,6 +46,15 @@ class FeedUiStateHolder(
             _idiomsList.value = list
             _loadingState.value = UiState.Success(_idiomsList.value)
         }
+    }
+
+    fun loadPagerState(pagerState: PagerState) {
+        this.pagerState = pagerState
+        println("isScrolling:: LOADED!!")
+    }
+
+    fun getPagerState(): PagerState? {
+        return this.pagerState
     }
 
      fun getTextToSpeech(): String {

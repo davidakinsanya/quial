@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import org.jetbrains.compose.resources.painterResource
 import quial_app.composeapp.generated.resources.Res
+import quial_app.composeapp.generated.resources.arrow_up
 import quial_app.composeapp.generated.resources.more
 import quial_app.composeapp.generated.resources.quial_img
 import quial_app.composeapp.generated.resources.sign_in_img
@@ -35,4 +36,12 @@ fun ThreeDots(modifier: Modifier, onClick: () -> Unit) {
           modifier = modifier.clickable {
               onClick.invoke()
           } )
+}
+
+@Composable
+fun ArrowUp(modifier: Modifier) {
+    Image(painter = painterResource(Res.drawable.arrow_up),
+        contentDescription = "",
+        contentScale = ContentScale.Crop,
+        modifier = modifier)
 }

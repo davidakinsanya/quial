@@ -78,6 +78,8 @@ fun FeedScreen(
 
         val loadingState by uiStateHolder.loadingState.collectAsState()
 
+        uiStateHolder.loadPagerState(pagerState)
+
         val borderStroke: BorderStroke = when (correctAnswer) {
             null -> {
                 BorderStroke(3.dp, Color.Black)
@@ -152,7 +154,7 @@ fun FeedScreen(
             }
         }
     }
-    BottomSheetExample()
+    BottomSheetExample(uiStateHolder)
 }
 
 @Composable
