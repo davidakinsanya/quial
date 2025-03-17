@@ -50,7 +50,6 @@ class FeedUiStateHolder(
 
     fun loadPagerState(pagerState: PagerState) {
         this.pagerState = pagerState
-        println("isScrolling:: LOADED!!")
     }
 
     fun getPagerState(): PagerState? {

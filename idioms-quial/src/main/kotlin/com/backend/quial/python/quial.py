@@ -137,9 +137,7 @@ def scrape(letter, page):
             idiom_dict[letter][1] += [meanings_list[0]]
             idiom_dict[letter][2] += [meanings_list[1]]
 
-            if ("until the cows come home" in idioms_list[i]):
-                print(basic_info, "\n\n", meanings_list[0], "\n\n", meanings_list[1])
-        else:
+                else:
             break
     
     if curr_page != max_page:
