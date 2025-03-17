@@ -182,11 +182,7 @@ for i in range(0, len(topics_list)):
         writer = csv.DictWriter(csvfile, fieldnames=field_names)
         writer.writeheader()
 
-        
         main_scrape(topics_list[i], url, 1)
-
-        print(len(idiom_dict[file_name]))
-        print(len(idiom_dict[file_name][0]))
             
         for i in range(0, len(idiom_dict[file_name][0])):
                 writer.writerow({
