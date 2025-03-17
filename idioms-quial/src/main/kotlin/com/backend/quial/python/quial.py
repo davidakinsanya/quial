@@ -64,7 +64,7 @@ def get_additional_meaning(idiom, link):
     final_additional_meanings = []
     arr_set = set(idiom.split()).intersection(meanings_list[0].split())
 
-    if (len(arr_set) == 0):
+    if (len(arr_set) <= 3):
         final_meanings = ul_elems_comp[1].split('\n')
     else:
         final_meanings = ul_elems_comp[2].split('\n')

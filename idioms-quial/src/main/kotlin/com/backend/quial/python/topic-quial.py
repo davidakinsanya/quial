@@ -43,8 +43,24 @@ def get_additional_meaning(idiom, link):
     
     ul_elems_comp = [elem.text for elem in ul_elems]
     ol_elems_comp = [elem.text for elem in ol_elems]
-    
-    return [ul_elems_comp[1].split('\n'), ol_elems_comp[1].split('\n')]
+
+    meanings_list = ul_elems_comp[1].split('\n')
+
+    final_meanings = []
+    final_additional_meanings = []
+    arr_set = set(idiom.split()).intersection(meanings_list[0].split())
+
+    if (len(arr_set) <= 3):
+        final_meanings = ul_elems_comp[1].split('\n')
+    else:
+        final_meanings = ul_elems_comp[2].split('\n')
+
+    if ('(64)' in meanings_list[0]):
+        final_additional_meanings = alt_meanings(idiom, ul_elems_comp)
+    else:
+        final_additional_meanings = ol_elems_comp[1].split('\n')
+
+    return [final_meanings, final_additional_meanings]
     
 
 def get_meaning(idiom):
