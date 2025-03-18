@@ -1,7 +1,7 @@
 package com.quial.app.screens.feed.sheet
 
-
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.quial.app.images.ArrowUp
+import com.quial.app.images.SavedButton
+import com.quial.app.images.ShareIcon
 import com.quial.app.screens.feed.FeedUiStateHolder
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.Font
@@ -34,19 +36,44 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder) {
         }
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
-            ArrowUp(modifier = Modifier.alpha(
-                if (uiStateHolder.getPagerState()?.isScrollInProgress == true) 0.4f else 1f
-            )
-                .fillMaxSize(0.075f)
-                .padding(bottom = 35.dp)
-                .clickable {
-                    scope.launch {
-                        showBottomSheet = true
-                        sheetState.show()
-                    }
-                })
+            val alphaValue = if (uiStateHolder.getPagerState()?.isScrollInProgress == true) 0.4f else 1f
+            Row(horizontalArrangement = Arrangement.spacedBy(50.dp),
+                verticalAlignment = Alignment.CenterVertically) {
+
+                ShareIcon(modifier = Modifier.alpha(alphaValue)
+                    .fillMaxSize(0.075f)
+                    .padding(bottom = 35.dp)
+                    .clickable {
+
+                    })
+
+
+                ArrowUp(
+                    modifier = Modifier.alpha(alphaValue)
+                        .fillMaxSize(0.075f)
+                        .padding(bottom = 35.dp)
+                        .clickable {
+                            scope.launch {
+                                showBottomSheet = true
+                                sheetState.show()
+                            }
+                        })
+
+
+                SavedButton(
+                    modifier = Modifier.alpha(alphaValue)
+                        .fillMaxSize(0.075f)
+                        .padding(bottom = 35.dp)
+                        .clickable {
+
+                        },
+                    clicked = false)
+
+            }
         }
     }
+
+
 
     LaunchedEffect(showBottomSheet) {
         if (showBottomSheet) {
@@ -63,6 +90,7 @@ fun BottomSheetContent() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .border(shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp), color = Color.Black, width = 5.dp)
             .background(Color(125, 184, 107))
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally

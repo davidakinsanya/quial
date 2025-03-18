@@ -4,12 +4,16 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.InputModeManager
 import androidx.compose.ui.layout.ContentScale
 import org.jetbrains.compose.resources.painterResource
 import quial_app.composeapp.generated.resources.Res
 import quial_app.composeapp.generated.resources.arrow_up
 import quial_app.composeapp.generated.resources.more
 import quial_app.composeapp.generated.resources.quial_img
+import quial_app.composeapp.generated.resources.saved_clicked
+import quial_app.composeapp.generated.resources.saved_unclicked
+import quial_app.composeapp.generated.resources.share_icon
 import quial_app.composeapp.generated.resources.sign_in_img
 
 @Composable
@@ -41,6 +45,35 @@ fun ThreeDots(modifier: Modifier, onClick: () -> Unit) {
 @Composable
 fun ArrowUp(modifier: Modifier) {
     Image(painter = painterResource(Res.drawable.arrow_up),
+        contentDescription = "",
+        contentScale = ContentScale.Crop,
+        modifier = modifier)
+}
+
+@Composable
+fun SavedButton(modifier: Modifier, clicked: Boolean) {
+    Image(painter = painterResource(
+        if (clicked)
+            Res.drawable.saved_clicked
+        else
+            Res.drawable.saved_unclicked
+    ),
+        contentDescription = "",
+        contentScale = ContentScale.Crop,
+        modifier = modifier)
+}
+
+@Composable
+fun SavedButtonInSheet(modifier: Modifier) {
+    Image(painter = painterResource(Res.drawable.saved_clicked),
+        contentDescription = "",
+        contentScale = ContentScale.Crop,
+        modifier = modifier)
+}
+
+@Composable
+fun ShareIcon(modifier: Modifier) {
+    Image(painter = painterResource(Res.drawable.share_icon),
         contentDescription = "",
         contentScale = ContentScale.Crop,
         modifier = modifier)
