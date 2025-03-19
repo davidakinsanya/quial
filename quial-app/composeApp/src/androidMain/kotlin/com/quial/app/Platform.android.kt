@@ -7,7 +7,6 @@ import android.os.Build
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.google.android.play.core.review.ReviewManagerFactory
-import com.mmk.kmpauth.core.getActivity
 import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import com.quial.app.data.datastore.DATA_STORE_FILE_NAME

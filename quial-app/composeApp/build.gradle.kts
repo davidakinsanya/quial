@@ -257,7 +257,6 @@ dependencies {
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.datastore.core.android)
-    implementation(libs.activity.ktx)
 }
 
 

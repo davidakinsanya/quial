@@ -144,7 +144,6 @@ tts-compose = { module = "nl.marc-apps:tts-compose", version.ref = "tts" }
 
 # Screenshot Library
 compose-multiplatform-screen-capture = { module = "network.chaintech:compose-multiplatform-screen-capture", version.ref = "composeMultiplatformScreenCapture" }
-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtxVersion" }
 
 [plugins]
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesVersion"}
