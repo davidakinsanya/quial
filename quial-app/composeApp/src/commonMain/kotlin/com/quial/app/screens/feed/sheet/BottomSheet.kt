@@ -49,9 +49,7 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder) {
 
                 Box(contentAlignment = Alignment.Center) {
 
-                    val onClick: () -> Unit = {
-                        uiStateHolder.getScreenShotState()?.capture()
-                    }
+                    val onClick: () -> Unit = {}
 
                     ShareIcon(
                         modifier = Modifier.alpha(alphaValue)

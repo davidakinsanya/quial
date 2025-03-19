@@ -186,7 +186,6 @@ kotlin {
                 implementation(libs.tts)
                 implementation(libs.tts.compose)
 
-                implementation(libs.compose.multiplatform.screen.capture)
             }
         }
 

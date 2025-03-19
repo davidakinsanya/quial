@@ -8,7 +8,6 @@ androidx-activityCompose = "1.9.2"
 androidx-lifecycle = "2.8.0"
 appRating = "1.0.0"
 compose-plugin = "1.6.11"
-composeMultiplatformScreenCapture = "1.0.2"
 firebaseAnalytics = "2.1.0"
 firebasePerf = "2.1.0"
 googleServicesVersion = "4.4.2"
@@ -143,7 +142,6 @@ tts = { module = "nl.marc-apps:tts", version.ref = "tts" }
 tts-compose = { module = "nl.marc-apps:tts-compose", version.ref = "tts" }
 
 # Screenshot Library
-compose-multiplatform-screen-capture = { module = "network.chaintech:compose-multiplatform-screen-capture", version.ref = "composeMultiplatformScreenCapture" }
 
 [plugins]
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesVersion"}

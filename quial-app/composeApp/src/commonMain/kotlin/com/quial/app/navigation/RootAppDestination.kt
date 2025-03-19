@@ -41,8 +41,6 @@ import dev.icerock.moko.permissions.compose.BindEffect
 import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import network.chaintech.composeMultiplatformScreenCapture.ScreenCaptureComposable
-import network.chaintech.composeMultiplatformScreenCapture.rememberScreenCaptureController
 import nl.marc_apps.tts.TextToSpeechEngine
 import nl.marc_apps.tts.rememberTextToSpeechOrNull
 import org.koin.compose.koinInject
@@ -185,12 +183,9 @@ interface RootAppDestination {
 
             }
 
-            val uiStateHolder = getUiStateHolder<FeedUiStateHolder>()
-            uiStateHolder.setScreenShotState(rememberScreenCaptureController())
-
             if (isConnected) {
                 FeedScreen(
-                    uiStateHolder = uiStateHolder,
+                    uiStateHolder = getUiStateHolder<FeedUiStateHolder>(),
                     dataHolder = getDataHolder(),
                     quizHolder = getUiStateHolder<QuizStateHolder>(),
                     isPremium = isPremium.value,
