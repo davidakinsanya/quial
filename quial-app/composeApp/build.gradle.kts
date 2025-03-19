@@ -185,6 +185,8 @@ kotlin {
 
                 implementation(libs.tts)
                 implementation(libs.tts.compose)
+
+                implementation(libs.compose.multiplatform.screen.capture)
             }
         }
 
@@ -223,7 +225,7 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 46
-        versionName = "1.0.2"
+        versionName = "1.0.3"
     }
     packaging {
         resources {
@@ -255,6 +257,7 @@ dependencies {
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.datastore.core.android)
+    implementation(libs.activity.ktx)
 }
 
 

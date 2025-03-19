@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.quial.app.data.idiom.Idiom
 import com.quial.app.screens.feed.FeedUiStateHolder
 import dev.gitlive.firebase.analytics.FirebaseAnalytics
+import network.chaintech.composeMultiplatformScreenCapture.ScreenCaptureComposable
 import nl.marc_apps.tts.TextToSpeechInstance
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
@@ -41,6 +42,18 @@ fun FeedComposable(modifier: Modifier,
     val idiomText = idiom.info[0]
     val idiomMeaning = idiom.meaning[0]
     val idiomExample = idiom.exampleSentences[0]
+
+    ScreenCaptureComposable(
+        modifier = Modifier,
+        screenCaptureController = uiHolder.getScreenShotState()!!,
+        shareImage = true,
+        onCaptured = { img, _ ->
+            println("CAPTURED:: ${img == null}")
+            if (img != null) {
+                uiHolder.captureScreenShot(img)
+            }
+        }
+    ) {}
 
     Row(horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.CenterVertically) {
         Column(horizontalAlignment = Alignment.Start) {

@@ -12,7 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.quial.app.images.ArrowUp
 import com.quial.app.images.SavedButton
 import com.quial.app.images.ShareIcon
@@ -36,38 +38,74 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder) {
         }
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
-            val alphaValue = if (uiStateHolder.getPagerState()?.isScrollInProgress == true) 0.4f else 1f
+            val alphaValue = if (uiStateHolder.getPagerState()?.isScrollInProgress == true) 0.4f else 0.8f
+            val fontSize = 12.sp
+            val textModifier = Modifier
+                .alpha(alphaValue)
+                .padding(top = 5.dp)
+
             Row(horizontalArrangement = Arrangement.spacedBy(50.dp),
                 verticalAlignment = Alignment.CenterVertically) {
 
-                ShareIcon(modifier = Modifier.alpha(alphaValue)
-                    .fillMaxSize(0.075f)
-                    .padding(bottom = 35.dp)
-                    .clickable {
+                Box(contentAlignment = Alignment.Center) {
 
-                    })
+                    val onClick: () -> Unit = {
+                        uiStateHolder.getScreenShotState()?.capture()
+                    }
 
+                    ShareIcon(
+                        modifier = Modifier.alpha(alphaValue)
+                            .fillMaxSize(0.075f)
+                            .padding(bottom = 35.dp)
+                            .clickable { onClick.invoke() })
 
-                ArrowUp(
-                    modifier = Modifier.alpha(alphaValue)
-                        .fillMaxSize(0.075f)
-                        .padding(bottom = 35.dp)
-                        .clickable {
-                            scope.launch {
-                                showBottomSheet = true
-                                sheetState.show()
-                            }
-                        })
+                    Text(text = "Share",
+                         modifier = textModifier.clickable { onClick.invoke() },
+                         textAlign = TextAlign.Center,
+                         fontSize = fontSize,
+                         fontFamily = FontFamily(Font(Res.font.DMSans_Bold)))
+                }
 
+                Box(contentAlignment = Alignment.Center) {
 
-                SavedButton(
-                    modifier = Modifier.alpha(alphaValue)
-                        .fillMaxSize(0.075f)
-                        .padding(bottom = 35.dp)
-                        .clickable {
+                    val onClick: () -> Unit = {
+                        scope.launch {
+                            showBottomSheet = true
+                            sheetState.show()
+                        }
+                    }
 
-                        },
-                    clicked = false)
+                    ArrowUp(
+                        modifier = Modifier.alpha(alphaValue)
+                            .fillMaxSize(0.075f)
+                            .padding(bottom = 35.dp)
+                            .clickable { onClick.invoke() })
+
+                    Text(text = "More",
+                         modifier = textModifier.clickable { onClick.invoke() },
+                         textAlign = TextAlign.Center,
+                         fontSize = fontSize,
+                         fontFamily = FontFamily(Font(Res.font.DMSans_Bold)))
+                }
+
+                Box(contentAlignment = Alignment.Center) {
+
+                    SavedButton(
+                        modifier = Modifier.alpha(alphaValue)
+                            .fillMaxSize(0.075f)
+                            .padding(bottom = 35.dp)
+                            .clickable {
+
+                            },
+                        clicked = false
+                    )
+
+                    Text(text = "Save",
+                         modifier = textModifier,
+                         textAlign = TextAlign.Center,
+                         fontSize = fontSize,
+                         fontFamily = FontFamily(Font(Res.font.DMSans_Bold)))
+                }
 
             }
         }
@@ -92,7 +130,7 @@ fun BottomSheetContent() {
             .fillMaxWidth()
             .border(shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp), color = Color.Black, width = 5.dp)
             .background(Color(125, 184, 107))
-            .padding(16.dp),
+            .padding(50.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(8.dp))

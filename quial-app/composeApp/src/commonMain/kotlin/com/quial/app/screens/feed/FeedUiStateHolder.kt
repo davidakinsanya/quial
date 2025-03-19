@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.ImageBitmap
 import com.quial.app.data.idiom.Idiom
 import com.quial.app.data.idiom.Topic
 import com.quial.app.data.idiom.TopicSelected
@@ -19,17 +20,21 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import network.chaintech.composeMultiplatformScreenCapture.ScreenCaptureController
 
 class FeedUiStateHolder(
     feedUiState: FeedUiState
 ): UiStateHolder() {
     private val _uiState = MutableStateFlow(feedUiState)
-    private var pagerState: PagerState? = null
-
     private val _loadingState = MutableStateFlow<UiState>(UiState.Loading)
     val loadingState: StateFlow<UiState> = _loadingState
 
     private val _ttsState = MutableStateFlow("")
+
+    private val screenShotState: MutableState<ScreenCaptureController?> = mutableStateOf(null)
+    private val savedScreenShotState: MutableState<ImageBitmap?> = mutableStateOf(null)
+
+    private var pagerState: PagerState? = null
 
     private val _idiomsList: MutableStateFlow<List<Idiom>> = MutableStateFlow(listOf())
     val idiomsList = _idiomsList
@@ -40,7 +45,7 @@ class FeedUiStateHolder(
         listOf()
     )
 
-    private suspend fun loadData() = uiStateHolderScope.launch(Dispatchers.IO) {
+    private fun loadData() = uiStateHolderScope.launch(Dispatchers.IO) {
         val list = _uiState.value.retrieveIdioms()!!
         if (list.isNotEmpty()) {
             _idiomsList.value = list
@@ -66,6 +71,23 @@ class FeedUiStateHolder(
             _ttsState.value += splitText(item)[0]
             if (item != stack[2]) _ttsState.value += "\n"
         }
+    }
+
+    fun setScreenShotState(state: ScreenCaptureController) {
+        screenShotState.value = state
+    }
+
+    fun getScreenShotState(): ScreenCaptureController? {
+        return screenShotState.value
+    }
+
+    fun captureScreenShot(image: ImageBitmap) {
+        savedScreenShotState.value = image
+        println("CAPTURED:: ${savedScreenShotState.value != null}")
+    }
+
+    fun retrieveScreenShot(): ImageBitmap? {
+        return savedScreenShotState.value
     }
 
      @Composable
