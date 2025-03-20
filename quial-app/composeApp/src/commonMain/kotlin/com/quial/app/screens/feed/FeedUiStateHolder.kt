@@ -40,6 +40,12 @@ class FeedUiStateHolder(
         listOf()
     )
 
+    private val _currentIdiom: MutableStateFlow<Idiom> = MutableStateFlow(Idiom())
+    val currentIdiom = _currentIdiom
+
+    private val _isQuiz: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isQuiz = _isQuiz
+
     private fun loadData() = uiStateHolderScope.launch(Dispatchers.IO) {
         val list = _uiState.value.retrieveIdioms()!!
         if (list.isNotEmpty()) {
@@ -66,6 +72,14 @@ class FeedUiStateHolder(
             _ttsState.value += splitText(item)[0]
             if (item != stack[2]) _ttsState.value += "\n"
         }
+    }
+
+    fun setCurrentIdiom(idiom: Idiom) {
+        _currentIdiom.value = idiom
+    }
+
+    fun setQuizState(quizState: Boolean) {
+        _isQuiz.value = quizState
     }
 
      @Composable

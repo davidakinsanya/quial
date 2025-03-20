@@ -10,6 +10,6 @@ import kotlinx.serialization.Serializable
  * @param exampleSentences examples of the idiom in a sentence.
  */
 @Serializable
-data class Idiom(val info: List<String>,
-                 val meaning: List<String>,
-                 val exampleSentences: List<String>)
+data class Idiom(val info: List<String> = listOf(),
+                 val meaning: List<String> = listOf(),
+                 val exampleSentences: List<String> = listOf())

@@ -209,6 +209,7 @@ fun Pager(pagerState: PagerState,
                     && pagerState.currentPage >= 7
                     && isPremium) {
 
+                    uiStateHolder.setQuizState(true)
                     quizHolder.setIdiomGuess()
                     val options = remember { mutableStateOf(quizHolder.quizOptions()) }
                     QuizLayout(quizHolder = quizHolder, options = options)
@@ -216,6 +217,7 @@ fun Pager(pagerState: PagerState,
                 } else {
 
                     if (isPremium) {
+                        uiStateHolder.setQuizState(false)
                         quizHolder.answerReset()
                         quizHolder.addToQuiz(idiomView)
                     }
@@ -225,6 +227,7 @@ fun Pager(pagerState: PagerState,
                     val idiomExample = idioms[pagerState.currentPage].exampleSentences[0]
 
                     uiStateHolder.setTextToSpeech(listOf(idiomText, idiomMeaning, idiomExample))
+                    uiStateHolder.setCurrentIdiom(idioms[pagerState.currentPage])
 
                     FeedComposable(
                         idiom = idiomView,

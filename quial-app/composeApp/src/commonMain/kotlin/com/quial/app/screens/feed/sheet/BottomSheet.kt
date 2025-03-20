@@ -11,13 +11,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.quial.app.images.ArrowUp
 import com.quial.app.images.SavedButton
-import com.quial.app.images.ShareIcon
+import com.quial.app.images.SearchButton
 import com.quial.app.screens.feed.FeedUiStateHolder
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.Font
@@ -39,26 +40,41 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder) {
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
             val alphaValue = if (uiStateHolder.getPagerState()?.isScrollInProgress == true) 0.4f else 0.8f
+            val quizState by uiStateHolder.isQuiz.collectAsState()
+            val altAlphaValue = if (quizState) 0.4f else alphaValue
+
             val fontSize = 12.sp
             val textModifier = Modifier
-                .alpha(alphaValue)
-                .padding(top = 5.dp)
+                .padding(top = 5.dp, bottom = 1.dp)
 
             Row(horizontalArrangement = Arrangement.spacedBy(50.dp),
                 verticalAlignment = Alignment.CenterVertically) {
 
                 Box(contentAlignment = Alignment.Center) {
 
-                    val onClick: () -> Unit = {}
+                    val currentIdiom by uiStateHolder.currentIdiom.collectAsState()
+                    val uriHandler = LocalUriHandler.current
 
-                    ShareIcon(
-                        modifier = Modifier.alpha(alphaValue)
+                    val onClick: () -> Unit = {
+                        val searchQuery = uiStateHolder.splitText(currentIdiom.info[0])[0].lowercase()+ " idiom meaning and synonyms"
+
+                        if(!quizState) {
+                            uriHandler.openUri("https://google.com/search?q=${searchQuery.replace(" ", "+")}")
+                        }
+                    }
+
+                    SearchButton(
+                        modifier = Modifier.alpha(altAlphaValue)
                             .fillMaxSize(0.075f)
                             .padding(bottom = 35.dp)
                             .clickable { onClick.invoke() })
 
-                    Text(text = "Share",
-                         modifier = textModifier.clickable { onClick.invoke() },
+
+
+                    Text(text = "Google",
+                         modifier = textModifier
+                             .alpha(altAlphaValue)
+                             .clickable { onClick.invoke() },
                          textAlign = TextAlign.Center,
                          fontSize = fontSize,
                          fontFamily = FontFamily(Font(Res.font.DMSans_Bold)))
@@ -80,7 +96,9 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder) {
                             .clickable { onClick.invoke() })
 
                     Text(text = "More",
-                         modifier = textModifier.clickable { onClick.invoke() },
+                         modifier = textModifier
+                             .alpha(alphaValue)
+                             .clickable { onClick.invoke() },
                          textAlign = TextAlign.Center,
                          fontSize = fontSize,
                          fontFamily = FontFamily(Font(Res.font.DMSans_Bold)))
@@ -88,18 +106,22 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder) {
 
                 Box(contentAlignment = Alignment.Center) {
 
+                    val onClick: () -> Unit = {}
+
                     SavedButton(
-                        modifier = Modifier.alpha(alphaValue)
+                        modifier = Modifier.alpha(altAlphaValue)
                             .fillMaxSize(0.075f)
                             .padding(bottom = 35.dp)
                             .clickable {
-
+                                // if (!quizState) { }
                             },
                         clicked = false
                     )
 
                     Text(text = "Save",
-                         modifier = textModifier,
+                         modifier = textModifier
+                             .alpha(altAlphaValue)
+                             .clickable { onClick.invoke() },
                          textAlign = TextAlign.Center,
                          fontSize = fontSize,
                          fontFamily = FontFamily(Font(Res.font.DMSans_Bold)))

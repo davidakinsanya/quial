@@ -12,6 +12,7 @@ import quial_app.composeapp.generated.resources.more
 import quial_app.composeapp.generated.resources.quial_img
 import quial_app.composeapp.generated.resources.saved_clicked
 import quial_app.composeapp.generated.resources.saved_unclicked
+import quial_app.composeapp.generated.resources.search_icon
 import quial_app.composeapp.generated.resources.share_icon
 import quial_app.composeapp.generated.resources.sign_in_img
 
@@ -71,8 +72,8 @@ fun SavedButtonInSheet(modifier: Modifier) {
 }
 
 @Composable
-fun ShareIcon(modifier: Modifier) {
-    Image(painter = painterResource(Res.drawable.share_icon),
+fun SearchButton(modifier: Modifier) {
+    Image(painter = painterResource(Res.drawable.search_icon),
         contentDescription = "",
         contentScale = ContentScale.Crop,
         modifier = modifier)
