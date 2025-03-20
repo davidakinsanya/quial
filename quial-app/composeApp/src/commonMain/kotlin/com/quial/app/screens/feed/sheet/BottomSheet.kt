@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.quial.app.data.datastore.DataStoreStateHolder
 import com.quial.app.images.ArrowUp
 import com.quial.app.images.SavedButton
 import com.quial.app.images.SearchButton
@@ -27,10 +28,21 @@ import quial_app.composeapp.generated.resources.Res
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun BottomSheetExample(uiStateHolder: FeedUiStateHolder) {
+fun BottomSheetExample(uiStateHolder: FeedUiStateHolder,
+                       dataStoreHolder: DataStoreStateHolder) {
+
     val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.HalfExpanded)
     var showBottomSheet by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+
+    val currentIdiom by uiStateHolder.currentIdiom.collectAsState()
+
+    val idiomTitle = if (currentIdiom.info.isNotEmpty())
+        uiStateHolder.splitText(currentIdiom.info[0])[0].lowercase()
+    else
+        ""
+
+
     ModalBottomSheetLayout(
         sheetState = sheetState,
         sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp), // Rounded top corners
@@ -38,6 +50,7 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder) {
             BottomSheetContent()
         }
     ) {
+
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
             val alphaValue = if (uiStateHolder.getPagerState()?.isScrollInProgress == true) 0.4f else 0.8f
             val quizState by uiStateHolder.isQuiz.collectAsState()
@@ -51,15 +64,21 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder) {
                 verticalAlignment = Alignment.CenterVertically) {
 
                 Box(contentAlignment = Alignment.Center) {
-
-                    val currentIdiom by uiStateHolder.currentIdiom.collectAsState()
                     val uriHandler = LocalUriHandler.current
 
                     val onClick: () -> Unit = {
-                        val searchQuery = uiStateHolder.splitText(currentIdiom.info[0])[0].lowercase()+ " idiom meaning and synonyms"
+                        val searchQuery =
+                            uiStateHolder.splitText(currentIdiom.info[0])[0].lowercase() + " idiom meaning and synonyms"
 
-                        if(!quizState) {
-                            uriHandler.openUri("https://google.com/search?q=${searchQuery.replace(" ", "+")}")
+                        if (!quizState) {
+                            uriHandler.openUri(
+                                "https://google.com/search?q=${
+                                    searchQuery.replace(
+                                        " ",
+                                        "+"
+                                    )
+                                }"
+                            )
                         }
                     }
 
@@ -71,14 +90,17 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder) {
 
 
 
-                    Text(text = "Google",
-                         modifier = textModifier
-                             .alpha(altAlphaValue)
-                             .clickable { onClick.invoke() },
-                         textAlign = TextAlign.Center,
-                         fontSize = fontSize,
-                         fontFamily = FontFamily(Font(Res.font.DMSans_Bold)))
+                    Text(
+                        text = "Google",
+                        modifier = textModifier
+                            .alpha(altAlphaValue)
+                            .clickable { onClick.invoke() },
+                        textAlign = TextAlign.Center,
+                        fontSize = fontSize,
+                        fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                    )
                 }
+
 
                 Box(contentAlignment = Alignment.Center) {
 
@@ -95,42 +117,62 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder) {
                             .padding(bottom = 35.dp)
                             .clickable { onClick.invoke() })
 
-                    Text(text = "More",
-                         modifier = textModifier
-                             .alpha(alphaValue)
-                             .clickable { onClick.invoke() },
-                         textAlign = TextAlign.Center,
-                         fontSize = fontSize,
-                         fontFamily = FontFamily(Font(Res.font.DMSans_Bold)))
+                    Text(
+                        text = "More",
+                        modifier = textModifier
+                            .alpha(alphaValue)
+                            .clickable { onClick.invoke() },
+                        textAlign = TextAlign.Center,
+                        fontSize = fontSize,
+                        fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                    )
                 }
-
                 Box(contentAlignment = Alignment.Center) {
+                    var isIdiomSaved by remember {
+                        mutableStateOf(false) }
 
-                    val onClick: () -> Unit = {}
+                    LaunchedEffect(uiStateHolder.getPagerState()?.currentPage) {
+                        isIdiomSaved = false
+                    }
+
+                    val onClick: () -> Unit = {
+                        scope.launch {
+                            val saved = dataStoreHolder.getSavedIdioms().contains(idiomTitle)
+                            if (!saved) {
+                                dataStoreHolder.addIdiomToSaved(idiomTitle)
+                                isIdiomSaved = !isIdiomSaved
+                                println("isSaved:: isSavedNow")
+                                println("isSaved:: $isIdiomSaved")
+                            } else {
+                                dataStoreHolder.removeSavedIdiom(idiomTitle)
+                                isIdiomSaved = !isIdiomSaved
+                                println("isSaved:: isRemovedNow")
+                                println("isSaved:: $isIdiomSaved")
+                            }
+                        }
+                    }
 
                     SavedButton(
                         modifier = Modifier.alpha(altAlphaValue)
                             .fillMaxSize(0.075f)
                             .padding(bottom = 35.dp)
-                            .clickable {
-                                // if (!quizState) { }
-                            },
-                        clicked = false
+                            .clickable { if (!quizState) onClick.invoke() },
+                        clicked = isIdiomSaved
                     )
 
-                    Text(text = "Save",
-                         modifier = textModifier
-                             .alpha(altAlphaValue)
-                             .clickable { onClick.invoke() },
-                         textAlign = TextAlign.Center,
-                         fontSize = fontSize,
-                         fontFamily = FontFamily(Font(Res.font.DMSans_Bold)))
+                    Text(
+                        text = if (isIdiomSaved && !quizState) "Saved" else "Save",
+                        modifier = textModifier
+                            .alpha(altAlphaValue)
+                            .clickable { if (!quizState) onClick.invoke() },
+                        textAlign = TextAlign.Center,
+                        fontSize = fontSize,
+                        fontFamily = FontFamily(Font(Res.font.DMSans_Bold))
+                    )
                 }
-
             }
         }
     }
-
 
 
     LaunchedEffect(showBottomSheet) {

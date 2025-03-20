@@ -24,19 +24,19 @@ class DataStoreStateHolder(
         return preferences
     }
 
-     fun isOnboardingShown(): Boolean  {
-         var bool = false
-         runBlocking {
+    fun isOnboardingShown(): Boolean {
+        var bool = false
+        runBlocking {
             preferences.edit {
                 val response = stringPreferencesKey("onboardingResponse")
                 // it[response] = ""
                 bool = it[response]?.isNotEmpty() == true
             }
-         }
+        }
         return bool
-     }
+    }
 
-    suspend fun setUserEmail(email: String) =  withContext(Dispatchers.IO) {
+    suspend fun setUserEmail(email: String) = withContext(Dispatchers.IO) {
         preferences.edit {
             val response = stringPreferencesKey("user_email")
             it[response] = email
@@ -56,21 +56,22 @@ class DataStoreStateHolder(
         return email
     }
 
-    fun saveOnboardingResponse(onboardingResponse: List<OnboardingResponse>) = uiStateHolderScope.launch {
-      preferences.edit {
-          val json = Json {
-              ignoreUnknownKeys = true
-              isLenient = false
-          }
+    fun saveOnboardingResponse(onboardingResponse: List<OnboardingResponse>) =
+        uiStateHolderScope.launch {
+            preferences.edit {
+                val json = Json {
+                    ignoreUnknownKeys = true
+                    isLenient = false
+                }
 
-          val response = stringPreferencesKey("onboardingResponse")
-          val responseString = json.encodeToJsonElement(onboardingResponse).toString()
-          it[response] = responseString
-      }
-    }
+                val response = stringPreferencesKey("onboardingResponse")
+                val responseString = json.encodeToJsonElement(onboardingResponse).toString()
+                it[response] = responseString
+            }
+        }
 
 
-     suspend fun isPremium(stripeClient: StripeClient): Boolean {
+    suspend fun isPremium(stripeClient: StripeClient): Boolean {
         val id = stripeClient.getCustomer(getEmail())
         return stripeClient.getSubscription(id)
     }
@@ -79,6 +80,41 @@ class DataStoreStateHolder(
         preferences.edit {
             val stamp = stringPreferencesKey("timeStamp")
             it[stamp] = getCurrentDate()
+        }
+    }
+
+    suspend fun getSavedIdioms(): String {
+        var idiom = ""
+        withContext(Dispatchers.IO) {
+            preferences.edit {
+                val savedIdioms = stringPreferencesKey("savedIdioms")
+                idiom = it[savedIdioms].toString()
+            }
+        }
+        return idiom
+    }
+
+    suspend fun addIdiomToSaved(idiom: String) {
+        withContext(Dispatchers.IO) {
+            preferences.edit {
+                val savedIdioms = stringPreferencesKey("savedIdioms")
+                if (it[savedIdioms]?.contains("null") == true) {
+                    val newString = it[savedIdioms]?.replace("null", "")
+                    it[savedIdioms] = newString.toString()
+                } else if (it[savedIdioms]?.contains("$idiom, ") == false) {
+                    it[savedIdioms] += "$idiom, "
+                }
+            }
+        }
+    }
+
+    fun removeSavedIdiom(idiom: String) = uiStateHolderScope.launch {
+        preferences.edit {
+            val savedIdioms = stringPreferencesKey("savedIdioms")
+
+            val newString = it[savedIdioms]?.replace("$idiom, ", "")
+            it[savedIdioms] = newString.toString()
+
         }
     }
 }

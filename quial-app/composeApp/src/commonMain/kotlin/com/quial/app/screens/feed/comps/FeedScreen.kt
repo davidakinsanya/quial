@@ -154,7 +154,7 @@ fun FeedScreen(
             }
         }
     }
-    BottomSheetExample(uiStateHolder)
+    BottomSheetExample(uiStateHolder, dataHolder)
 }
 
 @Composable
