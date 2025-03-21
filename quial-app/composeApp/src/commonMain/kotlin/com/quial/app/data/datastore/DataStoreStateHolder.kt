@@ -88,27 +88,31 @@ class DataStoreStateHolder(
         withContext(Dispatchers.IO) {
             preferences.edit {
                 val savedIdioms = stringPreferencesKey("savedIdioms")
-                idiom = it[savedIdioms].toString()
+                idiom = it[savedIdioms] ?: ""
             }
         }
         return idiom
     }
 
-    suspend fun addIdiomToSaved(idiom: String) {
-        withContext(Dispatchers.IO) {
-            preferences.edit {
-                val savedIdioms = stringPreferencesKey("savedIdioms")
-                if (it[savedIdioms]?.contains("null") == true) {
-                    val newString = it[savedIdioms]?.replace("null", "")
-                    it[savedIdioms] = newString.toString()
-                } else if (it[savedIdioms]?.contains("$idiom, ") == false) {
-                    it[savedIdioms] += "$idiom, "
-                }
-            }
-        }
-    }
+     suspend fun addIdiomToSaved(idiom: String) = withContext(Dispatchers.IO) {
+         preferences.edit {
+             val savedIdioms = stringPreferencesKey("savedIdioms")
+             it[savedIdioms] = if (it[savedIdioms].isNullOrEmpty()) "" else it[savedIdioms]!!
 
-    fun removeSavedIdiom(idiom: String) = uiStateHolderScope.launch {
+             if (it[savedIdioms]?.contains("null") == true) {
+                 val newString = it[savedIdioms]?.replace("null", "")
+                 it[savedIdioms] = newString.toString()
+             }
+
+             if (it[savedIdioms]?.contains(idiom) == false) {
+                 val string = it[savedIdioms] + "$idiom, "
+                 it[savedIdioms] = string
+             }
+
+         }
+     }
+
+    suspend fun removeSavedIdiom(idiom: String) = withContext(Dispatchers.IO) {
         preferences.edit {
             val savedIdioms = stringPreferencesKey("savedIdioms")
 

@@ -131,23 +131,18 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder,
                     var isIdiomSaved by remember {
                         mutableStateOf(false) }
 
-                    LaunchedEffect(uiStateHolder.getPagerState()?.currentPage) {
-                        isIdiomSaved = false
+                    LaunchedEffect(uiStateHolder.getPagerState()?.isScrollInProgress) {
+                        isIdiomSaved = dataStoreHolder.getSavedIdioms().contains(idiomTitle) && idiomTitle.isNotEmpty()
                     }
 
                     val onClick: () -> Unit = {
                         scope.launch {
-                            val saved = dataStoreHolder.getSavedIdioms().contains(idiomTitle)
-                            if (!saved) {
+                            if (!isIdiomSaved) {
                                 dataStoreHolder.addIdiomToSaved(idiomTitle)
                                 isIdiomSaved = !isIdiomSaved
-                                println("isSaved:: isSavedNow")
-                                println("isSaved:: $isIdiomSaved")
                             } else {
                                 dataStoreHolder.removeSavedIdiom(idiomTitle)
                                 isIdiomSaved = !isIdiomSaved
-                                println("isSaved:: isRemovedNow")
-                                println("isSaved:: $isIdiomSaved")
                             }
                         }
                     }
