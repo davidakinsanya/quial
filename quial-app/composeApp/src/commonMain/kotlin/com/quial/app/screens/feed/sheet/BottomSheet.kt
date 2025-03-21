@@ -132,7 +132,7 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder,
                         mutableStateOf(false) }
 
                     LaunchedEffect(uiStateHolder.getPagerState()?.isScrollInProgress) {
-                        isIdiomSaved = dataStoreHolder.getSavedIdioms().contains(idiomTitle) && idiomTitle.isNotEmpty()
+                        isIdiomSaved = !quizState && dataStoreHolder.getSavedIdioms().contains(idiomTitle) && idiomTitle.isNotEmpty()
                     }
 
                     val onClick: () -> Unit = {
