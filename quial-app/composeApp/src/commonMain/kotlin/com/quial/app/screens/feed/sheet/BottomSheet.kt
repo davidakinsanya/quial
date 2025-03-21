@@ -60,7 +60,7 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder,
             val textModifier = Modifier
                 .padding(top = 5.dp, bottom = 1.dp)
 
-            Row(horizontalArrangement = Arrangement.spacedBy(50.dp),
+            Row(horizontalArrangement = Arrangement.spacedBy(40.dp),
                 verticalAlignment = Alignment.CenterVertically) {
 
                 Box(contentAlignment = Alignment.Center) {

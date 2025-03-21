@@ -1,5 +1,6 @@
 package com.quial.app.data.datastore
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -20,6 +21,9 @@ import kotlinx.serialization.json.encodeToJsonElement
 class DataStoreStateHolder(
     private val preferences: DataStore<Preferences>,
 ): UiStateHolder() {
+
+    private val savedIdioms = mutableStateOf("savedIdioms")
+
     fun getPref(): DataStore<Preferences> {
         return preferences
     }
@@ -40,6 +44,7 @@ class DataStoreStateHolder(
         preferences.edit {
             val response = stringPreferencesKey("user_email")
             it[response] = email
+            savedIdioms.value += " - $email"
         }
     }
 
@@ -87,7 +92,7 @@ class DataStoreStateHolder(
         var idiom = ""
         withContext(Dispatchers.IO) {
             preferences.edit {
-                val savedIdioms = stringPreferencesKey("savedIdioms")
+                val savedIdioms = stringPreferencesKey(savedIdioms.value)
                 idiom = it[savedIdioms] ?: ""
             }
         }
@@ -96,7 +101,7 @@ class DataStoreStateHolder(
 
      suspend fun addIdiomToSaved(idiom: String) = withContext(Dispatchers.IO) {
          preferences.edit {
-             val savedIdioms = stringPreferencesKey("savedIdioms")
+             val savedIdioms = stringPreferencesKey(savedIdioms.value)
              it[savedIdioms] = if (it[savedIdioms].isNullOrEmpty()) "" else it[savedIdioms]!!
 
              if (it[savedIdioms]?.contains("null") == true) {
@@ -114,7 +119,7 @@ class DataStoreStateHolder(
 
     suspend fun removeSavedIdiom(idiom: String) = withContext(Dispatchers.IO) {
         preferences.edit {
-            val savedIdioms = stringPreferencesKey("savedIdioms")
+            val savedIdioms = stringPreferencesKey(savedIdioms.value)
 
             val newString = it[savedIdioms]?.replace("$idiom, ", "")
             it[savedIdioms] = newString.toString()
