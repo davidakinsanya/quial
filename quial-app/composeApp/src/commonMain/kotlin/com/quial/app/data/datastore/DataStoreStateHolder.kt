@@ -159,7 +159,6 @@ class DataStoreStateHolder(
             val streakTimeStamp = stringPreferencesKey(streakTimeStamp.value)
 
             if (it[streakTimeStamp]?.isEmpty() == true) {
-
                 it[streakTimeStamp] = getCurrentDate()
                 if (it[savedStreak]?.toString().isNullOrEmpty()) it[savedStreak] = 1
 
