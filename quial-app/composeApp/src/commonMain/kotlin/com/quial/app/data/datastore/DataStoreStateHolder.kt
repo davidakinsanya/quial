@@ -163,11 +163,14 @@ class DataStoreStateHolder(
                 it[streakTimeStamp] = getCurrentDate()
                 if (it[savedStreak]?.toString().isNullOrEmpty()) it[savedStreak] = 1
 
-            } else if (streakCheck(it[streakTimeStamp]!!) ) {
-                it[savedStreak] = it[savedStreak]!! + 1
-            } else {
-                it[streakTimeStamp] = getCurrentDate()
-                it[savedStreak] = 1
+            } else if (!sameDateCheck(it[streakTimeStamp]!!)) {
+                if (streakCheck(it[streakTimeStamp]!!)) {
+                    it[savedStreak] = it[savedStreak]!! + 1
+                    it[streakTimeStamp] = getCurrentDate()
+                } else {
+                    it[streakTimeStamp] = getCurrentDate()
+                    it[savedStreak] = 1
+                }
             }
         }
     }
