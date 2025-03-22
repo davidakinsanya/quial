@@ -142,7 +142,7 @@ interface RootAppDestination {
                     onGoogleSignInResult = { googleUser ->
                         googleUser?.idToken
 
-                        if (googleUser?.idToken?.let { tokenClient.verifyToken(it) } == true) {
+                        if (googleUser?.idToken?.let { tokenClient.verifyToken(it, getDataHolder()) } == true) {
                             val email = tokenClient.getResponseEmail(googleUser.idToken)
 
                             getDataHolder().uiStateHolderScope.launch {

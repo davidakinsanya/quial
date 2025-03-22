@@ -186,6 +186,9 @@ kotlin {
                 implementation(libs.tts)
                 implementation(libs.tts.compose)
 
+                implementation(libs.coil.compose)
+                implementation(libs.coil.network.ktor)
+
             }
         }
 

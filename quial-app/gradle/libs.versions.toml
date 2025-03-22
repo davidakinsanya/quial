@@ -7,6 +7,8 @@ android-targetSdk = "35"
 androidx-activityCompose = "1.9.2"
 androidx-lifecycle = "2.8.0"
 appRating = "1.0.0"
+coilCompose = "3.0.0-alpha06"
+coilNetworkKtor = "3.0.0-alpha06"
 compose-plugin = "1.6.11"
 firebaseAnalytics = "2.1.0"
 firebasePerf = "2.1.0"
@@ -17,8 +19,6 @@ kotlin = "2.0.20"
 kotlinxDatetime = "0.6.1"
 kotlinxSerializationJson = "1.7.2"
 permissionsCompose = "0.18.1"
-playServicesAds = "23.6.0"
-screenshot = "1.5.0"
 tts = "2.5.0"
 voyager = "1.0.0"
 koin = "3.5.6"
@@ -141,7 +141,9 @@ androidx-datastore-core-android = { group = "androidx.datastore", name = "datast
 tts = { module = "nl.marc-apps:tts", version.ref = "tts" }
 tts-compose = { module = "nl.marc-apps:tts-compose", version.ref = "tts" }
 
-# Screenshot Library
+# Coil Library
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coilNetworkKtor" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 
 [plugins]
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesVersion"}
