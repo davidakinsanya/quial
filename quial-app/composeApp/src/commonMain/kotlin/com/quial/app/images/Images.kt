@@ -5,12 +5,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import org.jetbrains.compose.resources.painterResource
 import quial_app.composeapp.generated.resources.Res
 import quial_app.composeapp.generated.resources.arrow_up
+import quial_app.composeapp.generated.resources.fire_emoji
 import quial_app.composeapp.generated.resources.more
 import quial_app.composeapp.generated.resources.quial_img
+import quial_app.composeapp.generated.resources.quizzes_complete
 import quial_app.composeapp.generated.resources.saved_clicked
 import quial_app.composeapp.generated.resources.saved_unclicked
 import quial_app.composeapp.generated.resources.search_icon
@@ -69,12 +73,29 @@ fun SavedButtonInSheet(modifier: Modifier) {
     Image(painter = painterResource(Res.drawable.saved_clicked),
         contentDescription = "",
         contentScale = ContentScale.Crop,
-        modifier = modifier)
+        modifier = modifier,
+        colorFilter = ColorFilter.tint(color = Color.White))
 }
 
 @Composable
 fun SearchButton(modifier: Modifier) {
     Image(painter = painterResource(Res.drawable.search_icon),
+        contentDescription = "",
+        contentScale = ContentScale.Crop,
+        modifier = modifier)
+}
+
+@Composable
+fun FireEmoji(modifier: Modifier) {
+    Image(painter = painterResource(Res.drawable.fire_emoji),
+        contentDescription = "",
+        contentScale = ContentScale.Crop,
+        modifier = modifier)
+}
+
+@Composable
+fun QuizEmoji(modifier: Modifier) {
+    Image(painter = painterResource(Res.drawable.quizzes_complete),
         contentDescription = "",
         contentScale = ContentScale.Crop,
         modifier = modifier)
