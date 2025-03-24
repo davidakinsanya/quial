@@ -69,7 +69,7 @@ def get_additional_meaning(idiom, link):
     else:
         final_meanings = ul_elems_comp[2].split('\n')
 
-    if ('(64)' in meanings_list[0]):
+    if ('(64)' in meanings_list[0] or '(64)' in ol_elems_comp[1].split('\n')[0]):
         final_additional_meanings = alt_meanings(idiom, ul_elems_comp)
     else:
         final_additional_meanings = ol_elems_comp[1].split('\n')

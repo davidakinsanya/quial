@@ -34,6 +34,20 @@ def main_driver():
                      driver_executable_path = cd.install())
 
 
+def alt_meanings(idiom, idiom_list):
+    idiom_breakdown = idiom.split()
+    alt_list = []
+
+    for i in range (0, len(idiom_list)):
+        main_string = idiom_list[i]
+        for word in idiom_breakdown:
+            if word in main_string:
+              alt_list.append(main_string.replace('.', ' '))
+            break
+                
+    return alt_list[0].split('\n')
+
+
 def get_additional_meaning(idiom, link):
     driver.get(link)
 
@@ -55,7 +69,7 @@ def get_additional_meaning(idiom, link):
     else:
         final_meanings = ul_elems_comp[2].split('\n')
 
-    if ('(64)' in meanings_list[0]):
+    if ('(64)' in meanings_list[0] or '(64)' in ol_elems_comp[1].split('\n')[0]):
         final_additional_meanings = alt_meanings(idiom, ul_elems_comp)
     else:
         final_additional_meanings = ol_elems_comp[1].split('\n')
@@ -71,6 +85,7 @@ def get_meaning(idiom):
         idiom_arr[2] = idiom_arr[2].replace(" Read more ➺", "")
         
     return idiom_arr
+
 
 def scrape_topic():
     driver.get(url + "topics/")
@@ -92,6 +107,7 @@ def get_links(idioms):
     for i in range(0, len(idioms)):
         arr.append(idioms[i].find_elements(By.CSS_SELECTOR, "a")[0].get_attribute('href'))
     return arr
+
 
 def get_data(topic, idioms, links, alt):
     idioms_list = [text.text for text in idioms]
@@ -121,6 +137,7 @@ def get_data(topic, idioms, links, alt):
     except TypeError:
         pass
     
+
 
 def main_scrape(topic, url, page):
     curr_page = 1
@@ -168,6 +185,7 @@ def main_scrape(topic, url, page):
     else:
         return
 
+
 def merge(csv1, csv2):
     master_df = pd.DataFrame()
     master_df.append(csv1)
@@ -214,4 +232,3 @@ for i in range(0, len(topics_list)):
 
 
 driver.close()
-
