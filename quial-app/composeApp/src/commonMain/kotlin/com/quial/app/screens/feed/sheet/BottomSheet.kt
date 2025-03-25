@@ -21,7 +21,6 @@ import com.quial.app.images.ArrowUp
 import com.quial.app.images.SavedButton
 import com.quial.app.images.SearchButton
 import com.quial.app.screens.feed.FeedUiStateHolder
-import com.quial.app.screens.feed.comps.UiState
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
