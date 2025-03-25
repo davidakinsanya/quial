@@ -43,7 +43,7 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder,
     else
         ""
 
-    var isIdiomSaved = remember {
+    val isIdiomSaved = remember {
         mutableStateOf(false)
     }
 
