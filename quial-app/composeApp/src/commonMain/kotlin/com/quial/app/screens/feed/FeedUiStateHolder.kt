@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FeedUiStateHolder(
     feedUiState: FeedUiState
@@ -52,6 +53,39 @@ class FeedUiStateHolder(
             _idiomsList.value = list
             _loadingState.value = UiState.Success(_idiomsList.value)
         }
+    }
+
+    suspend fun loadSavedIdioms(savedIdioms: List<String>,
+                                isIdiomSaved: MutableState<Boolean>) = withContext(Dispatchers.IO) {
+
+        _loadingState.value = UiState.Loading
+
+        var bool = false
+        _idiomsList.value.forEach {
+            bool = savedIdioms.contains(it.info[0].split(",")[0])
+        }
+
+        if (!bool && savedIdioms.size != _idiomsList.value.size) {
+
+            val savedIdiomsObj = _uiState.value.retrieveIdioms()!!.filter {
+                savedIdioms.contains(
+                    it.info[0]
+                        .split(",")[0]
+                        .replace("'", "")
+                )
+            }
+
+            if (savedIdiomsObj.isEmpty()) {
+                _idiomsList.value = _uiState.value.retrieveIdioms()!!
+            } else {
+                _idiomsList.value = savedIdiomsObj
+            }
+        } else {
+            _idiomsList.value = _uiState.value.retrieveIdioms()!!
+        }
+
+        _loadingState.value = UiState.Success(_idiomsList.value)
+        isIdiomSaved.value = !isIdiomSaved.value
     }
 
     fun loadPagerState(pagerState: PagerState) {

@@ -21,6 +21,7 @@ import com.quial.app.images.ArrowUp
 import com.quial.app.images.SavedButton
 import com.quial.app.images.SearchButton
 import com.quial.app.screens.feed.FeedUiStateHolder
+import com.quial.app.screens.feed.comps.UiState
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.Font
 import quial_app.composeapp.generated.resources.DMSans_Bold
@@ -42,12 +43,21 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder,
     else
         ""
 
+    var isIdiomSaved = remember {
+        mutableStateOf(false)
+    }
+
 
     ModalBottomSheetLayout(
         sheetState = sheetState,
         sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp), // Rounded top corners
         sheetContent = {
-            BottomSheetContent(dataStoreHolder, uiStateHolder)
+            BottomSheetContent(
+                dataHolder = dataStoreHolder,
+                uiStateHolder = uiStateHolder,
+                sheetState = sheetState,
+                isIdiomSaved = isIdiomSaved
+            )
         }
     ) {
 
@@ -128,11 +138,9 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder,
                     )
                 }
                 Box(contentAlignment = Alignment.Center) {
-                    var isIdiomSaved by remember {
-                        mutableStateOf(false) }
 
                     LaunchedEffect(uiStateHolder.getPagerState()?.isScrollInProgress) {
-                        isIdiomSaved = !quizState
+                        isIdiomSaved.value = !quizState
                                 &&
                                 dataStoreHolder
                                     .getSavedIdioms()
@@ -143,12 +151,12 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder,
 
                     val onClick: () -> Unit = {
                         scope.launch {
-                            if (!isIdiomSaved) {
+                            if (!isIdiomSaved.value) {
                                 dataStoreHolder.addIdiomToSaved(idiomTitle)
-                                isIdiomSaved = !isIdiomSaved
+                                isIdiomSaved.value = !isIdiomSaved.value
                             } else {
                                 dataStoreHolder.removeSavedIdiom(idiomTitle)
-                                isIdiomSaved = !isIdiomSaved
+                                isIdiomSaved.value = !isIdiomSaved.value
                             }
                         }
                     }
@@ -158,11 +166,11 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder,
                             .fillMaxSize(0.075f)
                             .padding(bottom = 35.dp)
                             .clickable { if (!quizState) onClick.invoke() },
-                        clicked = isIdiomSaved
+                        clicked = isIdiomSaved.value
                     )
 
                     Text(
-                        text = if (isIdiomSaved) "Saved" else "Save",
+                        text = if (isIdiomSaved.value) "Saved" else "Save",
                         modifier = textModifier
                             .alpha(altAlphaValue)
                             .clickable { if (!quizState) onClick.invoke() },
@@ -186,9 +194,12 @@ fun BottomSheetExample(uiStateHolder: FeedUiStateHolder,
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BottomSheetContent(dataHolder: DataStoreStateHolder,
-                       uiStateHolder: FeedUiStateHolder) {
+                       uiStateHolder: FeedUiStateHolder,
+                       sheetState: ModalBottomSheetState,
+                       isIdiomSaved: MutableState<Boolean>) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -210,7 +221,7 @@ fun BottomSheetContent(dataHolder: DataStoreStateHolder,
             Spacer(modifier = Modifier.padding(15.dp))
             QuizCompleteView(dataHolder)
             Spacer(modifier = Modifier.padding(15.dp))
-            SavedIdiomView(dataHolder, uiStateHolder)
+            SavedIdiomView(dataHolder, uiStateHolder, sheetState, isIdiomSaved)
         }
     }
 }

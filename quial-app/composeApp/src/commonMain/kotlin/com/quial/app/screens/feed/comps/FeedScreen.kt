@@ -71,7 +71,7 @@ fun FeedScreen(
         backgroundColor = Color(125, 184, 107)
     ) {
         val idioms by uiStateHolder.idiomsList.collectAsState()
-        val pageCount = idioms.size * 400
+        val pageCount = idioms.size
         val pagerState = rememberPagerState(pageCount = { pageCount })
         val correctAnswer = quizHolder.getAnswerState()
         val showMenu = remember { mutableStateOf(false) }
